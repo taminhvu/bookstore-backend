@@ -1,7 +1,7 @@
 const Define = {
     API_BASE_URL: "http://localhost:2727/",
     //user access token
-    TOKEN: "token",
+    TOKEN: "refreshToken",
     SESSION_COOKIE_OPTION: {
         httpOnly: true,
         secure: false,//only for browser
