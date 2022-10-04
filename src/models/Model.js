@@ -19,7 +19,7 @@ class Model{
      * @param {what you want to insert} obj 
      * @param {err,results()=>{}} callback 
      */
-    addData = (table, obj, callback) => {
+    addData =async (table, obj, callback) => {
         let sql = `INSERT INTO ${table} SET ?`;
         this.db.query(sql, obj, callback);
     }
