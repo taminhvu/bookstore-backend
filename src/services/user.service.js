@@ -22,7 +22,6 @@ const createUser = async(userBody)=>{
    return user.addData(DB.user_table.name,obj);
 }
 
-
 const getUserByEmail = async(Email)=>{
    return user.getUserByEmail(DB.user_table.name,Email);
 }
