@@ -1,9 +1,9 @@
 const bcrypt = require('bcrypt');
-const AuthModel = require("../../models/auth/AuthModel");
-const Response = require("../../models/Response");
-const DB_Define = require("../../utils/DB_Define");
-const Define = require("../../utils/Define");
-const Helper = require("../../utils/Helper");
+const AuthModel = require("../models/user.model");
+const Response = require("../models/Response");
+const DB_Define = require("../utils/DB_Define");
+const Define = require("../utils/Define");
+const Helper = require("../utils/Helper");
 
 const AuthController = {
   signUp: (req, res) => {
@@ -119,6 +119,7 @@ const AuthController = {
       let verifiedUser = Helper.verifyAccesstoken(token);
       if (!verifiedUser) return res.status(401).send('Unauthorized request');
       req.user = verifiedUser;
+      console.log(verifiedUser);
       next();
     } catch (error) {
       return res.status(400).send("Invalid Token");
