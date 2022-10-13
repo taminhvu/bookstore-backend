@@ -2,25 +2,26 @@ const httpStatus = require('http-status');
 const {User} = require('../models');
 const Response = require('../utils/Response');
 const DB = require('../utils/DB_Define');
-
+const bcrypt = require('bcrypt');
 const user = new User();
 
 const createUser = async(userBody)=>{
-   const {Email,HoTen,MatKhau,GioiTinh,NgaySinh} = userBody;
+   const {Email,HoTen,MatKhau,GioiTinh} = userBody;
    const check = await user.getUserByEmail(DB.user_table.name,Email);
    if(check.length !=0){ 
      throw new  Response(true,'Email already use');
    } 
+   const hashpass =  bcrypt.hashSync(MatKhau,bcrypt.genSaltSync(10));
    const obj = {
       Quyen:'1',
       Email,
       HoTen,
-      MatKhau,
+      MatKhau: hashpass,
       GioiTinh,
-      NgaySinh,
    };
    return user.addData(DB.user_table.name,obj);
 }
+
 
 const getUserByEmail = async(Email)=>{
    return user.getUserByEmail(DB.user_table.name,Email);
