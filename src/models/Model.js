@@ -42,7 +42,7 @@ getAll = async function (table, field){
   updateData = async function (table, fieldId, obj) {
     let sql = `UPDATE ?? SET ? WHERE ?? = ?`;
     return new Promise((reslove,reject)=>{
-        this.db.query(sql, [table, obj, fieldId, bj.id], (err)=>{
+        this.db.query(sql, [table, obj, fieldId, obj.id], (err)=>{
             if(err)reject(err);
             return reslove();
         });

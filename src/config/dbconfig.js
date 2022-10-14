@@ -13,12 +13,4 @@ const pool = mysql.createPool({
     password: pass,
     database: database
 });
-// pool.getConnection((err,connection)=>{
-//     if(err){
-//         console.log(err);
-//        return err;
-//     }else{
-//         console.log("connection succeess");
-//     }
-// })
 module.exports = pool;

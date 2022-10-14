@@ -8,6 +8,7 @@ const register = async(req,res)=>{
         res.status(httpStatus.CREATED).json(new Response(false,'Create'));
     }
     catch(err){
+        console.log(err);
         res.status(httpStatus.NOT_ACCEPTABLE).json(err);
     }
     
@@ -18,6 +19,8 @@ const login = async(req,res)=>{
         const user = await authService.loginWithEmailAndPassword(Email,MatKhau);
         const token = tokenService.generateAuthToken(user);
         delete user.MatKhau;
+        delete user.IDNguoiDung;
+        delete  user.Quyen;
         user['accesstoken'] = token;
         res.status(httpStatus.OK).json(new Response(false,'',user));
     }catch(err){
