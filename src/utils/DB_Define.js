@@ -1,4 +1,4 @@
 const DB_Define = {
-    USER_TABLE : "nguoidung",
+    user_table:'NguoiDung',
 }
 module.exports = DB_Define;
