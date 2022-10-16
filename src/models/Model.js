@@ -1,3 +1,4 @@
+const { resolve } = require("path");
 const pool = require("../config/dbconfig");
 const Define = require("../utils/Define");
 
@@ -61,18 +62,18 @@ getAll = async function (table, field){
     
   };
   
+  countAll = function(table){
+    const sql = `select count(*) as soluong from ${table}`;
+    return new Promise((resolve,reject)=>{
+      this.db.query(sql,(err,result)=>{
+        if(err) return reject(err);
+        return resolve(result);
+      })
+    })
+  }
 
   //get all data from a table in decending order by a field with pagination
-  getPaginateList = (
-    page,
-    table,
-    field,
-    value,
-    field2 = "",
-    value2 = -1,
-    order_field,
-    callback
-  ) => {
+  getPaginateList = (page, table, field, value, field2 = "",value2 = -1, order_field) => {
     //implement pagination here later
     const page_size = Define.PAGINATE_PAGE_SIZE;
     let skip = (page - 1) * page_size;

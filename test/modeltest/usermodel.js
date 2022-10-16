@@ -3,7 +3,7 @@ require("dotenv").config({path:__dirname+'./../../.env'});
 const user = require("./../../src/models/user.model");
 async function getdata(){
    const result = await new usermodel().isEmailTaken('nguoidung','minhvu@gmail.com')
-    console.log(result);
+   return result;
 }
 //getdata();
 

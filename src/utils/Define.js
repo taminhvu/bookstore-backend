@@ -18,6 +18,7 @@ const Define = {
     FORMAT_SQL_DATE: "YYYY-MM-DD",
     CREATED_AT: "created_at",
     PAGINATE_PAGE_SIZE: 10,
+    USER_PAGE_SIZE:5,
     //time
     DAYS: "days",
     MONTHS: "months",
