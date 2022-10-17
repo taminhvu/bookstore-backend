@@ -8,7 +8,9 @@ const verifyJWT = (req, res, next )=>{
     const user = helper.verifyAccesstoken(token);
     if(!user) return res.sendStatus(403);
     req.user = user.IDNguoiDung;
+
     req.roles = [user.Quyen];
+    
     next();
 }
 module.exports = verifyJWT;

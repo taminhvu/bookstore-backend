@@ -5,7 +5,7 @@ const express = require('express');
 const router = express.Router();
 router.post('/register',validate(authValidation.register), authController.register)
 router.post('/login',validate(authValidation.login),authController.login);
-router.post('/send-verification-email',authController.sendVerificationEmail);
-router.get('/verify-email',authController.verifyEmailToken); 
+router.post('/send-verification-email',validate(authValidation.sendVerificationEmail),authController.sendVerificationEmail);
+router.post('/verify-email',validate(authValidation.verifyEmailToken),authController.verifyEmailToken); 
 module.exports = router;
 

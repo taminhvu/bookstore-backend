@@ -1,6 +1,5 @@
 
 const tokenService = require('./token.service');
-const emailService = require('./email.service');
 const userService = require('./user.service');
 const Response = require('../utils/Response');
 const bcrypt = require('bcrypt');
@@ -33,13 +32,6 @@ const loginWithEmailAndPassword = async(Email,MatKhau)=>{
     return user;
 }
 
-const generateAuthToken = (user)=>{
-    return tokenService.generateAuthToken(user);
-}
-
-const generateVerifyEmailToken = (user)=>{
-    return tokenService.generateVerifyEmailToken(user);
-}
 const verifyEmailToken = async(token)=>{
     try{
         const user = tokenService.verifyToken(token);
@@ -50,14 +42,8 @@ const verifyEmailToken = async(token)=>{
     }
 }
 
-const sendVerificationEmail = async(to, token)=>{
-    return emailService.sendVerificationEmail(to, token);
-}
 module.exports = {
     createUser,
     loginWithEmailAndPassword,
-    generateVerifyEmailToken,
-    generateAuthToken,
     verifyEmailToken,
-    sendVerificationEmail,
 }

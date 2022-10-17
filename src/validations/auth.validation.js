@@ -1,3 +1,4 @@
+const { verify } = require('crypto');
 const Joi = require('joi');
 const { join } = require('path');
 const { MatKhau } = require('./custom.validation');
@@ -17,7 +18,20 @@ const login = {
     }),
 };
 
+const sendVerificationEmail = {
+    body: Joi.object().keys({
+        Email: Joi.string().required().email(),
+    })
+}
+
+const verifyEmailToken = {
+    body: Joi.object().keys({
+        token: Joi.string().required(),
+    })
+}
 module.exports = {
     register,
     login,
+    sendVerificationEmail,
+    verifyEmailToken,
 }

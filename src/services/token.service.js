@@ -11,9 +11,9 @@ const generateAuthToken = (user)=>{
     return helper.getAccesstoken(payload,'30d');
 }
 
-const generateVerifyEmailToken = (user)=>{
-    const payload = {IDNguoiDung: user.IDNguoiDung}
-    return helper.getAccesstoken(payload,'10h');
+const generateVerifyEmailToken = (IDNguoiDung)=>{
+    const payload = {IDNguoiDung:IDNguoiDung}
+    return helper.getAccesstoken(payload,'1h');
 }
 
 const verifyToken = (token)=>{
