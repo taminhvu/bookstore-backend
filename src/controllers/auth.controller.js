@@ -42,7 +42,7 @@ const sendVerificationEmail = async (req, res) => {
     return res.status(httpStatus.OK).json(new Response(false, "success"));
   } catch (error) {
     console.log(error);
-    return res.status(httpStatus.EXPECTATION_FAILED).json(new Response(true,'',{error}));
+    return res.status(httpStatus.EXPECTATION_FAILED).json(new Response(true,'fail-to-send-email',{error}));
   }
 };
 
@@ -50,7 +50,7 @@ const verifyEmailToken = async (req, res) => {
   try {
     const token = req.body.token;
     await authService.verifyEmailToken(token);
-    return res.status(httpStatus.OK).json();
+    return res.status(httpStatus.OK).json(new Response(false,'success'));
   } catch (err) {
     console.log(err);
     return res.status(httpStatus.BAD_REQUEST).json(err);
