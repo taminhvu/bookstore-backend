@@ -1,17 +1,22 @@
+const { string } = require("joi");
+
 const Define = {
     API_BASE_URL: "http://localhost:2727/",
     //user access token
-    TOKEN: "refreshToken",
+    REFRESHTOKEN: "refreshToken",
+    TOKENACCESS: "accessToken",
     SESSION_COOKIE_OPTION: {
         httpOnly: true,
         secure: false,//only for browser
         sameSite: 'lax',
+        signed: true,
         //maxAge: 1 * 24 * 60 * 60 * 1000//1 day in milis
     },
     LOGOUT_COOKIE_OPTION: {
         httpOnly: true,
         secure: false,//only for browser
         sameSite: 'lax',
+        signed: true,
         expires: new Date(0)
     },
     //pagination

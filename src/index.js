@@ -2,14 +2,14 @@ require('dotenv').config();
 const bcrypt = require('bcrypt');
 const express = require('express');
 const cors = require('cors');
-const cookieparser = require('cookie-parser');
+const cookieParser = require('cookie-parser');
 const helmet = require('helmet');
 const routers = require('./routers');
 const app = express();
 
 app.use(express.urlencoded({extended: false}));
 app.use(express.json());
-app.use(cookieparser());
+app.use(cookieParser(process.env.SIGNEDCOOKIE));
 app.get('/', (req, res) => {
     res.send(req.query.id);
 });

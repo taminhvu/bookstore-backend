@@ -52,12 +52,10 @@ const deleteUser = async (req,res)=>{
 const getUserPagination = async(req,res)=>{
     try {
         const pageIndex = req.params.index;
-        console.log(pageIndex);
         const result = await userService.getUserPagination(pageIndex);
         return res.status(httpStatus.OK).json(new Response(false,'',result));
     } catch (error) {
-        console.log(err);
-        return res.status(httpStatus.BAD_REQUEST).json(new Response(true,'Page Not Found'));
+        return res.status(httpStatus.BAD_REQUEST).json(error);
     }
 }
 module.exports = {

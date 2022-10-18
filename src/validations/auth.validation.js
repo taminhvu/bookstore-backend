@@ -1,6 +1,5 @@
-const { verify } = require('crypto');
+const { string } = require('joi');
 const Joi = require('joi');
-const { join } = require('path');
 const { MatKhau } = require('./custom.validation');
 const register = {
     body: Joi.object().keys({
@@ -29,9 +28,36 @@ const verifyEmailToken = {
         token: Joi.string().required(),
     })
 }
+
+const refreshToken = {
+    body: Joi.object().keys({
+    })
+}
+
+const sendEmailResetPassword ={
+    body: Joi.object().keys({
+        Email: Joi.string().required().email()
+    })
+}
+
+const resetPassword = {
+    body:Joi.object().keys({
+        resetPasswordToken: Joi.string().required(),
+        newPassword:Joi.string().required().custom(MatKhau),
+    })
+}
+
+const logout = {
+    body: Joi.object().keys({
+    })
+}
 module.exports = {
     register,
     login,
     sendVerificationEmail,
     verifyEmailToken,
+    resetPassword,
+    sendEmailResetPassword,
+    refreshToken,
+    logout,
 }

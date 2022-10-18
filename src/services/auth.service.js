@@ -1,49 +1,97 @@
+const tokenService = require("./token.service");
+const userService = require("./user.service");
+const bcrypt = require("bcrypt");
+const emailService = require("./email.service");
 
-const tokenService = require('./token.service');
-const userService = require('./user.service');
-const Response = require('../utils/Response');
-const bcrypt = require('bcrypt');
-const moment = require('moment');
-
-const createUser = async(user)=>{
-    return userService.createUser(user);
-}
-const loginWithEmailAndPassword = async(Email,MatKhau)=>{
+const loginWithEmailAndPassword = async (Email, MatKhau) => {
+  try {
     let user = await userService.getUserByEmail(Email);
     user = user[0];
-    if(!user){
-        throw new Response(true,"0");
+    if (!user) {
+      throw new Error('0');
     }
     const ckPass = bcrypt.compareSync(MatKhau, user.MatKhau);
-    if(!ckPass){
-        throw new Response(true,"1");
+    if (!ckPass) {
+      throw new Error('1');
     }
-    
-    if(user.XacThuc === 0){
-        throw new Response(true,'2');
+
+    if (user.XacThuc === 0) {
+      throw new Error('2');
     }
-    if(user.trangThai === 0){
-        throw new Response(true,'3');
+    if (user.trangThai === 0) {
+      throw new Error('3');
     }
     delete user.MatKhau;
-    delete user.IDNguoiDung;
-    delete  user.Quyen;
-    user.NgaySinh = moment(user.NgaySinh).utc().format('YYYY-MM-DD');
-    return user;
+    const accessToken = tokenService.generateAuthToken(user);
+    const refreshToken = tokenService.generateRefreshToken(user);
+    user['accessToken'] =  accessToken;
+    return {user:user, refreshToken:refreshToken};
+  } catch (error) {
+    throw error;
+  }
+};
+
+const verifyEmail = async (token) => {
+  try {
+    const user = tokenService.verifyEmailToken(token);
+    console.log(user);
+    return await userService.updateUserById(user.IDNguoiDung, { XacThuc: 1 });
+  } catch (error) {
+    throw error;
+  }
+};
+
+const updateToken = async (oldRefreshToken) => {
+  try {
+    const IDOldToken = await tokenService.findIDRefreshToken(oldRefreshToken);
+    console.log(IDOldToken);
+    const body = tokenService.verifyRefreshToken(oldRefreshToken);
+    console.log(body.IDNguoiDung);
+    const user = await userService.getUserById(body.IDNguoiDung);
+    const accessToken = tokenService.generateAuthToken(user[0]);
+    const refreshToken = tokenService.generateRefreshToken(user[0]);
+    await tokenService.updateRefreshToken(refreshToken, IDOldToken);
+    return { accessToken: accessToken, refreshToken: refreshToken };
+  } catch (error) {
+    throw error;
+  }
+};
+
+const logout =async (token)=>{
+  try {
+    const IDToken = await tokenService.findIDRefreshToken(token)
+    return await tokenService.deleteRefreshToken(IDToken);
+  } catch (error) {
+    throw error;
+  }
 }
 
-const verifyEmailToken = async(token)=>{
-    try{
-        const user = tokenService.verifyToken(token);
-        console.log(user);
-        return await userService.updateUserById(user.IDNguoiDung,{XacThuc:1});
-    }catch(err){
-        throw err;
+ const resetPassword = async(token,newPassword)=>{
+    try {
+      const ID = await tokenService.verifyPasswordToken(token);
+      console.log(ID);
+      const hashpass = bcrypt.hashSync(newPassword, bcrypt.genSaltSync(10));
+      await userService.updateUserById(ID.IDNguoiDung,{MatKhau:hashpass});
+    } catch (error) {
+      throw error;
     }
-}
+ }
+ 
+ const sendEmailResetPassword = async(email)=>{
+    try {
+      const user = await userService.getUserByEmail(email);
+      const token = await tokenService.generatePasswordToken({IDNguoiDung: user[0].IDNguoiDung});
+      return await emailService.sendEmailResetPassword(email,token);
+    } catch (error) {
+      throw error;
+    }
+ }
 
 module.exports = {
-    createUser,
-    loginWithEmailAndPassword,
-    verifyEmailToken,
-}
+  loginWithEmailAndPassword,
+  verifyEmail,
+  updateToken,
+  logout,
+  resetPassword,
+  sendEmailResetPassword,
+};
