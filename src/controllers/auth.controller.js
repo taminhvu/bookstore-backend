@@ -103,6 +103,16 @@ const resetPassword = async(req,res)=>{
     res.status(httpStatus.BAD_REQUEST).json(new Response(true,error.message));
   }
 };
+
+const changePassword = async(req,res)=>{
+  try {
+    const {Email,oldPassword,newPassword} =  req.body;
+    await authService.changePassword(Email,oldPassword,newPassword);
+    res.sendStatus(httpStatus.NO_CONTENT);
+  } catch (error) {
+    res.status(httpStatus.BAD_REQUEST).json(new Response(true,error.message));
+  }
+}
 module.exports = {
   login,
   register,
@@ -112,4 +122,5 @@ module.exports = {
   logout,
   resetPassword,
   sendEmailResetPassword,
+  changePassword,
 };

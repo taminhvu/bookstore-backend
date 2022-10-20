@@ -51,6 +51,13 @@ const logout = {
     body: Joi.object().keys({
     })
 }
+const changePassword = {
+    body: Joi.object().keys({
+        Email:Joi.string().required().email(),
+        oldPassword:Joi.string().required().custom(MatKhau),
+        newPassword:Joi.string().required().custom(MatKhau),
+    })
+}
 module.exports = {
     register,
     login,
@@ -60,4 +67,5 @@ module.exports = {
     sendEmailResetPassword,
     refreshToken,
     logout,
+    changePassword,
 }

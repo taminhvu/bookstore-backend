@@ -2,6 +2,9 @@ const {authController} = require('../controllers');
 const  authValidation = require('../validations/auth.validation');
 const validate = require('../middlewares/validate')
 const express = require('express');
+const ROLES_LIST = require('../config/roles.list');
+const verifyRoles = require('../middlewares/verifyRoles');
+const verifyJWT = require('../middlewares/verifyJWT');
 
 const router = express.Router();
 router.post('/register',validate(authValidation.register), authController.register)
@@ -12,5 +15,6 @@ router.post('/refreshToken',validate(authValidation.refreshToken),authController
 router.delete('/logout',validate(authValidation.logout),authController.logout);
 router.post('/send-email-reset-password',validate(authValidation.sendEmailResetPassword), authController.sendEmailResetPassword);
 router.post('/reset-password',validate(authValidation.resetPassword),authController.resetPassword);
+router.put('/change_password',verifyJWT,validate(authValidation.changePassword),authController.changePassword);
 module.exports = router;
 

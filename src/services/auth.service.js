@@ -87,6 +87,17 @@ const logout =async (token)=>{
     }
  }
 
+ const changePassword = async(email,oldPassword,newPassword)=>{
+  try {
+    const user =await userService.getUserByEmail(email);
+    const ckPass = bcrypt.compareSync(oldPassword, user[0].MatKhau);
+    if(!ckPass) throw new Error('wrong password');
+    const hashpass = bcrypt.hashSync(newPassword, bcrypt.genSaltSync(10));
+    await userService.updateUserById(user[0].IDNguoiDung,{MatKhau:hashpass});
+  } catch (error) {
+    throw error;
+  }
+ }
 module.exports = {
   loginWithEmailAndPassword,
   verifyEmail,
@@ -94,4 +105,5 @@ module.exports = {
   logout,
   resetPassword,
   sendEmailResetPassword,
+  changePassword,
 };

@@ -32,7 +32,6 @@ const getUserByEmail = async (Email) => {
     const array = await user.getUserByEmail(Email);
     if(array.length === 0) throw new Error('Email not found');
     return array;
-
   } catch (error) {
     throw error;
   }
