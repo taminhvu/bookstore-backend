@@ -29,7 +29,7 @@ const login = async (req, res) => {
     res.cookie(Define.REFRESHTOKEN,result.refreshToken,Define.SESSION_COOKIE_OPTION);
     tokenService.addRefreshToken(result.refreshToken);
     const user = result.user;
-    res.status(httpStatus.OK).json(new Response(false, "", {Email:user.Email,HoTen:user.HoTen ,Anh:user.Anh,AccessToken:user.accessToken}));
+    res.status(httpStatus.OK).json(new Response(false, "", {Email:user.Email,HoTen:user.HoTen ,Anh:"http://localhost:8000/"+user.Anh,accessToken:user.accessToken}));
   } catch (error) {
     res.status(httpStatus.NOT_ACCEPTABLE).json(new Response(true,error.message));
   }
@@ -76,7 +76,6 @@ const logout = async (req,res)=>{
   try {
     const token = req.signedCookies.refreshToken;
     await authService.logout(token);
-    res.cookie(Define.REFRESHTOKEN,'',Define.LOGOUT_COOKIE_OPTION);
     res.sendStatus(httpStatus.NO_CONTENT);
   } catch (error) {
     res.status(httpStatus.BAD_REQUEST).json(new Response(true,error.message));

@@ -38,7 +38,7 @@ class UserModel extends Model {
   getUserPagination = function(page){
     const size = Define.USER_PAGE_SIZE;
     const skip = (page - 1) * size;
-    const sql = `select IDNguoiDung,Quyen,Email,HoTen,NgaySinh,GioiTinh,Anh,XacThuc,TrangThai from nguoidung order by IDNguoiDung limit ${size} offset ${skip} `;
+    const sql = `select IDNguoiDung,Quyen,Email,HoTen,DATE_FORMAT(NgaySinh,"%d-%m-%Y") as NgaySinh,GioiTinh,Anh,XacThuc,TrangThai from nguoidung order by IDNguoiDung limit ${size} offset ${skip} `;
     return new Promise((resolve, reject)=>{
       this.db.query(sql,(err ,data)=>{
         if(err) return reject(err);

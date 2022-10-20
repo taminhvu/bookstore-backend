@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<form action="" method="POST" enctype="multipart/form-data">
+    <input type="file" name="image" id="test" />
+    <input type="text" name="Id" value="29">
+    <button type="submit">Upload</button>
+</form>
+<script> 
+    const formTest = document.querySelector("#test");
+    formTest.addEventListener("change", (event) => {
+        event.preventDefault();
+        console.log(event.target.files[0]);
+    })
+</script>

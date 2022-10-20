@@ -1,8 +1,8 @@
 const httpStatus = require('http-status');
 const Response = require('../utils/Response');
 const {userService} = require('../services');
-
-
+const Uploader = require('../middlewares/Uploader');
+const fs = require('fs');
 const createUser = async (req,res)=>{
     try{
         const user = await userService.createUser(req.body);
@@ -58,10 +58,54 @@ const getUserPagination = async(req,res)=>{
         return res.status(httpStatus.BAD_REQUEST).json(error);
     }
 }
+const changeInfoUser = async(req,res)=>{
+    try {
+        const id = req.user;
+        const obj = {HoTen:req.body.HoTen,NgaySinh:req.body.NgaySinh,GioiTinh:req.body.GioiTinh};
+        console.log(obj);
+        await userService.updateUserById(id,obj)
+        return res.status(httpStatus.OK).json(new Response(false,"Success"));
+    } catch (error) {
+        return res.status(httpStatus.BAD_REQUEST).json(new Response(true,error.message));
+    }
+}
+
+const updateAvatar = async(req,res)=>{
+    console.log(req);
+    try {
+        var upload = Uploader.single("image");
+        upload(req,res,async function(err){
+            if(err)throw err;
+            if (!req.file) {
+                return res.status(httpStatus.BAD_REQUEST).json(new Response(true,'No file!'));
+            }
+            const id = req.user;
+            const user = await userService.getUserById(id);
+            const scrImage = user[0].Anh;
+           
+            if(scrImage!= null){
+                fs.unlink(scrImage,(err)=>{
+                    if(err) throw err;
+                })
+            }
+            
+            let src = req.file.path.split('\\').join('/');
+            const obj = {Anh:src};
+            console.log(req.file);
+            await userService.updateAvatar(id,obj);
+            res.status(httpStatus.OK).json(new Response(false,"update avatar success"));
+          });
+         
+    } catch (error) {
+        return res.status(httpStatus.BAD_REQUEST).json(new Response(true,error.message));
+    }
+}
 module.exports = {
     createUser,
     getAllUser,
     getUser,
     deleteUser,
     getUserPagination,
+    changeInfoUser,
+    updateAvatar,
 }

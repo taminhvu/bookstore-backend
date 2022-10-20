@@ -27,6 +27,8 @@ const createUser = async (userBody) => {
   }
 };
 
+
+
 const getUserByEmail = async (Email) => {
   try {
     const array = await user.getUserByEmail(Email);
@@ -64,6 +66,13 @@ const updateUserById = async (id, obj) => {
   }
 };
 
+const updateAvatar = async(id,obj)=>{
+  try {
+    return user.updateUserById(id,obj);
+  } catch (error) {
+    throw new Error('can not update user');
+  }
+}
 const getUserPagination = async (page) => {
   try {
     const data = await user.getUserPagination(page);
@@ -97,4 +106,5 @@ module.exports = {
   updateUserById,
   getAllUser,
   getUserPagination,
+  updateAvatar,
 };
