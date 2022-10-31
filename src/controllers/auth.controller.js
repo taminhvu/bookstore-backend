@@ -29,7 +29,7 @@ const login = async (req, res) => {
     res.cookie(Define.REFRESHTOKEN,result.refreshToken,Define.SESSION_COOKIE_OPTION);
     tokenService.addRefreshToken(result.refreshToken);
     const user = result.user;
-    res.status(httpStatus.OK).json(new Response(false, "", {Email:user.Email,HoTen:user.HoTen ,Anh:"http://localhost:8000/"+user.Anh,accessToken:user.accessToken}));
+    res.status(httpStatus.OK).json(new Response(false, "", {Email:user.Email,HoTen:user.HoTen ,Anh:process.env.URL+user.Anh,accessToken:user.accessToken}));
   } catch (error) {
     res.status(httpStatus.NOT_ACCEPTABLE).json(new Response(true,error.message));
   }

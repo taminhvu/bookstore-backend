@@ -71,7 +71,6 @@ const changeInfoUser = async(req,res)=>{
 }
 
 const updateAvatar = async(req,res)=>{
-    console.log(req);
     try {
         var upload = Uploader.single("image");
         upload(req,res,async function(err){
@@ -91,9 +90,8 @@ const updateAvatar = async(req,res)=>{
             
             let src = req.file.path.split('\\').join('/');
             const obj = {Anh:src};
-            console.log(req.file);
             await userService.updateAvatar(id,obj);
-            res.status(httpStatus.OK).json(new Response(false,"update avatar success"));
+            res.status(httpStatus.OK).json(new Response(false,"update avatar success",{Anh:process.env.URL+src}));
           });
          
     } catch (error) {
