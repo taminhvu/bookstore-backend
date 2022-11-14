@@ -12,7 +12,7 @@ class ProductModel extends Model {
     });
   };
 
-  getProbuctByID = function(id){
+  getProductByID = function(id){
     let sql = `select * from sanpham where IDSanPham = ?`;
     return new Promise((resolve, reject)=>{
         this.db.query(sql, id, (err, data)=>{

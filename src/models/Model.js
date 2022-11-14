@@ -40,10 +40,10 @@ getAll = async function (table, field){
   };
   //update a specific row on a table
   
-  updateData = async function (table, fieldId, obj) {
+  updateData = async function (table, fieldId, obj,ID) {
     let sql = `UPDATE ?? SET ? WHERE ?? = ?`;
     return new Promise((reslove,reject)=>{
-        this.db.query(sql, [table, obj, fieldId, obj.id], (err)=>{
+        this.db.query(sql, [table, obj, fieldId,ID], (err)=>{
             if(err)reject(err);
             return reslove();
         });

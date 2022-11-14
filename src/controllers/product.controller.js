@@ -12,13 +12,14 @@ const addProduct = async function (req, res) {
   }
 };
 
-const getProductById = async function (req, res) {
+const getProductByID = async function (req, res) {
   try {
-    const id = req.params.id;
-    const product = await productService.getProductById(id);
-    return res.httpStatus(httpStatus.OK).json(new Response(fase, "", product));
-  } catch (err) {
-    return res.status(httpStatus.BAD_REQUEST).json(err);
+    const id = req.params.ID;
+    const product = await productService.getProductByID(id);
+    return res.status(httpStatus.OK).json(new Response(false, "", product));
+  } catch (error) {
+    console.log(error);
+    return res.status(httpStatus.BAD_REQUEST).json(error.message);
   }
 };
 
@@ -27,12 +28,33 @@ const getAllProduct = async function (req, res) {
     const product = await productService.getAllProduct();
     return res.status(httpStatus.OK).json(new Response(false, "", product));
   } catch (err) {
-    return res.status(httpStatus.BAD_REQUEST).json(err);
+    return res.status(httpStatus.BAD_REQUEST).json(err.message);
   }
 };
 
+const deleteProductByID = async function(req,res){
+  try {
+    const ID = req.params.ID;
+    await productService.deleteProductByID(ID);
+    return res.sendStatus(httpStatus.NO_CONTENT);
+  } catch (error) {
+    return res.status(httpStatus.BAD_REQUEST).json(error.message);
+  }
+}
+const updateProductByID = async function(req,res){
+  try {
+    const ID = req.params.ID;
+    const obj = req.body;
+    await productService.updateProductByID(ID,obj);
+    return res.sendStatus(httpStatus.NO_CONTENT);
+  } catch (error) {
+    return res.status(httpStatus.BAD_REQUEST).json(error.message);
+  }
+}
 module.exports = {
     addProduct,
-    getProductById,
+    getProductByID,
     getAllProduct,
+    deleteProductByID,
+    updateProductByID,
 }
