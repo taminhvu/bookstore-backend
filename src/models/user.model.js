@@ -47,6 +47,44 @@ class UserModel extends Model {
     });
   };
 
+  getNewRegistration = function(date) {
+    let sql = `SELECT
+    COUNT(nguoidung.IDNguoiDung) as soluong
+    FROM nguoidung 
+    WHERE nguoidung.NgayDangKi 
+    BETWEEN ? AND CURRENT_DATE
+    UNION
+    SELECT 
+    COUNT(nguoidung.IDNguoiDung) as soluong
+    FROM nguoidung 
+    WHERE nguoidung.NgayDangKi 
+    BETWEEN DATE_SUB(?, INTERVAL 1 WEEK) AND ?`;
+    return new Promise((resolve, reject) => {
+      this.db.query(sql,[date,date,date], (err, result) => {
+        if (err) {
+          return reject(err);
+        }
+        return resolve(result);
+      });
+    });
+  };
+
+  getNewRegistrationPerDay = function(date) {
+    let sql = `SELECT nguoidung.NgayDangKi,
+    COUNT(nguoidung.IDNguoiDung) as soluong
+    FROM nguoidung 
+    WHERE nguoidung.NgayDangKi 
+    BETWEEN ? AND CURRENT_DATE
+    GROUP BY nguoidung.NgayDangKi`;
+    return new Promise((resolve, reject) => {
+      this.db.query(sql,date, (err, result) => {
+        if (err) {
+          return reject(err);
+        }
+        return resolve(result);
+      });
+    });
+  };
 }
 
 

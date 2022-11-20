@@ -41,9 +41,19 @@ const getKindProductByID = async function(req,res){
         res.status(httpStatus.BAD_REQUEST).json(new Response(true,error.message));
     }
 }
+const getKindProudctByIDCategory = async function(req,res){
+    try {
+        const ID = req.params.ID;
+        const data = await kindProductService.getKindProductByIDCategory(ID);
+        res.status(httpStatus.OK).json(new Response(false,"",data));
+    } catch (error) {
+        res.status(httpStatus.BAD_REQUEST).json(new Response(true,error.message));
+    }
+}
 module.exports = {
     addKindProduct,
     getKindProductByID,
     updateKindProductByID,
     deleteKindProductByID,
+    getKindProudctByIDCategory,
 }

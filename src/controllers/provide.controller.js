@@ -35,6 +35,8 @@ const deleteProvider = async function (req,res){
 const getProvider = async function(req,res){
     try {
         const data = await provideService.getProvider();
+        let arr = req.originalUrl.split('/');
+        console.log();
         if(data.length == 0){
             return res.status(httpStatus.NOT_FOUND).json(new Response(true,"Not Found"));
          }

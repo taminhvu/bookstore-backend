@@ -18,6 +18,14 @@ const getCategoryByID = async function(ID){
     }
 }
 
+const getAllCategory = async function(){
+    try {
+        return category.getAll(DB_Define.Category,"IDDanhMuc");
+    } catch (error) {
+        throw error;
+    }
+}
+
 const updateCategoryByID = async function(ID,obj){
     try {
         const data = await getCategoryByID(ID);
@@ -42,4 +50,5 @@ module.exports = {
     getCategoryByID,
     updateCategoryByID,
     deleteCategoryByID,
+    getAllCategory,
 }

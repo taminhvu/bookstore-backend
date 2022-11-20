@@ -3,8 +3,8 @@ const path  = require('path');
 const fs = require('fs-extra');
 const  multerStorage = multer.diskStorage({
   destination: function (req, file, cb) {
-    let type = req.params.type;
-    let dest = `./public/${type}`;
+    let arr = req.originalUrl.split('/');
+    let dest = `./public/${arr[arr.length-1]}`;
     fs.mkdirsSync(dest);
     cb(null, dest)
   },

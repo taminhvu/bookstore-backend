@@ -3,6 +3,7 @@ const DB = require("../utils/DB_Define");
 const bcrypt = require("bcrypt");
 const user = new User();
 const Define = require("../utils/Define");
+const moment = require('moment');
 
 const createUser = async (userBody) => {
   try {
@@ -99,6 +100,28 @@ const getUserPagination = async (page) => {
 //    return user.deleteData(DB.user_tableid);
 // }
 
+const getNewRegistration = async () => {
+  try {
+    let date = moment().isoWeekday(1).format("YYYY-MM-DD");
+    const array = await user.getNewRegistration(date);
+    if(array.length ===0) throw new Error('ID Not found');
+
+    const percent = ((array[1].soluong / array[0].soluong) * 100 )-100;
+    return {TaiKhoan:array[0].soluong,PhanTram:percent};
+  } catch (error) {
+    throw error;
+  }
+};
+const getNewRegistrationPerDay = async () => {
+  try {
+    let date = moment().isoWeekday(1).format("YYYY-MM-DD");
+    const array = await user.getNewRegistrationPerDay(date);
+    if(array.length ===0) throw new Error('ID Not found');
+    return array;
+  } catch (error) {
+    throw error;
+  }
+};
 module.exports = {
   createUser,
   getUserByEmail,
@@ -107,4 +130,6 @@ module.exports = {
   getAllUser,
   getUserPagination,
   updateAvatar,
+  getNewRegistration,
+  getNewRegistrationPerDay,
 };

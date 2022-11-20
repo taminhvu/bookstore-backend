@@ -74,11 +74,12 @@ const updateAvatar = async(req,res)=>{
     try {
         var upload = Uploader.single("image");
         upload(req,res,async function(err){
-            if(err)throw err;
+            if(err)return res.status(httpStatus.BAD_REQUEST).json(new Response(true,err.message));
             if (!req.file) {
                 return res.status(httpStatus.BAD_REQUEST).json(new Response(true,'No file!'));
             }
-            const id = req.user;
+            // const id = req.user;
+            const id = req.body.Id;
             const user = await userService.getUserById(id);
             const scrImage = user[0].Anh;
            
@@ -92,10 +93,26 @@ const updateAvatar = async(req,res)=>{
             const obj = {Anh:src};
             await userService.updateAvatar(id,obj);
             res.status(httpStatus.OK).json(new Response(false,"update avatar success",{Anh:process.env.URL+src}));
-          });
-         
+          }); 
     } catch (error) {
         return res.status(httpStatus.BAD_REQUEST).json(new Response(true,error.message));
+    }
+}
+
+const getNewRegistration = async(req,res)=>{
+    try {
+        const result = await userService.getNewRegistration();
+        return res.status(httpStatus.OK).json(new Response(false,'',result));
+    } catch (error) {
+        return res.status(httpStatus.BAD_REQUEST).json(error);
+    }
+}
+const getNewRegistrationPerDay = async(req,res)=>{
+    try {
+        const result = await userService.getNewRegistrationPerDay();
+        return res.status(httpStatus.OK).json(new Response(false,'',result));
+    } catch (error) {
+        return res.status(httpStatus.BAD_REQUEST).json(error);
     }
 }
 module.exports = {
@@ -106,4 +123,7 @@ module.exports = {
     getUserPagination,
     changeInfoUser,
     updateAvatar,
+    getNewRegistration,
+    getNewRegistrationPerDay,
+
 }

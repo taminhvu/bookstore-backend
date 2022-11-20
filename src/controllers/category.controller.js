@@ -12,6 +12,14 @@ const addCategory = async function(req,res){
     }
 }
 
+const getAllCategory = async function(req,res){
+    try {
+        const data = await categoryService.getAllCategory();
+        res.status(httpStatus.OK).json(new Response(false,"",data));
+    } catch (error) {
+        res.status(httpStatus.BAD_REQUEST).json(new Response(true,error.message));
+    }
+}
 const deleteCategoryByID = async function(req,res){
     try {
         const ID = req.params.ID;
@@ -46,4 +54,5 @@ module.exports = {
     getCategoryByID,
     updateCategoryByID,
     deleteCategoryByID,
+    getAllCategory,
 }

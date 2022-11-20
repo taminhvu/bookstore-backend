@@ -10,6 +10,8 @@ const addProduct = {
         GiaBan:Joi.number().required(),
         Giamgia:Joi.number(),
         SoTrang:Joi.number().required(),
+        IDTheLoai: Joi.string().required(),
+        HinhAnh:Joi.string(),
     }),
 };
 const updateProduct = {

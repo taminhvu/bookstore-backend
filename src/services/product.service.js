@@ -9,7 +9,15 @@ const addProduct = async function(obj){
 const getProductByID = async function(id){
     return product.getProductByID(id);
 }
-
+const getProductByIDDanhMuc = async function(id){
+    return product.getProductByIDDanhMuc(id);
+}
+const getProductByIDTheLoai = async function(id){
+    return product.getProductByIDTheloai(id);
+}
+const getProductByIDNhaXuatBan = async function(id){
+    return product.getProductByIDNhaXuatBan(id);
+}
 const getAllProduct = async function(){
     return product.getAllProduct();
 }
@@ -33,10 +41,21 @@ const updateProductByID = async function(ID,obj){
     }
 
 }
+const getNewProduct = async function(){
+    return product.getNewProduct();
+}
+const getBestSeller = async function(){
+    return product.getBestseller();
+}
 module.exports ={
+    getNewProduct,
     addProduct,
     getAllProduct,
     getProductByID,
     deleteProductByID,
     updateProductByID,
+    getProductByIDDanhMuc,
+    getProductByIDTheLoai,
+    getProductByIDNhaXuatBan,
+    getBestSeller,
 }

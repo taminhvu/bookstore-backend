@@ -14,4 +14,7 @@ router.route('/:ID')
 .delete(validate(kindProductValidate.deleteKindProduct), kindProductController.deleteKindProductByID)
 .get(validate(kindProductValidate.getKindProduct),kindProductController.getKindProductByID)
 
+router.route('/idcategory/:ID')
+.get(validate(kindProductValidate.getKindProduct),kindProductController.getKindProudctByIDCategory)
+
 module.exports = router;

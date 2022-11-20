@@ -6,16 +6,16 @@ const cookieParser = require('cookie-parser');
 const helmet = require('helmet');
 const routers = require('./routers');
 const app = express();
-const path = require('path')
-const Uploader = require('./middlewares/Uploader');
+const path = require('path');
 app.use(express.urlencoded({extended: false}));
 app.use(express.json());
 app.use(cookieParser(process.env.SIGNEDCOOKIE));
 
 //begin test
-app.use('/public',express.static(path.join(__dirname,'../public')));
-console.log();
-
+app.use('/public',express.static(path.join(__dirname,"../public")));
+app.use('/home',(req,res)=>{
+    res.sendFile(__dirname+"/index.html");
+});
 //end test
 
 app.use(cors({origin:["http://localhost:3000"], credentials:true}));

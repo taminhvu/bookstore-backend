@@ -1,7 +1,7 @@
 const {Order} = require('../models');
 const DB_Define = require('../utils/DB_Define')
 const order = new Order();
-
+const moment = require('moment');
 
 //crud order
 const createOrder = async function(obj){
@@ -14,7 +14,7 @@ const createOrder = async function(obj){
 
 const getOrderByID = async function(ID){
     try {
-        return order.getOne(DB_Define.Order,"IDDonHang",ID);
+        return order.getOrderByID(ID);
     } catch (error) {
         throw error;
     }
@@ -36,9 +36,16 @@ const deleteOrderByID = async function(ID){
     }
 }
 
-const getOrder = async function(){
+const getAllOrder = async function(){
     try {
-        return order.getAll(DB_Define.Order,"IDDonHang");
+        return order.getAllOrder()
+    } catch (error) {
+        throw error;
+    }
+}
+const getOrderDetailByIDOrder = async function(ID){
+    try {
+        return order.getOrderDetailByIDOrder(ID)
     } catch (error) {
         throw error;
     }
@@ -86,8 +93,9 @@ const getOrderDetail = async function(){
 
 const addOrder = async function(obj){
     try {
-        const order = {IDNguoiDung:obj.IDNguoiDung,SoLuong:obj.SoLuong,TongTien:obj.TongTien,DiaChi:obj.DiaChi};
+        const order = {IDNguoiDung:obj.IDNguoiDung,DiaChi:obj.DiaChi};
         const orderDetail = obj.ChiTietDonHang;
+        //kiem tra chi tiet don hang
         const data = await createOrder(order);
         orderDetail.forEach(async element => {
             element["IDDonHang"] = data.insertId;
@@ -98,16 +106,50 @@ const addOrder = async function(obj){
     }
 }
 
+const getRevanue = async function(){
+    try {
+        let date = moment().isoWeekday(1).format("YYYY-MM-DD");
+        const data = await order.getRevanue(date);
+        const percent = (data[0].DoanhThu /data[1].DoanhThu * 100)-100;
+        return {DoanhThu:data[0].DoanhThu,PhanTram:percent};
+    } catch (error) {
+        throw error;
+    }
+}
+const getAmount = async function(){
+    try {
+        let date = moment().isoWeekday(1).format("YYYY-MM-DD");
+        const data = await order.getAmount(date);
+        const percent = (data[0].TongDon /data[1].TongDon * 100)-100;
+        return {TongDon:data[0].TongDon,PhanTram:percent};
+    } catch (error) {
+        throw error;
+    }
+}
+const getAmountPerDay = async function(){
+    try {
+        let date = moment().isoWeekday(1).format("YYYY-MM-DD");
+        const data = await order.getAmountPerDay(date);
+        return data;
+    } catch (error) {
+        throw error;
+    }
+}
+
 module.exports = {
     createOrder,
     getOrderByID,
     updateOrder,
     deleteOrderByID,
-    getOrder,
+    getAllOrder,
     createOrderDetail,
     getOrderDetailByID,
     updateOrderDetail,
     deleteOrderDetailByID,
     getOrderDetail,
     addOrder,
+    getOrderDetailByIDOrder,
+    getRevanue,
+    getAmount,
+    getAmountPerDay,
 }

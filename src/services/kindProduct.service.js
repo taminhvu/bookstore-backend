@@ -17,7 +17,13 @@ const getKindProductByID = async function(ID){
         throw error;
     }
 }
-
+const getKindProductByIDCategory = async function(ID){
+    try {
+        return kindProduct.getOne(DB_Define.KindOfProduct,"IDDanhMuc",ID);
+    } catch (error) {
+        throw error;
+    }
+}
 const updateKindProductByID = async function(ID,obj){
     try {
         const data = await getKindProductByID(ID);
@@ -42,4 +48,5 @@ module.exports = {
     getKindProductByID,
     updateKindProductByID,
     deleteKindProductByID,
+    getKindProductByIDCategory,
 }

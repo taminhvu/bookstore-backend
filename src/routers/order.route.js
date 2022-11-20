@@ -4,14 +4,18 @@ const validate = require('../middlewares/validate');
 const orderValidate = require('../validations/order.validation')
 const router = express.Router();
 
-
+router.get('/revanue',orderController.getRevanue);
+router.get('/amountperday',orderController.getAmountPerDay);
+router.get('/amount',orderController.getAmount)
 router.route('/')
 .post(validate(orderValidate.addOrder),orderController.addOrder)
-// .get(validate(provideValidate.getProvider),provideController.getProvider)
+.get(orderController.getAllOrder)
 
-// router.route('/:ID')
-// .put(validate(provideValidate.updateProvider), provideController.updateProvider)
+router.route('/:ID')
+// .put(orderController)
 // .delete(validate(provideValidate.deleteProvider), provideController.deleteProvider)
-// .get(validate(provideValidate.getProvider),provideController.getProviderByID)
+.get(orderController.getOrderByID);
 
+router.route('/order_detail/:ID')
+.get(orderController.getOrderDetailByIDOrder)
 module.exports = router;
