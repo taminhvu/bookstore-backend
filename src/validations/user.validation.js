@@ -7,7 +7,12 @@ const changeInfo = {
         NgaySinh: Joi.string().required().isoDate(),
     }),
 };
+const getInfor = {
+    body: Joi.object().keys({
+    }),
+};
 
 module.exports ={
     changeInfo,
+    getInfor,
 }

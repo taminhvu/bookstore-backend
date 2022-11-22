@@ -6,6 +6,11 @@ const addOrder = {
         ChiTietDonHang:Joi.array().required(),
     }),
 };
+const getOrder = {
+    body: Joi.object().keys({
+    }),
+};
 module.exports ={
     addOrder,
+    getOrder,
 }

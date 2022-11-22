@@ -78,8 +78,8 @@ const updateAvatar = async(req,res)=>{
             if (!req.file) {
                 return res.status(httpStatus.BAD_REQUEST).json(new Response(true,'No file!'));
             }
-            // const id = req.user;
-            const id = req.body.Id;
+            const id = req.user;
+            // const id = req.body.Id;
             const user = await userService.getUserById(id);
             const scrImage = user[0].Anh;
            

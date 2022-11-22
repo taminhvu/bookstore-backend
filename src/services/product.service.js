@@ -1,5 +1,6 @@
 const {Product} = require('../models');
 const DB_Define = require('../utils/DB_Define');
+const moment = require('moment');
 const product = new Product()
 
 const addProduct = async function(obj){
@@ -47,6 +48,10 @@ const getNewProduct = async function(){
 const getBestSeller = async function(){
     return product.getBestseller();
 }
+const getTopTenBestsellerPerDay = async function(){
+    let day = moment().isoWeekday(1).format("YYYY-MM-DD");
+    return product.getTopTenBestsellerPerDay(day);
+}
 module.exports ={
     getNewProduct,
     addProduct,
@@ -58,4 +63,5 @@ module.exports ={
     getProductByIDTheLoai,
     getProductByIDNhaXuatBan,
     getBestSeller,
+    getTopTenBestsellerPerDay,
 }

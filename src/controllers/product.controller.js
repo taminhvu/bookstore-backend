@@ -40,7 +40,14 @@ const getBestSeller = async function (req, res) {
     return res.status(httpStatus.BAD_REQUEST).json(err.message);
   }
 };
-
+const getTopTenBestsellerPerDay = async function (req, res) {
+  try {
+    const product = await productService.getTopTenBestsellerPerDay();
+    return res.status(httpStatus.OK).json(new Response(false,"",product));
+  } catch (err) {
+    return res.status(httpStatus.BAD_REQUEST).json(err.message);
+  }
+};
 const getProductByID = async function (req, res) {
   try {
     const id = req.params.ID;
@@ -123,5 +130,5 @@ module.exports = {
     getProductByIDTheLoai,
     getProductByIDNhaXuatBan,
     getBestSeller,
-    
+    getTopTenBestsellerPerDay,
 }

@@ -8,6 +8,7 @@ const {
   emailService,
 } = require("../services");
 const Response = require("../utils/Response");
+const { OK } = require("http-status");
 
 
 const register = async (req, res) => {
@@ -34,6 +35,19 @@ const login = async (req, res) => {
     res.status(httpStatus.NOT_ACCEPTABLE).json(new Response(true,error.message));
   }
 };
+const handleError = async (err, req, res, next) => {
+  if (err.name === 'TokenError') {
+    res.redirect('http://localhost:3000/auths/google'); // redirect them back to the login page
+} else {
+    // Handle other errors here
+}
+};
+const handleSuccess = async (req, res) => {
+  console.log("Google", req.user);
+  // const user = jwt.sign(req.user, process.env.JWT_REFRESH_KEY, { expiresIn: "30d" });
+  res.status(200).json(OK);
+};
+
 
 const sendVerificationEmail = async (req, res) => {
   try {
@@ -122,4 +136,6 @@ module.exports = {
   resetPassword,
   sendEmailResetPassword,
   changePassword,
+  handleError,
+  handleSuccess,
 };

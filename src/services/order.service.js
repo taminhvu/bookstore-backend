@@ -1,4 +1,5 @@
 const {Order} = require('../models');
+const product = require('./product.service');
 const DB_Define = require('../utils/DB_Define')
 const order = new Order();
 const moment = require('moment');
@@ -96,9 +97,22 @@ const addOrder = async function(obj){
         const order = {IDNguoiDung:obj.IDNguoiDung,DiaChi:obj.DiaChi};
         const orderDetail = obj.ChiTietDonHang;
         //kiem tra chi tiet don hang
+        let error = false;
+        for await(const element of orderDetail){
+            console.log(element);
+            const id = element["IDSanPham"];
+            const sanpham = await product.getProductByID(id);
+            if(sanpham[0].SoLuongConLai < element["SoLuong"])error = true; 
+        }
+        console.log(error);
+        if(error === true) throw new Error(`product exceeds quantity`);
         const data = await createOrder(order);
         orderDetail.forEach(async element => {
             element["IDDonHang"] = data.insertId;
+            const id = element["IDSanPham"];
+            const sanpham = await product.getProductByID(id);
+            const soluong = sanpham[0].SoLuongConLai - element["SoLuong"];
+            await product.updateProductByID(id,{SoLuongConLai:soluong});
             await createOrderDetail(element);
         });
     } catch (error) {

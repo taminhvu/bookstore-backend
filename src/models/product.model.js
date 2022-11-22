@@ -89,6 +89,26 @@ class ProductModel extends Model {
         });
     });
   }
+
+  getTopTenBestsellerPerDay = function(day){
+    let sql = `select sanpham.*,
+    SUM(chitietdonhang.SoLuong) as soluong
+    from sanpham
+    LEFT JOIN chitietdonhang
+    on sanpham.IDSanPham = chitietdonhang.IDSanPham
+    LEFT JOIN donhang
+    on chitietdonhang.IDDonHang = donhang.IDDonHang
+    WHERE donhang.TrangThai = 1 and donhang.NgayDat BETWEEN ? and CURRENT_DATE
+    GROUP BY sanpham.IDSanPham
+    ORDER BY soluong DESC
+    LIMIT 10`;
+    return new Promise((resolve,reject)=>{
+        this.db.query(sql,day,(err,data)=>{
+            if(err) return reject(err);
+            return resolve(data);
+        });
+    });
+  }
 }
 
 module.exports = ProductModel;

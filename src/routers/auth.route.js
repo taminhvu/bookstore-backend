@@ -3,10 +3,13 @@ const  authValidation = require('../validations/auth.validation');
 const validate = require('../middlewares/validate')
 const express = require('express');
 const verifyJWT = require('../middlewares/verifyJWT');
+const passport = require('passport');
 
 const router = express.Router();
 router.post('/register',validate(authValidation.register), authController.register)
 router.post('/login',validate(authValidation.login),authController.login);
+router.get('/google',passport.authenticate('google', { session: false, scope: ['profile', 'email'] }));
+router.get('/google/callback',passport.authenticate('google', { session: false}),authController.handleError,authController.handleSuccess);
 router.post('/send-verification-email',validate(authValidation.sendVerificationEmail),authController.sendVerificationEmail);
 router.post('/verify-email',validate(authValidation.verifyEmailToken),authController.verifyEmailToken); 
 router.get('/refreshToken',validate(authValidation.refreshToken),authController.updateToken);

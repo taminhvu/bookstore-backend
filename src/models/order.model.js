@@ -86,7 +86,7 @@ class orderModel extends Model{
         COUNT(donhang.IDDonHang) as TongDon
         from donhang 
         WHERE donhang.TrangThai = 1 and donhang.NgayDat 
-        BETWEEN DATE_SUB(?, INTERVAL 2 WEEK) AND ?;`;
+        BETWEEN DATE_SUB(?, INTERVAL 1 WEEK) AND ?;`;
         return new Promise((resolve, reject)=>{
             this.db.query(sql,[date,date,date], (err, data)=>{
                 if(err) return reject(err);
@@ -100,7 +100,7 @@ class orderModel extends Model{
         COUNT(donhang.IDDonHang) as TongDon
         from donhang 
         WHERE donhang.TrangThai = 1 and donhang.NgayDat 
-        BETWEEN  DATE_SUB(?, INTERVAL 1 WEEK) AND CURRENT_DATE
+        BETWEEN  ? AND CURRENT_DATE
         GROUP BY donhang.NgayDat;`;
         return new Promise((resolve, reject)=>{
             this.db.query(sql,[date,date,date], (err, data)=>{
