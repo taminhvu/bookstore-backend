@@ -10,7 +10,6 @@ const {
 const Response = require("../utils/Response");
 const { OK } = require("http-status");
 
-
 const register = async (req, res) => {
   try {
     await userService.createUser(req.body);
@@ -29,12 +28,17 @@ const login = async (req, res) => {
     const result = await authService.loginWithEmailAndPassword(Email, MatKhau);
     res.cookie(Define.REFRESHTOKEN,result.refreshToken,Define.SESSION_COOKIE_OPTION);
     tokenService.addRefreshToken(result.refreshToken);
+    let anh = null;
     const user = result.user;
-    res.status(httpStatus.OK).json(new Response(false, "", {Email:user.Email,HoTen:user.HoTen ,Anh:process.env.URL+user.Anh,accessToken:user.accessToken}));
+    if(user.Anh !== null){
+      anh = process.env.URL+user.Anh
+    }
+    res.status(httpStatus.OK).json(new Response(false, "", {Email:user.Email,HoTen:user.HoTen ,Anh:anh,accessToken:user.accessToken}));
   } catch (error) {
     res.status(httpStatus.NOT_ACCEPTABLE).json(new Response(true,error.message));
   }
 };
+
 const handleError = async (err, req, res, next) => {
   if (err.name === 'TokenError') {
     res.redirect('http://localhost:3000/auths/google'); // redirect them back to the login page
@@ -42,6 +46,7 @@ const handleError = async (err, req, res, next) => {
     // Handle other errors here
 }
 };
+
 const handleSuccess = async (req, res) => {
   console.log("Google", req.user);
   // const user = jwt.sign(req.user, process.env.JWT_REFRESH_KEY, { expiresIn: "30d" });

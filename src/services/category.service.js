@@ -45,10 +45,28 @@ const deleteCategoryByID = async function(ID){
         throw error;
     }
 }
+const getCategoryPagination = async function(page,size){
+    try {
+        const data = await category.getCategoryPagination(page,size);
+        if (data.length === 0) {
+          throw new Error('Page Not Found'); 
+        }
+        const amount = await category.countAll(DB_Define.Category);
+        const amountPage = Math.ceil(amount[0].soluong / size);
+        return {
+          DanhSach: data,
+          TongDanhMuc: amount[0].soluong,
+          SoLuongTrang: amountPage,
+        };
+      } catch (error) {
+          throw error;
+      }
+} 
 module.exports = {
     addCategory,
     getCategoryByID,
     updateCategoryByID,
     deleteCategoryByID,
     getAllCategory,
+    getCategoryPagination,
 }

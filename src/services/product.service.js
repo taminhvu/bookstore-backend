@@ -52,6 +52,24 @@ const getTopTenBestsellerPerDay = async function(){
     let day = moment().isoWeekday(1).format("YYYY-MM-DD");
     return product.getTopTenBestsellerPerDay(day);
 }
+
+const getProductPagination = async function(page,size){
+    try {
+        const data = await product.getProductPagination(page,size);
+        if (data.length === 0) {
+          throw new Error('Page Not Found'); 
+        }
+        const amount = await product.countAll(DB_Define.Product);
+        const amountPage = Math.ceil(amount[0].soluong / size);
+        return {
+          DanhSach: data,
+          TongSanPham: amount[0].soluong,
+          SoLuongTrang: amountPage,
+        };
+      } catch (error) {
+          throw error;
+      }
+} 
 module.exports ={
     getNewProduct,
     addProduct,
@@ -64,4 +82,5 @@ module.exports ={
     getProductByIDNhaXuatBan,
     getBestSeller,
     getTopTenBestsellerPerDay,
+    getProductPagination,
 }

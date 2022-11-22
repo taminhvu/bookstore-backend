@@ -125,7 +125,7 @@ const getRevanue = async function(){
         let date = moment().isoWeekday(1).format("YYYY-MM-DD");
         const data = await order.getRevanue(date);
         const percent = (data[0].DoanhThu /data[1].DoanhThu * 100)-100;
-        return {DoanhThu:data[0].DoanhThu,PhanTram:percent};
+        return {DoanhThu:data[0].DoanhThu,PhanTram:Math.round(percent)};
     } catch (error) {
         throw error;
     }
@@ -135,7 +135,7 @@ const getAmount = async function(){
         let date = moment().isoWeekday(1).format("YYYY-MM-DD");
         const data = await order.getAmount(date);
         const percent = (data[0].TongDon /data[1].TongDon * 100)-100;
-        return {TongDon:data[0].TongDon,PhanTram:percent};
+        return {TongDon:data[0].TongDon,PhanTram:Math.round(percent)};
     } catch (error) {
         throw error;
     }
@@ -149,7 +149,23 @@ const getAmountPerDay = async function(){
         throw error;
     }
 }
-
+const getOrderPagination = async function(page,size){
+    try {
+        const data = await order.getOrderPagination(page,size);
+        if (data.length === 0) {
+          throw new Error('Page Not Found'); 
+        }
+        const amount = await order.countAll(DB_Define.Order);
+        const amountPage = Math.ceil(amount[0].soluong / size);
+        return {
+          DanhSach: data,
+          TongDon: amount[0].soluong,
+          SoLuongTrang: amountPage,
+        };
+      } catch (error) {
+          throw error;
+      }
+} 
 module.exports = {
     createOrder,
     getOrderByID,
@@ -166,4 +182,5 @@ module.exports = {
     getRevanue,
     getAmount,
     getAmountPerDay,
+    getOrderPagination,
 }

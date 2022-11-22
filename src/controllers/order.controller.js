@@ -64,6 +64,16 @@ const getAmountPerDay = async function(req,res){
         return res.status(httpStatus.BAD_REQUEST).json(new Response(true,error.message));
     }
 }
+const getOrderPagination = async function (req, res) {
+    try {
+      const page = req.query.p;
+      const size = req.query.s;
+      const data = await orderService.getOrderPagination(page,size);
+      return res.status(httpStatus.OK).json(new Response(false, "", data));
+    } catch (err) {
+      return res.status(httpStatus.BAD_REQUEST).json(err.message);
+    }
+  };
 module.exports={
     addOrder,
     getOrderByID,
@@ -72,4 +82,5 @@ module.exports={
     getRevanue,
     getAmount,
     getAmountPerDay,
+    getOrderPagination,
 }

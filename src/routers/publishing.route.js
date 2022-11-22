@@ -4,10 +4,10 @@ const validate = require('../middlewares/validate');
 const publishingValidate = require('../validations/publishing.validation')
 const router = express.Router();
 
-
+router.get('/pages',validate(publishingValidate.getPublisher),publishingController.getPublishingPagination);
 router.route('/')
 .post(validate(publishingValidate.addPublisher), publishingController.addPublisher)
-// .get(validate(provideValidate.getProvider),publishingController.getPublisherByID)
+.get(validate(publishingValidate.getPublisher),publishingController.getPublisher)
 
 router.route('/:ID')
 .put(validate(publishingValidate.updatePulisher), publishingController.updatePublisher)

@@ -108,7 +108,18 @@ class ProductModel extends Model {
             return resolve(data);
         });
     });
-  }
+  };
+
+  getProductPagination = function(page,size){
+    const skip = (page - 1) * size;
+    const sql = `select * from sanpham order by IDSanPham limit ${size} offset ${skip}`;
+    return new Promise((resolve, reject)=>{
+      this.db.query(sql,(err ,data)=>{
+        if(err) return reject(err);
+        return resolve(data);
+      });
+    });
+  };
 }
 
 module.exports = ProductModel;

@@ -7,7 +7,7 @@ const router = express.Router();
 
 router.route('/')
 .post(validate(kindProductValidate.addKindProduct), kindProductController.addKindProduct)
-// .get(validate(provideValidate.getProvider),publishingController.getPublisherByID)
+.get(validate(kindProductValidate.getKindProduct),kindProductController.getKindProduct)
 
 router.route('/:ID')
 .put(validate(kindProductValidate.updateKindProduct), kindProductController.updateKindProductByID)

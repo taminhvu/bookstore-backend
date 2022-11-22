@@ -9,6 +9,15 @@ const addPublisher = async function(obj){
         throw error;
     }
 }
+const getPublisher = async function(){
+    try {
+        const data = await publisher.getAll(DB_Define.PublishingCompany,"IDNhaXuatBan");
+        if(data.length === 0) throw new Error("Publisher not found");
+        return data;
+    } catch (error) {
+        throw error;
+    }
+}
 
 const getPublisherByID = async function(ID){
     try {
@@ -37,9 +46,28 @@ const deletePublisher = async function(ID){
         throw error;
     }
 }
+const getPublishingPagination = async function(page,size){
+    try {
+        const data = await publisher.getPublishingPagination(page,size);
+        if (data.length === 0) {
+          throw new Error('Page Not Found'); 
+        }
+        const amount = await publisher.countAll(DB_Define.PublishingCompany);
+        const amountPage = Math.ceil(amount[0].soluong / size);
+        return {
+          DanhSach: data,
+          TongNhaXuatBan: amount[0].soluong,
+          SoLuongTrang: amountPage,
+        };
+      } catch (error) {
+          throw error;
+      }
+} 
 module.exports = {
     addPublisher,
     updatePublisher,
     getPublisherByID,
     deletePublisher,
+    getPublisher,
+    getPublishingPagination,
 }

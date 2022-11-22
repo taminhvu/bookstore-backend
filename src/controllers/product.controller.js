@@ -119,6 +119,16 @@ const updateProductByID = async function(req,res){
     return res.status(httpStatus.BAD_REQUEST).json(error.message);
   }
 };
+const getProductPagination = async function (req, res) {
+  try {
+    const page = req.query.p;
+    const size = req.query.s;
+    const data = await productService.getProductPagination(page,size);
+    return res.status(httpStatus.OK).json(new Response(false, "", data));
+  } catch (err) {
+    return res.status(httpStatus.BAD_REQUEST).json(err.message);
+  }
+};
 module.exports = {
     addProduct,
     getNewProduct,
@@ -131,4 +141,5 @@ module.exports = {
     getProductByIDNhaXuatBan,
     getBestSeller,
     getTopTenBestsellerPerDay,
+    getProductPagination,
 }

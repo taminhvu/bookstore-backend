@@ -9,7 +9,13 @@ const addKindProduct = async function(obj){
         throw error;
     }
 }
-
+const getKindProduct = async function(){
+    try {
+        return kindProduct.getAll(DB_Define.KindOfProduct,"IDTheLoai");
+    } catch (error) {
+        throw error;
+    }
+}
 const getKindProductByID = async function(ID){
     try {
         return kindProduct.getOne(DB_Define.KindOfProduct,"IDTheLoai",ID);
@@ -19,7 +25,7 @@ const getKindProductByID = async function(ID){
 }
 const getKindProductByIDCategory = async function(ID){
     try {
-        return kindProduct.getOne(DB_Define.KindOfProduct,"IDDanhMuc",ID);
+        return kindProduct.getByIDCategory(ID);
     } catch (error) {
         throw error;
     }
@@ -49,4 +55,5 @@ module.exports = {
     updateKindProductByID,
     deleteKindProductByID,
     getKindProductByIDCategory,
+    getKindProduct,
 }

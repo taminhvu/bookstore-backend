@@ -3,7 +3,6 @@ const Joi = require('joi');
 const addProduct = {
     body: Joi.object().keys({
         TenSanPham: Joi.string().required(),
-        IDDanhMuc: Joi.string().required(),
         IDNhaXuatBan:Joi.string().required(),
         DonViTinh: Joi.string().required(),
         TomTatND: Joi.string(),
@@ -11,7 +10,8 @@ const addProduct = {
         Giamgia:Joi.number(),
         SoTrang:Joi.number().required(),
         IDTheLoai: Joi.string().required(),
-        HinhAnh:Joi.string(),
+        SoLuonConLai: Joi.number().required(),
+        HinhAnh:Joi.string().required(),
     }),
 };
 const updateProduct = {

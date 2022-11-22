@@ -4,6 +4,7 @@ const validate = require('../middlewares/validate');
 const orderValidate = require('../validations/order.validation')
 const router = express.Router();
 
+router.get('/pages',validate(orderValidate.getOrder),orderController.getOrderPagination);
 router.get('/revanue',validate(orderValidate.getOrder),orderController.getRevanue);
 router.get('/amountperday',validate(orderValidate.getOrder),orderController.getAmountPerDay);
 router.get('/amount',validate(orderValidate.getOrder),orderController.getAmount)

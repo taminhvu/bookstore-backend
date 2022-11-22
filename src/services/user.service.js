@@ -107,7 +107,7 @@ const getNewRegistration = async () => {
     if(array.length ===0) throw new Error('ID Not found');
     console.log(array);
     const percent = ((array[0].soluong / array[1].soluong) * 100 )-100;
-    return {TaiKhoan:array[0].soluong,PhanTram:percent};
+    return {TaiKhoan:array[0].soluong,PhanTram:Math.round(percent)};
   } catch (error) {
     throw error;
   }

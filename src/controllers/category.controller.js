@@ -49,10 +49,21 @@ const getCategoryByID = async function(req,res){
         res.status(httpStatus.BAD_REQUEST).json(new Response(true,error.message));
     }
 }
+const getCategoryPagination = async function (req, res) {
+    try {
+      const page = req.query.p;
+      const size = req.query.s;
+      const data = await categoryService.getCategoryPagination(page,size);
+      return res.status(httpStatus.OK).json(new Response(false, "", data));
+    } catch (err) {
+      return res.status(httpStatus.BAD_REQUEST).json(err.message);
+    }
+  };
 module.exports = {
     addCategory,
     getCategoryByID,
     updateCategoryByID,
     deleteCategoryByID,
     getAllCategory,
+    getCategoryPagination
 }

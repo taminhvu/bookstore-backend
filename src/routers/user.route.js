@@ -7,7 +7,7 @@ const validate = require('../middlewares/validate');
 const userValidation = require('../validations/user.validation');
 const router = express.Router();
 
-router.use(verifyJWT);
+// router.use(verifyJWT);
 router.get('/statisticperday',validate(userValidation.getInfor),userController.getNewRegistrationPerDay);
 router.get('/statistic',validate(userValidation.getInfor),userController.getNewRegistration);
 
