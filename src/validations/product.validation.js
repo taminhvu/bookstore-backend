@@ -11,6 +11,7 @@ const addProduct = {
         SoTrang:Joi.number().required(),
         IDTheLoai: Joi.string().required(),
         SoLuongConLai: Joi.number().required(),
+        TacGia:Joi.number().required(),
         HinhAnh:Joi.required(),
     }),
 };

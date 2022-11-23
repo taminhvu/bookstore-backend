@@ -33,7 +33,6 @@ const createUser = async (userBody) => {
 const getUserByEmail = async (Email) => {
   try {
     const array = await user.getUserByEmail(Email);
-    if(array.length === 0) throw new Error('Email not found');
     return array;
   } catch (error) {
     throw error;
