@@ -2,17 +2,17 @@ const { string } = require('joi');
 const Joi = require('joi');
 const addProduct = {
     body: Joi.object().keys({
-        TenSanPham: Joi.string().required(),
-        IDNhaXuatBan:Joi.string().required(),
         DonViTinh: Joi.string().required(),
-        TomTatND: Joi.string(),
         GiaBan:Joi.number().required(),
         GiamGia:Joi.number(),
-        SoTrang:Joi.number().required(),
+        HinhAnh:Joi.required(),
+        IDNhaXuatBan:Joi.string().required(),
         IDTheLoai: Joi.string().required(),
         SoLuongConLai: Joi.number().required(),
+        SoTrang:Joi.number().required(),
         TacGia:Joi.number().required(),
-        HinhAnh:Joi.required(),
+        TenSanPham: Joi.string().required(),
+        TomTatND: Joi.string(),
     }),
 };
 const updateProduct = {
