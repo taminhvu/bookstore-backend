@@ -21,6 +21,15 @@ class ProductModel extends Model {
         });
     });
   };
+  getProductByName = function(name){
+    let sql = `select * from sanpham where TenSanPham = ?`;
+    return new Promise((resolve, reject)=>{
+        this.db.query(sql, name, (err, data)=>{
+            if(err) return reject(err);
+            return resolve(data);
+        });
+    });
+  };
 
   getProductByIDTheloai = function(id){
     let sql = `select * from sanpham where IDTheLoai = ?`;

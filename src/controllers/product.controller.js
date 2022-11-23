@@ -13,9 +13,17 @@ const addProduct = async function (req, res) {
           return res.status(httpStatus.BAD_REQUEST).json(new Response(true,'No file!'));
       } 
       let src = req.file.path.split('\\').join('/');
+      const name = await productService.getProductByName(req.body.TenSanPham);
+      if(name.length !== 0){
+        fs.unlink(src,(err)=>{
+        if(err) console.log(err);
+        })
+        return res.status(httpStatus.BAD_REQUEST).json("Sản phẩm đã tồn tại");
+      }
       let obj = req.body;
       obj["HinhAnh"] = src;
       console.log(obj);
+      
       await productService.addProduct(obj);
       return res.status(httpStatus.CREATED).send(new Response(false, "create"));
     }); 

@@ -10,6 +10,9 @@ const addProduct = async function(obj){
 const getProductByID = async function(id){
     return product.getProductByID(id);
 }
+const getProductByName = async function(name){
+    return product.getProductByName(name);
+}
 const getProductByIDDanhMuc = async function(id){
     return product.getProductByIDDanhMuc(id);
 }
@@ -83,4 +86,5 @@ module.exports ={
     getBestSeller,
     getTopTenBestsellerPerDay,
     getProductPagination,
+    getProductByName,
 }
