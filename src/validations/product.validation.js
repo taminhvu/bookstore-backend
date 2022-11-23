@@ -7,11 +7,11 @@ const addProduct = {
         DonViTinh: Joi.string().required(),
         TomTatND: Joi.string(),
         GiaBan:Joi.number().required(),
-        Giamgia:Joi.number(),
+        GiamGia:Joi.number(),
         SoTrang:Joi.number().required(),
         IDTheLoai: Joi.string().required(),
-        SoLuonConLai: Joi.number().required(),
-        HinhAnh:Joi.string().required(),
+        SoLuongConLai: Joi.number().required(),
+        HinhAnh:Joi.required(),
     }),
 };
 const updateProduct = {
