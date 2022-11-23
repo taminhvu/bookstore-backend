@@ -10,7 +10,7 @@ router.route('/bestseller').get(validate(productValidate.getProduct),productCont
 router.route('/toptenbestsellerperday').get(validate(productValidate.getProduct),productController.getTopTenBestsellerPerDay);
 router.route('/')
 //validate(productValidate.addProduct),
-.post(validate(productValidate.addProduct),productController.addProduct)
+.post(productController.addProduct)
 .get(validate(productValidate.getProduct),productController.getAllProduct);
 
 router.route('/:ID')
