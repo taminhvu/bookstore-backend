@@ -71,6 +71,15 @@ getAll = async function (table, field){
       })
     })
   }
+  countAllByID = function(table,column,value){
+    const sql = `select count(*) as soluong from ${table} where ${column} = ${value}`;
+    return new Promise((resolve,reject)=>{
+      this.db.query(sql,(err,result)=>{
+        if(err) return reject(err);
+        return resolve(result);
+      })
+    })
+  }
 
   //get all data from a table in decending order by a field with pagination
   getPaginateList = (page, table, field, value, field2 = "",value2 = -1, order_field) => {

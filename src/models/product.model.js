@@ -31,16 +31,66 @@ class ProductModel extends Model {
     });
   };
 
-  getProductByIDTheloai = function(id){
-    let sql = `select * from sanpham where IDTheLoai = ?`;
+  getProductByIDTheloai = function(IDTheLoai,page,size){
+    const skip = (page - 1) * size;
+    let sql = `select * from sanpham where IDTheLoai = ? limit ${size} offset ${skip}`;
     return new Promise((resolve, reject)=>{
-        this.db.query(sql, id, (err, data)=>{
+        this.db.query(sql, IDTheLoai, (err, data)=>{
             if(err) return reject(err);
             return resolve(data);
         });
     });
   };
-
+  // filerCAndK = function(category,kind_category,page,size){
+  //   const skip = (page - 1) * size;
+  //   let sql = `select * from sanpham where IDTheLoai = ? limit ${size} offset ${skip}`;
+  //   return new Promise((resolve, reject)=>{
+  //       this.db.query(sql, IDTheLoai, (err, data)=>{
+  //           if(err) return reject(err);
+  //           return resolve(data);
+  //       });
+  //   });
+  // };
+  // filerKandD = function(kind_category,date,page,size){
+  //   const skip = (page - 1) * size;
+  //   let sql = `select * from sanpham where IDTheLoai = ? limit ${size} offset ${skip}`;
+  //   return new Promise((resolve, reject)=>{
+  //       this.db.query(sql, IDTheLoai, (err, data)=>{
+  //           if(err) return reject(err);
+  //           return resolve(data);
+  //       });
+  //   });
+  // };
+  // filterCAndKAndD = function(category,kind_category,date,page,size){
+  //   const skip = (page - 1) * size;
+  //   let sql = `select * from sanpham where IDTheLoai = ? limit ${size} offset ${skip}`;
+  //   return new Promise((resolve, reject)=>{
+  //       this.db.query(sql, IDTheLoai, (err, data)=>{
+  //           if(err) return reject(err);
+  //           return resolve(data);
+  //       });
+  //   });
+  // };
+  // filerCAndD = function(category,kind_category,page,size){
+  //   const skip = (page - 1) * size;
+  //   let sql = `select * from sanpham where IDTheLoai = ? limit ${size} offset ${skip}`;
+  //   return new Promise((resolve, reject)=>{
+  //       this.db.query(sql, IDTheLoai, (err, data)=>{
+  //           if(err) return reject(err);
+  //           return resolve(data);
+  //       });
+  //   });
+  // };
+  // filterD = function(date,page,size){
+  //   const skip = (page - 1) * size;
+  //   let sql = `select * from sanpham where IDTheLoai = ? limit ${size} offset ${skip}`;
+  //   return new Promise((resolve, reject)=>{
+  //       this.db.query(sql, IDTheLoai, (err, data)=>{
+  //           if(err) return reject(err);
+  //           return resolve(data);
+  //       });
+  //   });
+  // };
   getProductByIDNhaXuatBan = function(id){
     let sql = `select * from sanpham where IDNhaXuatBan = ?`;
     return new Promise((resolve, reject)=>{
@@ -51,12 +101,13 @@ class ProductModel extends Model {
     });
   };
 
-  getProductByIDDanhMuc = function(id){
+  getProductByIDDanhMuc = function(idcategory,page,size){
+    const skip = (page - 1) * size;
     let sql = `select * from sanpham
     where IDTheLoai IN(select IDTheLoai FROM theloai
-                      WHERE IDDanhMuc = ?)`;
+                      WHERE IDDanhMuc = ?) limit ${size} offset ${skip}`;
     return new Promise((resolve, reject)=>{
-        this.db.query(sql, id, (err, data)=>{
+        this.db.query(sql, idcategory, (err, data)=>{
             if(err) return reject(err);
             return resolve(data);
         });
@@ -121,7 +172,11 @@ class ProductModel extends Model {
 
   getProductPagination = function(page,size){
     const skip = (page - 1) * size;
-    const sql = `select * from sanpham order by IDSanPham limit ${size} offset ${skip}`;
+    const sql = `SELECT sanpham.*, theloai.TenTheLoai,danhmuc.IDDanhMuc,danhmuc.TenDanhMuc FROM sanpham
+    LEFT JOIN theloai
+    ON sanpham.IDTheLoai = theloai.IDTheLoai
+    LEFT JOIN danhmuc
+    ON theloai.IDDanhMuc = danhmuc.IDDanhMuc limit ${size} offset ${skip}`;
     return new Promise((resolve, reject)=>{
       this.db.query(sql,(err ,data)=>{
         if(err) return reject(err);
@@ -129,6 +184,35 @@ class ProductModel extends Model {
       });
     });
   };
+  filter = function(filter,page,size){
+    const skip = (page - 1) * size;
+    const sql = `SELECT sanpham.*, theloai.TenTheLoai,danhmuc.IDDanhMuc,danhmuc.TenDanhMuc FROM sanpham
+    LEFT JOIN theloai
+    ON sanpham.IDTheLoai = theloai.IDTheLoai
+    LEFT JOIN danhmuc
+    ON theloai.IDDanhMuc = danhmuc.IDDanhMuc ${filter} limit ${size} offset ${skip}`;
+    return new Promise((resolve, reject)=>{
+      this.db.query(sql,(err ,data)=>{
+        if(err) return reject(err);
+        return resolve(data);
+      });
+    });
+  };
+  countFilter = function(filter){
+    const sql = `select count(IDSanPham) as soluong from sanpham
+    LEFT JOIN theloai
+    ON sanpham.IDTheLoai = theloai.IDTheLoai
+    LEFT JOIN danhmuc
+    ON theloai.IDDanhMuc = danhmuc.IDDanhMuc ${filter}`;
+    return new Promise((resolve,reject)=>{
+      this.db.query(sql,(err,result)=>{
+        if(err) return reject(err);
+        return resolve(result);
+      })
+    })
+  };
 }
+
+
 
 module.exports = ProductModel;

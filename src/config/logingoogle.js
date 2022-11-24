@@ -10,7 +10,6 @@ const loginwithgoogle = (app)=>{
     },
         async function (accessToken, refreshToken, profile, cb) {
             const { provider, _raw, _json, ...user } = profile;
-            console.log(user);
             return cb(null, user);
         }
     ));

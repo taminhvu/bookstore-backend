@@ -31,6 +31,20 @@ const loginWithEmailAndPassword = async (Email, MatKhau) => {
   }
 };
 
+const loginThirdParty = async (Email) => {
+  try {
+    let user = await userService.getUserByEmail(Email);
+    user = user[0];
+    delete user.MatKhau;
+    const accessToken = tokenService.generateAuthToken(user);
+    const refreshToken = tokenService.generateRefreshToken(user);
+    user['accessToken'] =  accessToken;
+    return {user:user, refreshToken:refreshToken};
+  } catch (error) {
+    throw error;
+  }
+};
+
 const verifyEmail = async (token) => {
   try {
     const user = tokenService.verifyEmailToken(token);
@@ -106,4 +120,5 @@ module.exports = {
   resetPassword,
   sendEmailResetPassword,
   changePassword,
+  loginThirdParty,
 };

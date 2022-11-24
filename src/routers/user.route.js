@@ -17,6 +17,7 @@ router.get('/statistic',validate(userValidation.getInfor),userController.getNewR
  .put(validate(userValidation.changeInfo),userController.changeInfoUser);
 
 router.route('/:id')
+.put(validate(userValidation.changeInfoByAdmin),userController.changeInfoUserByAdmin)
 .get(validate(userValidation.getInfor),userController.getUser)
 .delete(validate(userValidation.getInfor),userController.deleteUser);
 

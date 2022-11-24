@@ -69,6 +69,15 @@ const changeInfoUser = async(req,res)=>{
         return res.status(httpStatus.BAD_REQUEST).json(new Response(true,error.message));
     }
 }
+const changeInfoUserByAdmin = async(req,res)=>{
+    try {
+        const id = req.params.id;
+        await userService.updateUserById(id,req.body);
+        return res.status(httpStatus.OK).json(new Response(false,"Success"));
+    } catch (error) {
+        return res.status(httpStatus.BAD_REQUEST).json(new Response(true,error.message));
+    }
+}
 
 const updateAvatar = async(req,res)=>{
     try {
@@ -125,5 +134,5 @@ module.exports = {
     updateAvatar,
     getNewRegistration,
     getNewRegistrationPerDay,
-
+    changeInfoUserByAdmin,
 }

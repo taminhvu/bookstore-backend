@@ -37,10 +37,17 @@ const getOrderDetailByIDOrder = async function(req,res){
         return res.status(httpStatus.BAD_REQUEST).json(new Response(true,error.message));
     }
 }
+const getRevanuePerDay = async function(req,res){
+    try {
+        const data = await orderService.getRevanuePerDay()
+        return res.status(httpStatus.OK).json(new Response(false,"",data));
+    } catch (error) {
+        return res.status(httpStatus.BAD_REQUEST).json(new Response(true,error.message));
+    }
+}
 const getRevanue = async function(req,res){
     try {
-        const ID = req.params.ID;
-        const data = await orderService.getRevanue(ID)
+        const data = await orderService.getRevanue()
         return res.status(httpStatus.OK).json(new Response(false,"",data));
     } catch (error) {
         return res.status(httpStatus.BAD_REQUEST).json(new Response(true,error.message));
@@ -48,8 +55,7 @@ const getRevanue = async function(req,res){
 }
 const getAmount = async function(req,res){
     try {
-        const ID = req.params.ID;
-        const data = await orderService.getAmount(ID)
+        const data = await orderService.getAmount()
         return res.status(httpStatus.OK).json(new Response(false,"",data));
     } catch (error) {
         return res.status(httpStatus.BAD_REQUEST).json(new Response(true,error.message));
@@ -57,8 +63,7 @@ const getAmount = async function(req,res){
 }
 const getAmountPerDay = async function(req,res){
     try {
-        const ID = req.params.ID;
-        const data = await orderService.getAmountPerDay(ID)
+        const data = await orderService.getAmountPerDay();
         return res.status(httpStatus.OK).json(new Response(false,"",data));
     } catch (error) {
         return res.status(httpStatus.BAD_REQUEST).json(new Response(true,error.message));
@@ -83,4 +88,5 @@ module.exports={
     getAmount,
     getAmountPerDay,
     getOrderPagination,
+    getRevanuePerDay,
 }

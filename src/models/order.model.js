@@ -74,7 +74,22 @@ class orderModel extends Model{
             });
         });
       };
-
+      getRevanuePerDay = function(date){
+        let sql = `select donhang.NgayDat,donhang.PhiShip,
+        SUM(chitietdonhang.GiaBan * chitietdonhang.SoLuong) as DoanhThu
+        from donhang 
+        LEFT JOIN chitietdonhang
+        on donhang.IDDonHang = chitietdonhang.IDDonHang
+        WHERE donhang.TrangThai = 1 and donhang.NgayDat 
+        BETWEEN ? AND CURRENT_DATE
+        GROUP by donhang.NgayDat`;
+        return new Promise((resolve, reject)=>{
+            this.db.query(sql,date, (err, data)=>{
+                if(err) return reject(err);
+                return resolve(data);
+            });
+        });
+      };
     getAmount = function(date){
         let sql = `select
         COUNT(donhang.IDDonHang) as TongDon

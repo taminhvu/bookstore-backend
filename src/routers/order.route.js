@@ -6,6 +6,7 @@ const router = express.Router();
 
 router.get('/pages',validate(orderValidate.getOrder),orderController.getOrderPagination);
 router.get('/revanue',validate(orderValidate.getOrder),orderController.getRevanue);
+router.get('/revanueperday',validate(orderValidate.getOrder),orderController.getRevanuePerDay);
 router.get('/amountperday',validate(orderValidate.getOrder),orderController.getAmountPerDay);
 router.get('/amount',validate(orderValidate.getOrder),orderController.getAmount)
 router.route('/')

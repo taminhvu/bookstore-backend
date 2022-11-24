@@ -27,7 +27,23 @@ const createUser = async (userBody) => {
     throw error;
   }
 };
-
+const createThirdPartyUsers = async (userBody) => {
+  console.log("user service" + userBody.HoTen);
+  try {
+    const { Email, HoTen, Anh } = userBody;
+    const obj = {
+      Quyen: 1,
+      Email,
+      HoTen,
+      Anh,
+      XacThuc: 1,
+      TrangThai: 1,
+    };
+    return user.addData(DB.user_table, obj);
+  } catch (error) {
+    throw error;
+  }
+};
 
 
 const getUserByEmail = async (Email) => {
@@ -131,4 +147,5 @@ module.exports = {
   updateAvatar,
   getNewRegistration,
   getNewRegistrationPerDay,
+  createThirdPartyUsers,
 };

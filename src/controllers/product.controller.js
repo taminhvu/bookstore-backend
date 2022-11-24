@@ -3,6 +3,7 @@ const httpStatus = require("http-status");
 const Response = require("../utils/Response");
 const Uploader = require('../middlewares/Uploader');
 const fs = require('fs');
+const { number } = require("joi");
 
 const addProduct = async function (req, res) {
   try {
@@ -68,21 +69,21 @@ const getProductByID = async function (req, res) {
 };
 const getProductByIDDanhMuc = async function (req, res) {
   try {
-    const id = req.params.ID;
-    const product = await productService.getProductByIDDanhMuc(id);
+
+    const {c,p,s} = req.query;
+    const product = await productService.getProductByIDDanhMuc(c,p,s);
     return res.status(httpStatus.OK).json(new Response(false, "", product));
   } catch (error) {
-    console.log(error);
     return res.status(httpStatus.BAD_REQUEST).json(error.message);
   }
 };
+
 const getProductByIDTheLoai = async function (req, res) {
   try {
-    const id = req.params.ID;
-    const product = await productService.getProductByIDTheLoai(id);
+    const {k,p,s} = req.query;
+    const product = await productService.getProductByIDTheLoai(k,p,s);
     return res.status(httpStatus.OK).json(new Response(false, "", product));
   } catch (error) {
-    console.log(error);
     return res.status(httpStatus.BAD_REQUEST).json(error.message);
   }
 };
@@ -137,6 +138,16 @@ const getProductPagination = async function (req, res) {
     return res.status(httpStatus.BAD_REQUEST).json(err.message);
   }
 };
+const filter = async function(req,res){
+  try {
+    const {c="",k="",d="",p,s} = req.query;
+    const data = await productService.filter(c,k,d,p,s);
+
+    return res.status(httpStatus.OK).json(new Response(false, "", data));
+  } catch (error) {
+    return res.status(httpStatus.BAD_REQUEST).json(error.message);
+  }
+}
 module.exports = {
     addProduct,
     getNewProduct,
@@ -150,4 +161,5 @@ module.exports = {
     getBestSeller,
     getTopTenBestsellerPerDay,
     getProductPagination,
+    filter,
 }

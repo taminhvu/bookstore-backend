@@ -39,18 +39,59 @@ const login = async (req, res) => {
   }
 };
 
-const handleError = async (err, req, res, next) => {
+const handleErrorGoogle = async (err, req, res, next) => {
   if (err.name === 'TokenError') {
     res.redirect('http://localhost:3000/auths/google'); // redirect them back to the login page
 } else {
     // Handle other errors here
 }
 };
-
-const handleSuccess = async (req, res) => {
-  console.log("Google", req.user);
-  // const user = jwt.sign(req.user, process.env.JWT_REFRESH_KEY, { expiresIn: "30d" });
-  res.status(200).json(OK);
+const handleErrorFacebook = async (err, req, res, next) => {
+  if (err.name === 'TokenError') {
+    res.redirect('http://localhost:3000/auths/facebook'); // redirect them back to the login page
+} else {
+    // Handle other errors here
+}
+};
+const handleSuccessFacebook = async (req, res) => {
+  // const HoTen = req.user.displayName;
+  // const Email = req.user.emails[0].value;
+  // const Anh = req.user.photos[0].value;
+  // console.log(HoTen+"      "+Email+"      "+ Anh);
+  // let data = await userService.getUserByEmail(Email);
+  // if(data.length === 0){
+  //   await userService.createThirdPartyUsers({HoTen:HoTen,Email:Email,Anh:Anh});
+  // }
+  // const result = await authService.loginThirdParty(Email);
+  // res.cookie(Define.REFRESHTOKEN,result.refreshToken,Define.SESSION_COOKIE_OPTION);
+  // tokenService.addRefreshToken(result.refreshToken);
+  // let anh = null;
+  // const user = result.user;
+  // if(user.Anh !== null){
+  //   anh = user.Anh;
+  // }
+  // console.log(user);
+  // return res.status(httpStatus.OK).json(new Response(false, "", {Email:user.Email,HoTen:user.HoTen ,Anh:anh,accessToken:user.accessToken}));
+};
+const handleSuccessGoogle = async (req, res) => {
+  const HoTen = req.user.displayName;
+  const Email = req.user.emails[0].value;
+  const Anh = req.user.photos[0].value;
+  console.log(HoTen+"      "+Email+"      "+ Anh);
+  let data = await userService.getUserByEmail(Email);
+  if(data.length === 0){
+    await userService.createThirdPartyUsers({HoTen:HoTen,Email:Email,Anh:Anh});
+  }
+  const result = await authService.loginThirdParty(Email);
+  res.cookie(Define.REFRESHTOKEN,result.refreshToken,Define.SESSION_COOKIE_OPTION);
+  tokenService.addRefreshToken(result.refreshToken);
+  let anh = null;
+  const user = result.user;
+  if(user.Anh !== null){
+    anh = user.Anh;
+  }
+  console.log(user);
+  return res.status(httpStatus.OK).json(new Response(false, "", {Email:user.Email,HoTen:user.HoTen ,Anh:anh,accessToken:user.accessToken}));
 };
 
 
@@ -141,6 +182,8 @@ module.exports = {
   resetPassword,
   sendEmailResetPassword,
   changePassword,
-  handleError,
-  handleSuccess,
+  handleErrorGoogle,
+  handleSuccessGoogle,
+  handleSuccessFacebook,
+  handleErrorFacebook,
 };

@@ -9,7 +9,12 @@ const router = express.Router();
 router.post('/register',validate(authValidation.register), authController.register)
 router.post('/login',validate(authValidation.login),authController.login);
 router.get('/google',passport.authenticate('google', { session: false, scope: ['profile', 'email'] }));
-router.get('/google/callback',passport.authenticate('google', { session: false}),authController.handleError,authController.handleSuccess);
+router.get('/google/callback',passport.authenticate('google', { session: false}),authController.handleErrorGoogle,authController.handleSuccessGoogle);
+
+
+router.get('/facebook',passport.authenticate('facebook', {session: false,scope: ['email']}));
+router.get('/facebook/callback',passport.authenticate('facebook', {session: false}),authController.handleErrorFacebook,authController.handleSuccessFacebook);
+
 router.post('/send-verification-email',validate(authValidation.sendVerificationEmail),authController.sendVerificationEmail);
 router.post('/verify-email',validate(authValidation.verifyEmailToken),authController.verifyEmailToken); 
 router.get('/refreshToken',validate(authValidation.refreshToken),authController.updateToken);

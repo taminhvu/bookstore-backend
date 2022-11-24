@@ -35,9 +35,19 @@ const getProduct = {
     body: Joi.object().keys({
     }),
 };
+const filter = {
+    query: Joi.object().keys({
+        c: Joi.number(),
+        k: Joi.number(),
+        d: Joi.string(),
+        p: Joi.number(),
+        s: Joi.number(),
+    }),
+};
 module.exports ={
     addProduct,
     getProduct,
     deleteProduct,
     updateProduct,
+    filter,
 }

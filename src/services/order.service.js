@@ -94,7 +94,7 @@ const getOrderDetail = async function(){
 
 const addOrder = async function(obj){
     try {
-        const order = {IDNguoiDung:obj.IDNguoiDung,DiaChi:obj.DiaChi};
+        const order = {IDNguoiDung:obj.IDNguoiDung,DiaChi:obj.DiaChi,PhiShip:obj.PhiShip};
         const orderDetail = obj.ChiTietDonHang;
         //kiem tra chi tiet don hang
         let error = false;
@@ -102,10 +102,10 @@ const addOrder = async function(obj){
             console.log(element);
             const id = element["IDSanPham"];
             const sanpham = await product.getProductByID(id);
-            if(sanpham[0].SoLuongConLai < element["SoLuong"])error = true; 
+            if(sanpham[0].SoLuongConLai < element["SoLuong"] || sanpham[0].GiaBan !== element["GiaBan"])error = true; 
         }
         console.log(error);
-        if(error === true) throw new Error(`product exceeds quantity`);
+        if(error === true) throw new Error(`product exceeds quantity or price of product change`);
         const data = await createOrder(order);
         orderDetail.forEach(async element => {
             element["IDDonHang"] = data.insertId;
@@ -126,6 +126,15 @@ const getRevanue = async function(){
         const data = await order.getRevanue(date);
         const percent = (data[0].DoanhThu /data[1].DoanhThu * 100)-100;
         return {DoanhThu:data[0].DoanhThu,PhanTram:Math.round(percent)};
+    } catch (error) {
+        throw error;
+    }
+}
+const getRevanuePerDay = async function(){
+    try {
+        let date = moment().isoWeekday(1).format("YYYY-MM-DD");
+        const data = await order.getRevanuePerDay(date);
+        return data;
     } catch (error) {
         throw error;
     }
@@ -183,4 +192,5 @@ module.exports = {
     getAmount,
     getAmountPerDay,
     getOrderPagination,
+    getRevanuePerDay,
 }
