@@ -35,13 +35,17 @@ class orderModel extends Model{
       };
 
       getOrderDetailByIDOrder = function(ID){
-        let sql = `select chitietdonhang.*,sanpham.TenSanPham,sanpham.HinhAnh,
-		(chitietdonhang.GiaBan * chitietdonhang.SoLuong) as Tong
-        from chitietdonhang 
-        LEFT JOIN sanpham
-        on chitietdonhang.IDSanPham = sanpham.IDSanPham
-        WHERE chitietdonhang.IDDonHang = ?
-        GROUP BY chitietdonhang.IDChiTietDonHang`;
+        let sql = `select chitietdonhang.*,sanpham.TenSanPham,sanpham.HinhAnh,theloai.TenTheLoai,danhmuc.TenDanhMuc,
+        (chitietdonhang.GiaBan * chitietdonhang.SoLuong) as Tong
+            from chitietdonhang 
+            LEFT JOIN sanpham
+            on chitietdonhang.IDSanPham = sanpham.IDSanPham
+            LEFT JOIN theloai
+            on sanpham.IDTheLoai = theloai.IDTheLoai
+            LEFT JOIN danhmuc
+            on theloai.IDDanhMuc = danhmuc.IDDanhMuc
+            WHERE chitietdonhang.IDDonHang = ?
+            GROUP BY chitietdonhang.IDChiTietDonHang`;
         return new Promise((resolve, reject)=>{
             this.db.query(sql,ID, (err, data)=>{
                 if(err) return reject(err);

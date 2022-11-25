@@ -18,7 +18,7 @@ router.route('/')
 .get(validate(orderValidate.getOrder),orderController.getAllOrder)
 
 router.route('/:ID')
-// .put(orderController)
+.put(validate(orderValidate.updateOrderByID),orderController.updateOrderByID)
 // .delete(validate(provideValidate.deleteProvider), provideController.deleteProvider)
 .get(validate(orderValidate.getOrderByID),orderController.getOrderByID);
 

@@ -23,6 +23,14 @@ const getOrderByID = async function(ID){
 
 const updateOrder = async function(obj,ID){
     try {
+        if(obj.TrangThai <-1 || obj.TrangThai > 3){
+            throw new Error("Trang thai don hang sai");
+        }
+        if(obj.TrangThai === 3){
+            const date = moment().format("YYYY-MM-DD");
+            console.log(date);
+            obj["NgayGiao"] = date;
+        }
         return order.updateData(DB_Define.Order,"IDDonHang",obj,ID);
     } catch (error) {
         throw error;

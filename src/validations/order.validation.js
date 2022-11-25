@@ -27,9 +27,18 @@ const getOrderByID = {
         ID:Joi.number().required()
     }),
 };
+const updateOrderByID = {
+    body: Joi.object().keys({
+        TrangThai: Joi.number().required(),
+    }),
+    params: Joi.object().keys({
+        ID:Joi.number().required()
+    }),
+};
 module.exports ={
     addOrder,
     getOrder,
     getOrderByID,
     getOrderPage,
+    updateOrderByID,
 }
