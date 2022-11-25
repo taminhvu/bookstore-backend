@@ -8,6 +8,7 @@ const ROLES_LIST = require('../config/roles.list');
 const router = express.Router();
 
 router.use(verifyJWT);
+router.get('/user_id',validate(orderValidate.getOrder),orderController.getOrderByIDUser)
 router.get('/pages',verifyRoles(ROLES_LIST.Admin),validate(orderValidate.getOrderPage),orderController.getOrderPagination);
 router.get('/revanue',verifyRoles(ROLES_LIST.Admin),validate(orderValidate.getOrder),orderController.getRevanue);
 router.get('/revanueperday',verifyRoles(ROLES_LIST.Admin),validate(orderValidate.getOrder),orderController.getRevanuePerDay);
@@ -24,6 +25,5 @@ router.route('/:ID')
 
 router.route('/order_detail/:ID')
 .get(validate(orderValidate.getOrderByID),orderController.getOrderDetailByIDOrder);
-router.route('/user_id/:ID')
-.get(validate(orderValidate.getOrderByID),orderController.getOrderByIDUser)
+
 module.exports = router;

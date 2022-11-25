@@ -43,7 +43,7 @@ const getAllOrder = async function(req,res){
 }
 const getOrderByIDUser = async function(req,res){
     try {
-        const ID = req.params.ID;
+        const ID = req.user;
         const data = await orderService.getOrderByIDUser(ID)
         return res.status(httpStatus.OK).json(new Response(false,"",data));
     } catch (error) {
