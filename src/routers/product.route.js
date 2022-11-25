@@ -17,7 +17,8 @@ router.route('/')
 .get(validate(productValidate.getProduct),productController.getAllProduct);
 
 router.route('/:ID')
-.put(validate(productValidate.updateProduct), productController.updateProductByID)
+// validate(productValidate.updateProduct),
+.put( productController.updateProductByID)
 .delete(validate(productValidate.deleteProduct), productController.deleteProductByID)
 .get(validate(productValidate.getProduct),productController.getProductByID)
 

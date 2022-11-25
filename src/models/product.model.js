@@ -13,7 +13,7 @@ class ProductModel extends Model {
   };
 
   getProductByID = function(id){
-    let sql = `select * from sanpham where IDSanPham = ?`;
+    let sql = `select * from sanpham where sanpham.TrangThai = 0 and IDSanPham = ?`;
     return new Promise((resolve, reject)=>{
         this.db.query(sql, id, (err, data)=>{
             if(err) return reject(err);
@@ -22,7 +22,7 @@ class ProductModel extends Model {
     });
   };
   getProductByName = function(name){
-    let sql = `select * from sanpham where TenSanPham = ?`;
+    let sql = `select * from sanpham where sanpham.TrangThai = 0 and TenSanPham = ?`;
     return new Promise((resolve, reject)=>{
         this.db.query(sql, name, (err, data)=>{
             if(err) return reject(err);
@@ -33,7 +33,7 @@ class ProductModel extends Model {
 
   getProductByIDTheloai = function(IDTheLoai,page,size){
     const skip = (page - 1) * size;
-    let sql = `select * from sanpham where IDTheLoai = ? limit ${size} offset ${skip}`;
+    let sql = `select * from sanpham where sanpham.TrangThai = 0 and IDTheLoai = ? limit ${size} offset ${skip}`;
     return new Promise((resolve, reject)=>{
         this.db.query(sql, IDTheLoai, (err, data)=>{
             if(err) return reject(err);
@@ -41,58 +41,9 @@ class ProductModel extends Model {
         });
     });
   };
-  // filerCAndK = function(category,kind_category,page,size){
-  //   const skip = (page - 1) * size;
-  //   let sql = `select * from sanpham where IDTheLoai = ? limit ${size} offset ${skip}`;
-  //   return new Promise((resolve, reject)=>{
-  //       this.db.query(sql, IDTheLoai, (err, data)=>{
-  //           if(err) return reject(err);
-  //           return resolve(data);
-  //       });
-  //   });
-  // };
-  // filerKandD = function(kind_category,date,page,size){
-  //   const skip = (page - 1) * size;
-  //   let sql = `select * from sanpham where IDTheLoai = ? limit ${size} offset ${skip}`;
-  //   return new Promise((resolve, reject)=>{
-  //       this.db.query(sql, IDTheLoai, (err, data)=>{
-  //           if(err) return reject(err);
-  //           return resolve(data);
-  //       });
-  //   });
-  // };
-  // filterCAndKAndD = function(category,kind_category,date,page,size){
-  //   const skip = (page - 1) * size;
-  //   let sql = `select * from sanpham where IDTheLoai = ? limit ${size} offset ${skip}`;
-  //   return new Promise((resolve, reject)=>{
-  //       this.db.query(sql, IDTheLoai, (err, data)=>{
-  //           if(err) return reject(err);
-  //           return resolve(data);
-  //       });
-  //   });
-  // };
-  // filerCAndD = function(category,kind_category,page,size){
-  //   const skip = (page - 1) * size;
-  //   let sql = `select * from sanpham where IDTheLoai = ? limit ${size} offset ${skip}`;
-  //   return new Promise((resolve, reject)=>{
-  //       this.db.query(sql, IDTheLoai, (err, data)=>{
-  //           if(err) return reject(err);
-  //           return resolve(data);
-  //       });
-  //   });
-  // };
-  // filterD = function(date,page,size){
-  //   const skip = (page - 1) * size;
-  //   let sql = `select * from sanpham where IDTheLoai = ? limit ${size} offset ${skip}`;
-  //   return new Promise((resolve, reject)=>{
-  //       this.db.query(sql, IDTheLoai, (err, data)=>{
-  //           if(err) return reject(err);
-  //           return resolve(data);
-  //       });
-  //   });
-  // };
+
   getProductByIDNhaXuatBan = function(id){
-    let sql = `select * from sanpham where IDNhaXuatBan = ?`;
+    let sql = `select * from sanpham where sanpham.TrangThai = 0 and IDNhaXuatBan = ?`;
     return new Promise((resolve, reject)=>{
         this.db.query(sql, id, (err, data)=>{
             if(err) return reject(err);
@@ -101,7 +52,7 @@ class ProductModel extends Model {
     });
   };
   getAllProductByIDTheLoai = function(id){
-    let sql = `select * from sanpham where IDTheLoai = ?`;
+    let sql = `select * from sanpham where sanpham.TrangThai = 0 and IDTheLoai = ?`;
     return new Promise((resolve, reject)=>{
         this.db.query(sql, id, (err, data)=>{
             if(err) return reject(err);
@@ -113,7 +64,7 @@ class ProductModel extends Model {
   getProductByIDDanhMuc = function(idcategory,page,size){
     const skip = (page - 1) * size;
     let sql = `select * from sanpham
-    where IDTheLoai IN(select IDTheLoai FROM theloai
+    where sanpham.TrangThai = 0 and IDTheLoai IN(select IDTheLoai FROM theloai
                       WHERE IDDanhMuc = ?) limit ${size} offset ${skip}`;
     return new Promise((resolve, reject)=>{
         this.db.query(sql, idcategory, (err, data)=>{
@@ -124,7 +75,7 @@ class ProductModel extends Model {
   };
 
   getAllProduct = function(){
-    let sql = 'select * from sanpham';
+    let sql = 'select * from sanpham where sanpham.TrangThai = 0';
     return new Promise((resolve,reject)=>{
         this.db.query(sql,(err,data)=>{
             if(err) return reject(err);
@@ -134,7 +85,7 @@ class ProductModel extends Model {
   }
 
   getNewProduct = function(){
-    let sql = "SELECT * FROM `sanpham` WHERE NgayThem BETWEEN DATE_SUB(CURRENT_DATE, INTERVAL 1 MONTH) AND CURRENT_DATE";
+    let sql = "SELECT * FROM `sanpham` where sanpham.TrangThai = 0 and NgayThem BETWEEN DATE_SUB(CURRENT_DATE, INTERVAL 1 MONTH) AND CURRENT_DATE";
     return new Promise((resolve,reject)=>{
         this.db.query(sql,(err,data)=>{
             if(err) return reject(err);
@@ -149,6 +100,7 @@ class ProductModel extends Model {
     from sanpham
     LEFT JOIN chitietdonhang
     on sanpham.IDSanPham = chitietdonhang.IDSanPham
+    where sanpham.TrangThai = 0
     GROUP BY sanpham.IDSanPham
     ORDER BY soluong DESC`;
     return new Promise((resolve,reject)=>{
@@ -167,7 +119,7 @@ class ProductModel extends Model {
     on sanpham.IDSanPham = chitietdonhang.IDSanPham
     LEFT JOIN donhang
     on chitietdonhang.IDDonHang = donhang.IDDonHang
-    WHERE donhang.TrangThai = 1 and donhang.NgayDat BETWEEN ? and CURRENT_DATE
+    WHERE donhang.TrangThai = 1 and sanpham.TrangThai = 0 and donhang.NgayDat BETWEEN ? and CURRENT_DATE
     GROUP BY sanpham.IDSanPham
     ORDER BY soluong DESC
     LIMIT 10`;
@@ -185,7 +137,7 @@ class ProductModel extends Model {
     LEFT JOIN theloai
     ON sanpham.IDTheLoai = theloai.IDTheLoai
     LEFT JOIN danhmuc
-    ON theloai.IDDanhMuc = danhmuc.IDDanhMuc limit ${size} offset ${skip}`;
+    ON theloai.IDDanhMuc = danhmuc.IDDanhMuc where TrangThai = 0 limit ${size} offset ${skip}`;
     return new Promise((resolve, reject)=>{
       this.db.query(sql,(err ,data)=>{
         if(err) return reject(err);
@@ -199,7 +151,7 @@ class ProductModel extends Model {
     LEFT JOIN theloai
     ON sanpham.IDTheLoai = theloai.IDTheLoai
     LEFT JOIN danhmuc
-    ON theloai.IDDanhMuc = danhmuc.IDDanhMuc ${filter} limit ${size} offset ${skip}`;
+    ON theloai.IDDanhMuc = danhmuc.IDDanhMuc where TrangThai = 0 ${filter} limit ${size} offset ${skip}`;
     return new Promise((resolve, reject)=>{
       this.db.query(sql,(err ,data)=>{
         if(err) return reject(err);
@@ -212,9 +164,19 @@ class ProductModel extends Model {
     LEFT JOIN theloai
     ON sanpham.IDTheLoai = theloai.IDTheLoai
     LEFT JOIN danhmuc
-    ON theloai.IDDanhMuc = danhmuc.IDDanhMuc ${filter}`;
+    ON theloai.IDDanhMuc = danhmuc.IDDanhMuc  where TrangThai = 0 ${filter}`;
     return new Promise((resolve,reject)=>{
       this.db.query(sql,(err,result)=>{
+        if(err) return reject(err);
+        return resolve(result);
+      })
+    })
+  };
+
+  hideProuct = function(id){
+    const sql = `UPDATE sanpham SET TrangThai = 1 WHERE IDSanPham = ?`;
+    return new Promise((resolve,reject)=>{
+      this.db.query(sql,id,(err,result)=>{
         if(err) return reject(err);
         return resolve(result);
       })

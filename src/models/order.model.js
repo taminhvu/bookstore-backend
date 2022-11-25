@@ -66,7 +66,7 @@ class orderModel extends Model{
         LEFT JOIN chitietdonhang
         on donhang.IDDonHang = chitietdonhang.IDDonHang
         WHERE donhang.TrangThai = 1 and donhang.NgayDat 
-        BETWEEN DATE_SUB(?, INTERVAL 1 WEEK) AND ?;`;
+        BETWEEN DATE_SUB(?, INTERVAL 1 WEEK) AND DATE_SUB(?, INTERVAL 1 DAY);`;
         return new Promise((resolve, reject)=>{
             this.db.query(sql,[date,date,date], (err, data)=>{
                 if(err) return reject(err);
@@ -101,7 +101,7 @@ class orderModel extends Model{
         COUNT(donhang.IDDonHang) as TongDon
         from donhang 
         WHERE donhang.TrangThai = 1 and donhang.NgayDat 
-        BETWEEN DATE_SUB(?, INTERVAL 1 WEEK) AND ?;`;
+        BETWEEN DATE_SUB(?, INTERVAL 1 WEEK) AND DATE_SUB(?, INTERVAL 1 DAY);`;
         return new Promise((resolve, reject)=>{
             this.db.query(sql,[date,date,date], (err, data)=>{
                 if(err) return reject(err);

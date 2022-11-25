@@ -4,7 +4,12 @@ const fs = require('fs-extra');
 const  multerStorage = multer.diskStorage({
   destination: function (req, file, cb) {
     let arr = req.originalUrl.split('/');
-    let dest = `./public/${arr[arr.length-1]}`;
+    let dest = "";
+    for(element of arr){{
+      if(element === "avatar" || element === "product"){
+        dest = `./public/${element}`;
+      }
+    }}
     fs.mkdirsSync(dest);
     cb(null, dest)
   },

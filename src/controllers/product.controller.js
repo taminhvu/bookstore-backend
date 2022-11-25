@@ -129,12 +129,36 @@ const deleteProductByID = async function(req,res){
 };
 const updateProductByID = async function(req,res){
   try {
-    const ID = req.params.ID;
-    const obj = req.body;
-    await productService.updateProductByID(ID,obj);
-    return res.sendStatus(httpStatus.NO_CONTENT);
-  } catch (error) {
-    return res.status(httpStatus.BAD_REQUEST).json(error.message);
+    var upload = Uploader.single("HinhAnh");
+    upload(req,res,async function(err){
+      if(err)return res.status(httpStatus.BAD_REQUEST).json(new Response(true,err.message));
+      let id = req.params.ID;
+      let obj = req.body;
+      if (!req.file){
+        const data = await productService.getProductByID(id);
+        const urloldimage = data[0].HinhAnh;
+        obj["HinhAnh"] = urloldimage;
+      }
+      else{
+        let src = req.file.path.split('\\').join('/');
+        const data = await productService.getProductByID(id);
+        const urloldimage = data[0].HinhAnh;
+        if(urloldimage !== null){
+          fs.unlink(urloldimage,(err)=>{
+          if(err) console.log(err); 
+          })
+        }
+        obj["HinhAnh"] = src;
+      }
+      try {
+        await productService.updateProductByID(id,obj);
+      } catch (error) {
+        return res.status(httpStatus.BAD_REQUEST).send(error.message);
+      }
+      return res.status(httpStatus.CREATED).send(new Response(false, "update success"));
+    }); 
+  } catch (err) {
+    return res.status(httpStatus.BAD_REQUEST).send(err);
   }
 };
 const getProductPagination = async function (req, res) {

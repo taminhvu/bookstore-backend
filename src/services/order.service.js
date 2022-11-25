@@ -142,7 +142,9 @@ const getRevanuePerDay = async function(){
 const getAmount = async function(){
     try {
         let date = moment().isoWeekday(1).format("YYYY-MM-DD");
+        console.log(date);
         const data = await order.getAmount(date);
+        console.log(data);
         const percent = (data[0].TongDon /data[1].TongDon * 100)-100;
         return {TongDon:data[0].TongDon,PhanTram:Math.round(percent)};
     } catch (error) {

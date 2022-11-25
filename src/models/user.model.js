@@ -58,7 +58,7 @@ class UserModel extends Model {
     COUNT(nguoidung.IDNguoiDung) as soluong
     FROM nguoidung 
     WHERE nguoidung.NgayDangKi 
-    BETWEEN DATE_SUB(?, INTERVAL 1 WEEK) AND ?`;
+    BETWEEN DATE_SUB(?, INTERVAL 1 WEEK) AND DATE_SUB(?, INTERVAL 1 DAY)`;
     return new Promise((resolve, reject) => {
       this.db.query(sql,[date,date,date], (err, result) => {
         if (err) {

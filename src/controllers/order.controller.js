@@ -58,6 +58,7 @@ const getAmount = async function(req,res){
         const data = await orderService.getAmount()
         return res.status(httpStatus.OK).json(new Response(false,"",data));
     } catch (error) {
+        console.log(error);
         return res.status(httpStatus.BAD_REQUEST).json(new Response(true,error.message));
     }
 }

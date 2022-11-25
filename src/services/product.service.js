@@ -64,7 +64,7 @@ const deleteProductByID = async function (ID) {
   try {
     const data = await getProductByID(ID);
     if (data.length == 0) throw new Error("ID not Found");
-    return product.deleteData(DB_Define.Product, "IDSanPham", ID);
+    return product.hideProuct(ID);
   } catch (error) {
     throw error;
   }
@@ -110,19 +110,19 @@ const filter = async function (c = "", k = "", d = "", page, size) {
   try {
     let filter = "";
     if (c !== "" && k !== "" && d !== "") {
-      filter = `WHERE danhmuc.IDDanhMuc = ${c} and theloai.IDTheLoai = ${k} and sanpham.NgayThem BETWEEN ${d} AND CURRENT_DATE`;
+      filter = `and danhmuc.IDDanhMuc = ${c} and theloai.IDTheLoai = ${k} and sanpham.NgayThem BETWEEN ${d} AND CURRENT_DATE`;
     } else if (c !== "" && k !== "" && d == "") {
-      filter = `WHERE danhmuc.IDDanhMuc = ${c} and theloai.IDTheLoai = ${k}`;
+      filter = `and danhmuc.IDDanhMuc = ${c} and theloai.IDTheLoai = ${k}`;
     } else if (c !== "" && k == "" && d !== "") {
-      filter = `WHERE danhmuc.IDDanhMuc = ${c} and sanpham.NgayThem BETWEEN ${d} AND CURRENT_DATE`;
+      filter = `and danhmuc.IDDanhMuc = ${c} and sanpham.NgayThem BETWEEN ${d} AND CURRENT_DATE`;
     } else if (c == "" && k !== "" && d !== "") {
-      filter = `WHERE theloai.IDTheLoai = ${k} and sanpham.NgayThem BETWEEN ${d} AND CURRENT_DATE`;
+      filter = `and theloai.IDTheLoai = ${k} and sanpham.NgayThem BETWEEN ${d} AND CURRENT_DATE`;
     } else if (c !== "" && k == "" && d == "") {
-      filter = `WHERE danhmuc.IDDanhMuc = ${c}`;
+      filter = `and danhmuc.IDDanhMuc = ${c}`;
     } else if (c == "" && k !== "" && d == "") {
-      filter = `WHERE theloai.IDTheLoai = ${k}`;
+      filter = `and theloai.IDTheLoai = ${k}`;
     } else if (c == "" && k == "" && d !== "") {
-      filter = `WHERE sanpham.NgayThem BETWEEN ${d} AND CURRENT_DATE`;
+      filter = `and sanpham.NgayThem BETWEEN ${d} AND CURRENT_DATE`;
     }
     const data = await product.filter(filter, page, size);
     if (data.length === 0) {

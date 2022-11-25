@@ -77,6 +77,7 @@ const getUserById = async (id) => {
 const updateUserById = async (id, obj) => {
   try {
     const data =await user.getUserById(id);
+    console.log(data);
     if(data.length === 0) throw new Error("ID Not Found");
     return await user.updateUserById(id, obj);
   } catch (error) {
