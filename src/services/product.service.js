@@ -110,19 +110,19 @@ const filter = async function (c = "", k = "", d = "", page, size) {
   try {
     let filter = "";
     if (c !== "" && k !== "" && d !== "") {
-      filter = `and danhmuc.IDDanhMuc = ${c} and theloai.IDTheLoai = ${k} and sanpham.NgayThem BETWEEN ${d} AND CURRENT_DATE`;
+      filter = `and danhmuc.IDDanhMuc = ${c} and theloai.IDTheLoai = ${k} and sanpham.NgayThem BETWEEN "${d}" AND CURRENT_DATE`;
     } else if (c !== "" && k !== "" && d == "") {
       filter = `and danhmuc.IDDanhMuc = ${c} and theloai.IDTheLoai = ${k}`;
     } else if (c !== "" && k == "" && d !== "") {
-      filter = `and danhmuc.IDDanhMuc = ${c} and sanpham.NgayThem BETWEEN ${d} AND CURRENT_DATE`;
+      filter = `and danhmuc.IDDanhMuc = ${c} and sanpham.NgayThem BETWEEN "${d}" AND CURRENT_DATE`;
     } else if (c == "" && k !== "" && d !== "") {
-      filter = `and theloai.IDTheLoai = ${k} and sanpham.NgayThem BETWEEN ${d} AND CURRENT_DATE`;
+      filter = `and theloai.IDTheLoai = ${k} and sanpham.NgayThem BETWEEN "${d}" AND CURRENT_DATE`;
     } else if (c !== "" && k == "" && d == "") {
       filter = `and danhmuc.IDDanhMuc = ${c}`;
     } else if (c == "" && k !== "" && d == "") {
       filter = `and theloai.IDTheLoai = ${k}`;
     } else if (c == "" && k == "" && d !== "") {
-      filter = `and sanpham.NgayThem BETWEEN ${d} AND CURRENT_DATE`;
+      filter = `and sanpham.NgayThem BETWEEN "${d}" AND CURRENT_DATE`;
     }
     const data = await product.filter(filter, page, size);
     if (data.length === 0) {

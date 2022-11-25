@@ -28,6 +28,15 @@ const getAllOrder = async function(req,res){
         return res.status(httpStatus.BAD_REQUEST).json(new Response(true,error.message));
     }
 }
+const getOrderByIDUser = async function(req,res){
+    try {
+        const ID = req.params.ID;
+        const data = await orderService.getOrderByIDUser(ID)
+        return res.status(httpStatus.OK).json(new Response(false,"",data));
+    } catch (error) {
+        return res.status(httpStatus.BAD_REQUEST).json(new Response(true,error.message));
+    }
+}
 const getOrderDetailByIDOrder = async function(req,res){
     try {
         const ID = req.params.ID;
@@ -90,4 +99,5 @@ module.exports={
     getAmountPerDay,
     getOrderPagination,
     getRevanuePerDay,
+    getOrderByIDUser,
 }

@@ -12,9 +12,6 @@ router.route('/')
 router.route('/:ID')
 .put(validate(categoryValidate.updateCategory), categoryController.updateCategoryByID)
 .delete(validate(categoryValidate.deleteCategory), categoryController.deleteCategoryByID)
-.get(validate(categoryValidate.getCategory),categoryController.getCategoryByID)
-
-// router.route('/page/:index')
-// .get(userController.getUserPagination);
+.get(validate(categoryValidate.getCategoryByID),categoryController.getCategoryByID)
 
 module.exports = router;

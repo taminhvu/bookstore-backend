@@ -141,5 +141,22 @@ class orderModel extends Model{
           });
         });
       };
+
+      getOrderByIDUser = function(id){
+        let sql = `select donhang.*,
+        SUM(chitietdonhang.SoLuong) as SoLuong,
+        SUM(chitietdonhang.GiaBan * chitietdonhang.SoLuong) as Tong
+        from donhang 
+        LEFT JOIN chitietdonhang
+        on donhang.IDDonHang = chitietdonhang.IDDonHang
+        WHERE donhang.IDNguoiDung = ?
+        GROUP BY donhang.IDDonHang`;
+        return new Promise((resolve, reject)=>{
+            this.db.query(sql,id, (err, data)=>{
+                if(err) return reject(err);
+                return resolve(data);
+            });
+        });
+      };
 }
 module.exports = orderModel;

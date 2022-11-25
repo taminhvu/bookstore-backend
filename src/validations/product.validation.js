@@ -30,9 +30,45 @@ const updateProduct = {
 const deleteProduct = {
     body: Joi.object().keys({
     }),
+    params: Joi.object().keys({
+        ID:Joi.number().required(),
+    }),
 };
 const getProduct = {
     body: Joi.object().keys({
+    }),
+};
+const getProductPage = {
+    body: Joi.object().keys({
+    }),
+    query: Joi.object().keys({
+        p: Joi.number().required(),
+        s: Joi.number().required(),
+    }),
+};
+const getProductByKind = {
+    body: Joi.object().keys({
+    }),
+    query: Joi.object().keys({
+        k: Joi.number().required(),
+        p: Joi.number().required(),
+        s: Joi.number().required(),
+    }),
+};
+const getProductByCategory = {
+    body: Joi.object().keys({
+    }),
+    query: Joi.object().keys({
+        c: Joi.number().required(),
+        p: Joi.number().required(),
+        s: Joi.number().required(),
+    }),
+};
+const getProductByID = {
+    body: Joi.object().keys({
+    }),
+    params: Joi.object().keys({
+        ID:Joi.number().required(),
     }),
 };
 const filter = {
@@ -50,4 +86,8 @@ module.exports ={
     deleteProduct,
     updateProduct,
     filter,
+    getProductByID,
+    getProductByKind,
+    getProductByCategory,
+    getProductPage,
 }

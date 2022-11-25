@@ -12,7 +12,15 @@ const getOrder = {
     body: Joi.object().keys({
     }),
 };
+const getOrderByID = {
+    body: Joi.object().keys({
+    }),
+    params: Joi.object().keys({
+        ID:Joi.number().required()
+    }),
+};
 module.exports ={
     addOrder,
     getOrder,
+    getOrderByID,
 }

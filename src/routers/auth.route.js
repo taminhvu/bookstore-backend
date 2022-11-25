@@ -8,6 +8,7 @@ const passport = require('passport');
 const router = express.Router();
 router.post('/register',validate(authValidation.register), authController.register)
 router.post('/login',validate(authValidation.login),authController.login);
+
 router.get('/google',passport.authenticate('google', { session: false, scope: ['profile', 'email'] }));
 router.get('/google/callback',passport.authenticate('google', { session: false}),authController.handleErrorGoogle,authController.handleSuccessGoogle);
 

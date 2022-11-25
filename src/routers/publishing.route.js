@@ -12,6 +12,6 @@ router.route('/')
 router.route('/:ID')
 .put(validate(publishingValidate.updatePulisher), publishingController.updatePublisher)
 .delete(validate(publishingValidate.deletePublisher), publishingController.deletePublisher)
-.get(validate(publishingValidate.getPublisher),publishingController.getPublisherByID)
+.get(validate(publishingValidate.getPublisherByID),publishingController.getPublisherByID)
 
 module.exports = router;

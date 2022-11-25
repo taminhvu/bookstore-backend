@@ -12,6 +12,6 @@ router.route('/')
 router.route('/:ID')
 .put(validate(provideValidate.updateProvider), provideController.updateProvider)
 .delete(validate(provideValidate.deleteProvider), provideController.deleteProvider)
-.get(validate(provideValidate.getProvider),provideController.getProviderByID)
+.get(validate(provideValidate.getProviderByID),provideController.getProviderByID)
 
 module.exports = router;

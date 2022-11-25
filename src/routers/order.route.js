@@ -16,8 +16,10 @@ router.route('/')
 router.route('/:ID')
 // .put(orderController)
 // .delete(validate(provideValidate.deleteProvider), provideController.deleteProvider)
-.get(validate(orderValidate.getOrder),orderController.getOrderByID);
+.get(validate(orderValidate.getOrderByID),orderController.getOrderByID);
 
 router.route('/order_detail/:ID')
-.get(validate(orderValidate.getOrder),orderController.getOrderDetailByIDOrder)
+.get(validate(orderValidate.getOrderByID),orderController.getOrderDetailByIDOrder);
+router.route('/user_id/:ID')
+.get(validate(orderValidate.getOrderByID),orderController.getOrderByIDUser)
 module.exports = router;

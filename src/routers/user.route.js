@@ -13,16 +13,16 @@ router.get('/statistic',validate(userValidation.getInfor),userController.getNewR
 
  router.route('/')
 //  .post(verifyRoles(ROLES_LIST.Admin),userController.createUser)
- .get(verifyRoles(ROLES_LIST.Admin), userController.getAllUser)
+ .get(verifyRoles(ROLES_LIST.Admin),validate(userValidation.getInfor), userController.getAllUser)
  .put(validate(userValidation.changeInfo),userController.changeInfoUser);
 
-router.route('/:id')
+router.route('/:ID')
 .put(validate(userValidation.changeInfoByAdmin),userController.changeInfoUserByAdmin)
-.get(validate(userValidation.getInfor),userController.getUser)
-.delete(validate(userValidation.getInfor),userController.deleteUser);
+.get(validate(userValidation.getInforByID),userController.getUser)
+.delete(validate(userValidation.deleteByID),userController.deleteUser);
 
 router.route('/page/:index')
-.get(verifyRoles(ROLES_LIST.Admin),validate(userValidation.getInfor),userController.getUserPagination);
+.get(verifyRoles(ROLES_LIST.Admin),validate(userValidation.getInforByIndex),userController.getUserPagination);
 
 //sua lai khi ghep code
 router.post('/avatar',userController.updateAvatar);

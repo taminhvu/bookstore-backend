@@ -11,9 +11,15 @@ const updatePulisher = {
         TenNhaXuatBan: Joi.string().required(),
         DiaChi: Joi.string().required(),
     }),
+    params: Joi.object().keys({
+        ID:Joi.number().required(),
+    }),
 };
 const deletePublisher = {
     body: Joi.object().keys({
+    }),
+    params: Joi.object().keys({
+        ID:Joi.number().required(),
     }),
 };
 
@@ -21,9 +27,17 @@ const getPublisher = {
     body: Joi.object().keys({
     }),
 };
+const getPublisherByID = {
+    body: Joi.object().keys({
+    }),
+    params: Joi.object().keys({
+        ID:Joi.number().required(),
+    }),
+};
 module.exports ={
     addPublisher,
     updatePulisher,
     deletePublisher,
     getPublisher,
+    getPublisherByID,
 }

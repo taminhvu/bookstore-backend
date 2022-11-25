@@ -71,7 +71,7 @@ const changeInfoUser = async(req,res)=>{
 }
 const changeInfoUserByAdmin = async(req,res)=>{
     try {
-        const id = req.params.id;
+        const id = req.params.ID;
         await userService.updateUserById(id,req.body);
         return res.status(httpStatus.OK).json(new Response(false,"Success"));
     } catch (error) {

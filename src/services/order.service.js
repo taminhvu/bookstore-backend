@@ -67,7 +67,13 @@ const getOrderDetailByID = async function(ID){
         throw error;
     }
 }
-
+const getOrderByIDUser = async function(ID){
+    try {
+        return order.getOrderByIDUser(ID);
+    } catch (error) {
+        throw error;
+    }
+}
 const updateOrderDetail = async function(obj,ID){
     try {
         return order.updateData(DB_Define.orderDetail,"IDChiTietDonHang",obj,ID);
@@ -195,4 +201,5 @@ module.exports = {
     getAmountPerDay,
     getOrderPagination,
     getRevanuePerDay,
+    getOrderByIDUser,
 }

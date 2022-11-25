@@ -12,9 +12,9 @@ router.route('/')
 router.route('/:ID')
 .put(validate(kindProductValidate.updateKindProduct), kindProductController.updateKindProductByID)
 .delete(validate(kindProductValidate.deleteKindProduct), kindProductController.deleteKindProductByID)
-.get(validate(kindProductValidate.getKindProduct),kindProductController.getKindProductByID)
+.get(validate(kindProductValidate.getKindProductByID),kindProductController.getKindProductByID)
 
 router.route('/idcategory/:ID')
-.get(validate(kindProductValidate.getKindProduct),kindProductController.getKindProudctByIDCategory)
+.get(validate(kindProductValidate.getKindProductByID),kindProductController.getKindProudctByIDCategory)
 
 module.exports = router;
