@@ -51,6 +51,9 @@ const getProductByIDTheLoai = async function (idTheloai, page, size) {
     throw error;
   }
 };
+const getAllProductByIDTheLoai = async function (id) {
+  return product.getAllProductByIDTheLoai(id);
+};
 const getProductByIDNhaXuatBan = async function (id) {
   return product.getProductByIDNhaXuatBan(id);
 };
@@ -125,6 +128,9 @@ const filter = async function (c = "", k = "", d = "", page, size) {
     if (data.length === 0) {
       throw new Error("Page Not Found");
     }
+    for await(const element of data){
+      element["HinhAnh"] = process.env.URL + "" + element["HinhAnh"];
+  }
     const amount = await product.countFilter(filter);
     const amountPage = Math.ceil(amount[0].soluong / size);
     return {
@@ -151,4 +157,5 @@ module.exports = {
   getProductPagination,
   getProductByName,
   filter,
+  getAllProductByIDTheLoai,
 };

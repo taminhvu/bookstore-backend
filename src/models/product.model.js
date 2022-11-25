@@ -100,6 +100,15 @@ class ProductModel extends Model {
         });
     });
   };
+  getAllProductByIDTheLoai = function(id){
+    let sql = `select * from sanpham where IDTheLoai = ?`;
+    return new Promise((resolve, reject)=>{
+        this.db.query(sql, id, (err, data)=>{
+            if(err) return reject(err);
+            return resolve(data);
+        });
+    });
+  };
 
   getProductByIDDanhMuc = function(idcategory,page,size){
     const skip = (page - 1) * size;

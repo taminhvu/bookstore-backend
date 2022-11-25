@@ -4,8 +4,8 @@ const validate = require('../middlewares/validate');
 const productValidate = require('../validations/product.validation');
 const router = express.Router();
 
-// router.get('/id_theloai',validate(productValidate.getProduct),productController.getProductByIDTheLoai);
-// router.get('/id_danhmuc',validate(productValidate.getProduct),productController.getProductByIDDanhMuc);
+router.get('/id_theloai',validate(productValidate.getProduct),productController.getProductByIDTheLoai);
+router.get('/id_danhmuc',validate(productValidate.getProduct),productController.getProductByIDDanhMuc);
 router.get('/filter',validate(productValidate.filter),productController.filter);
 router.get('/pages',validate(productValidate.getProduct),productController.getProductPagination);
 router.route('/new').get(validate(productValidate.getProduct),productController.getNewProduct);
@@ -25,6 +25,6 @@ router.route('/:ID')
 
 
 router.get('/id_nhaxuatban/:ID',validate(productValidate.getProduct),productController.getProductByIDNhaXuatBan);
-
+router.get('/id_theloai/:ID',validate(productValidate.getProduct),productController.getAllProductByIDTheLoai);
 
 module.exports = router;

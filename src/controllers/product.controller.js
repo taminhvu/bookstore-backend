@@ -87,6 +87,15 @@ const getProductByIDTheLoai = async function (req, res) {
     return res.status(httpStatus.BAD_REQUEST).json(error.message);
   }
 };
+const getAllProductByIDTheLoai = async function (req, res) {
+  try {
+    const id = req.params.ID;
+    const product = await productService.getAllProductByIDTheLoai(id);
+    return res.status(httpStatus.OK).json(new Response(false, "", product));
+  } catch (error) {
+    return res.status(httpStatus.BAD_REQUEST).json(error.message);
+  }
+};
 
 const getProductByIDNhaXuatBan = async function (req, res) {
   try {
@@ -162,4 +171,5 @@ module.exports = {
     getTopTenBestsellerPerDay,
     getProductPagination,
     filter,
+    getAllProductByIDTheLoai,
 }
