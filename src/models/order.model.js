@@ -127,12 +127,14 @@ class orderModel extends Model{
 
       getOrderPagination = function(page,size){
         const skip = (page - 1) * size;
-        const sql = `select donhang.*,
+        const sql = `select donhang.*,nguoidung.HoTen,
         SUM(chitietdonhang.SoLuong) as SoLuong,
         SUM(chitietdonhang.GiaBan * chitietdonhang.SoLuong) as Tong
         from donhang 
         LEFT JOIN chitietdonhang
         on donhang.IDDonHang = chitietdonhang.IDDonHang
+        LEFT JOIN nguoidung
+        on donhang.IDNguoiDung = nguoidung.IDNguoiDung
         GROUP BY donhang.IDDonHang limit ${size} offset ${skip}`;
         return new Promise((resolve, reject)=>{
           this.db.query(sql,(err ,data)=>{

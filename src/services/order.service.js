@@ -105,12 +105,10 @@ const addOrder = async function(obj){
         //kiem tra chi tiet don hang
         let error = false;
         for await(const element of orderDetail){
-            console.log(element);
             const id = element["IDSanPham"];
             const sanpham = await product.getProductByID(id);
             if(sanpham[0].SoLuongConLai < element["SoLuong"] || sanpham[0].GiaBan !== element["GiaBan"])error = true; 
         }
-        console.log(error);
         if(error === true) throw new Error(`product exceeds quantity or price of product change`);
         const data = await createOrder(order);
         orderDetail.forEach(async element => {

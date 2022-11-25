@@ -8,8 +8,8 @@ const userValidation = require('../validations/user.validation');
 const router = express.Router();
 
 router.use(verifyJWT);
-router.get('/statisticperday',validate(userValidation.getInfor),userController.getNewRegistrationPerDay);
-router.get('/statistic',validate(userValidation.getInfor),userController.getNewRegistration);
+router.get('/statisticperday',verifyRoles(ROLES_LIST.Admin),validate(userValidation.getInfor),userController.getNewRegistrationPerDay);
+router.get('/statistic',verifyRoles(ROLES_LIST.Admin),validate(userValidation.getInfor),userController.getNewRegistration);
 
  router.route('/')
 //  .post(verifyRoles(ROLES_LIST.Admin),userController.createUser)
@@ -17,9 +17,9 @@ router.get('/statistic',validate(userValidation.getInfor),userController.getNewR
  .put(validate(userValidation.changeInfo),userController.changeInfoUser);
 
 router.route('/:ID')
-.put(validate(userValidation.changeInfoByAdmin),userController.changeInfoUserByAdmin)
+.put(verifyRoles(ROLES_LIST.Admin),validate(userValidation.changeInfoByAdmin),userController.changeInfoUserByAdmin)
 .get(validate(userValidation.getInforByID),userController.getUser)
-.delete(validate(userValidation.deleteByID),userController.deleteUser);
+.delete(verifyRoles(ROLES_LIST.Admin),validate(userValidation.deleteByID),userController.deleteUser);
 
 router.route('/page/:index')
 .get(verifyRoles(ROLES_LIST.Admin),validate(userValidation.getInforByIndex),userController.getUserPagination);

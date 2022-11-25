@@ -11,6 +11,18 @@ const addOrder = {
 const getOrder = {
     body: Joi.object().keys({
     }),
+    query: Joi.object().keys({
+        p: Joi.number().required(),
+        s: Joi.number().required(),
+    }),
+};
+const getOrderPage = {
+    body: Joi.object().keys({
+    }),
+    query: Joi.object().keys({
+        p: Joi.number().required(),
+        s: Joi.number().required(),
+    }),
 };
 const getOrderByID = {
     body: Joi.object().keys({
@@ -23,4 +35,5 @@ module.exports ={
     addOrder,
     getOrder,
     getOrderByID,
+    getOrderPage,
 }
