@@ -10,8 +10,8 @@ const changeInfo = {
 };
 const changeInfoByAdmin = {
     body: Joi.object().keys({
-        TrangThai: Joi.number(),
-        Quyen: Joi.number(),
+        TrangThai: Joi.number().required(),
+        Quyen: Joi.number().required(),
     }),
 };
 const getInfor = {
