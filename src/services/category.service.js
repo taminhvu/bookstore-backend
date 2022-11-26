@@ -4,6 +4,10 @@ const category = new Category();
 
 const addCategory = async function(obj){
     try {
+        const data = await category.getOne(DB_Define.Category,"TenDanhMuc",obj.TenDanhMuc);
+        if(data.length !== 0){
+            throw new Error("Danh mục đã tồn tại!");
+        }
         return category.addData(DB_Define.Category,obj);
     } catch (error) {
         throw error;

@@ -61,7 +61,7 @@ class orderModel extends Model{
         from donhang 
         LEFT JOIN chitietdonhang
         on donhang.IDDonHang = chitietdonhang.IDDonHang
-        WHERE donhang.TrangThai = 1 and donhang.NgayDat 
+        WHERE donhang.TrangThai = 3 and donhang.NgayDat 
         BETWEEN ? AND CURRENT_DATE
         UNION
         select
@@ -69,7 +69,7 @@ class orderModel extends Model{
         from donhang 
         LEFT JOIN chitietdonhang
         on donhang.IDDonHang = chitietdonhang.IDDonHang
-        WHERE donhang.TrangThai = 1 and donhang.NgayDat 
+        WHERE donhang.TrangThai = 3 and donhang.NgayDat 
         BETWEEN DATE_SUB(?, INTERVAL 1 WEEK) AND DATE_SUB(?, INTERVAL 1 DAY);`;
         return new Promise((resolve, reject)=>{
             this.db.query(sql,[date,date,date], (err, data)=>{
@@ -84,7 +84,7 @@ class orderModel extends Model{
         from donhang 
         LEFT JOIN chitietdonhang
         on donhang.IDDonHang = chitietdonhang.IDDonHang
-        WHERE donhang.TrangThai = 1 and donhang.NgayDat 
+        WHERE donhang.TrangThai = 3 and donhang.NgayDat 
         BETWEEN ? AND CURRENT_DATE
         GROUP by donhang.NgayDat`;
         return new Promise((resolve, reject)=>{
@@ -98,13 +98,13 @@ class orderModel extends Model{
         let sql = `select
         COUNT(donhang.IDDonHang) as TongDon
         from donhang 
-        WHERE donhang.TrangThai = 1 and donhang.NgayDat 
+        WHERE (donhang.TrangThai = 0 or donhang.TrangThai = 2 or donhang.TrangThai = 3) and donhang.NgayDat 
         BETWEEN ? AND CURRENT_DATE
         UNION
         select
         COUNT(donhang.IDDonHang) as TongDon
         from donhang 
-        WHERE donhang.TrangThai = 1 and donhang.NgayDat 
+        WHERE (donhang.TrangThai = 0 or donhang.TrangThai = 2 or donhang.TrangThai = 3) and donhang.NgayDat 
         BETWEEN DATE_SUB(?, INTERVAL 1 WEEK) AND DATE_SUB(?, INTERVAL 1 DAY);`;
         return new Promise((resolve, reject)=>{
             this.db.query(sql,[date,date,date], (err, data)=>{
@@ -118,7 +118,7 @@ class orderModel extends Model{
         let sql = `select donhang.NgayDat,
         COUNT(donhang.IDDonHang) as TongDon
         from donhang 
-        WHERE donhang.TrangThai = 1 and donhang.NgayDat 
+        WHERE (donhang.TrangThai = 0 or donhang.TrangThai = 2 or donhang.TrangThai = 3) and donhang.NgayDat 
         BETWEEN  ? AND CURRENT_DATE
         GROUP BY donhang.NgayDat;`;
         return new Promise((resolve, reject)=>{

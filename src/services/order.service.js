@@ -54,7 +54,8 @@ const getAllOrder = async function(){
 }
 const getOrderDetailByIDOrder = async function(ID){
     try {
-        return order.getOrderDetailByIDOrder(ID)
+         const data = order.getOrderDetailByIDOrder(ID);
+         return data;
     } catch (error) {
         throw error;
     }

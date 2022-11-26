@@ -4,6 +4,10 @@ const kindProduct = new KindProduct();
 
 const addKindProduct = async function(obj){
     try {
+        const data = await kindProduct.getOne(DB_Define.KindOfProduct,"TenTheLoai",obj.TenTheLoai);
+        if(data.length !== 0){
+            throw new Error("Thể loại đã tồn tại!");
+        }
         return kindProduct.addData(DB_Define.KindOfProduct,obj);
     } catch (error) {
         throw error;
