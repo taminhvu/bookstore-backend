@@ -38,6 +38,13 @@ const getProduct = {
     body: Joi.object().keys({
     }),
 };
+const search = {
+    body: Joi.object().keys({
+    }),
+    query: Joi.object().keys({
+        name: Joi.string().required(),
+    }),
+};
 const getProductPage = {
     body: Joi.object().keys({
     }),
@@ -90,4 +97,5 @@ module.exports ={
     getProductByKind,
     getProductByCategory,
     getProductPage,
+    search,
 }

@@ -110,6 +110,8 @@ const getUserPagination = async (page) => {
   }
 };
 
+
+
 // const deleteUserById = async (id)=>{
 //    const result = await user.getUserById(id);
 //    if(result.length === 0){

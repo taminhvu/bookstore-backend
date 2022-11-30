@@ -142,6 +142,9 @@ const filter = async function (c = "", k = "", d = "", page, size) {
     throw error;
   }
 };
+const filterByName = async function (name) {
+  return product.filterByName(name);
+};
 module.exports = {
   getNewProduct,
   addProduct,
@@ -158,4 +161,5 @@ module.exports = {
   getProductByName,
   filter,
   getAllProductByIDTheLoai,
+  filterByName,
 };

@@ -181,6 +181,18 @@ const filter = async function(req,res){
     return res.status(httpStatus.BAD_REQUEST).json(error.message);
   }
 }
+
+const filterByName = async function (req, res) {
+  try {
+    const name = req.query.name;
+    console.log(name);
+    const product = await productService.filterByName(name);
+    console.log(product);
+    return res.status(httpStatus.OK).json(new Response(false, "", product));
+  } catch (err) {
+    return res.status(httpStatus.BAD_REQUEST).json(err.message);
+  }
+};
 module.exports = {
     addProduct,
     getNewProduct,
@@ -196,4 +208,5 @@ module.exports = {
     getProductPagination,
     filter,
     getAllProductByIDTheLoai,
+    filterByName,
 }

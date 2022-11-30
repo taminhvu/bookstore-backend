@@ -4,6 +4,7 @@ const validate = require('../middlewares/validate');
 const productValidate = require('../validations/product.validation');
 const router = express.Router();
 
+router.get('/search',validate(productValidate.search),productController.filterByName);
 router.get('/id_theloai',validate(productValidate.getProductByKind),productController.getProductByIDTheLoai);
 router.get('/id_danhmuc',validate(productValidate.getProductByCategory),productController.getProductByIDDanhMuc);
 router.get('/filter',validate(productValidate.filter),productController.filter);

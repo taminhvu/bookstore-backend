@@ -182,6 +182,18 @@ class ProductModel extends Model {
       })
     })
   };
+
+  filterByName = function(name) {
+    let sql = `select * from sanpham WHERE sanpham.TenSanPham LIKE "%${name}%";`;
+    return new Promise((resolve, reject) => {
+      this.db.query(sql, (err, result) => {
+        if (err) {
+          return reject(err);
+        }
+        return resolve(result);
+      });
+    });
+  };
 }
 
 
