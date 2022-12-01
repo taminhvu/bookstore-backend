@@ -125,7 +125,6 @@ const getNewRegistration = async () => {
     let date = moment().isoWeekday(1).format("YYYY-MM-DD");
     const array = await user.getNewRegistration(date);
     if(array.length ===0) throw new Error('ID Not found');
-    console.log(array);
     const percent = ((array[0].soluong / array[1].soluong) * 100 )-100;
     return {TaiKhoan:array[0].soluong,PhanTram:Math.round(percent)};
   } catch (error) {
