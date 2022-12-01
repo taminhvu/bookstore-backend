@@ -124,7 +124,8 @@ const getNewRegistration = async () => {
   try {
     let date = moment().isoWeekday(1).format("YYYY-MM-DD");
     const array = await user.getNewRegistration(date);
-    if(array.length ===0) throw new Error('ID Not found');
+    if(array.length ===0) return {TaiKhoan:0,PhanTram:0};
+    if(array[1].soluong == 0) return {TaiKhoan:array[0],PhanTram:0};
     const percent = ((array[0].soluong / array[1].soluong) * 100 )-100;
     return {TaiKhoan:array[0].soluong,PhanTram:Math.round(percent)};
   } catch (error) {
@@ -135,10 +136,12 @@ const getNewRegistrationPerDay = async () => {
   try {
     let date = moment().isoWeekday(1).format("YYYY-MM-DD");
     const array = await user.getNewRegistrationPerDay(date);
-    if(array.length ===0) throw new Error('ID Not found');
+    if(array.length ===0);
     return array;
   } catch (error) {
+    console.log(error);
     throw error;
+    
   }
 };
 module.exports = {
