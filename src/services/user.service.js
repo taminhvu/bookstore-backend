@@ -98,6 +98,11 @@ const getUserPagination = async (page) => {
     if (data.length === 0) {
       throw new Error('Page Not Found'); 
     }
+    for await(const element of data){
+      if(element["Anh"]){
+        element["Anh"] = process.env.URL + "" + element["Anh"];
+      }
+    }
     const amountUser = await user.countAll(DB.user_table);
     const amountPage = Math.ceil(amountUser[0].soluong / Define.USER_PAGE_SIZE);
     return {

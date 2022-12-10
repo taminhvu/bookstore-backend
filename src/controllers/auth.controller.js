@@ -12,6 +12,8 @@ const { OK } = require("http-status");
 
 const register = async (req, res) => {
   try {
+    console.log(req.body);
+    
     await userService.createUser(req.body);
     res
       .status(httpStatus.CREATED)

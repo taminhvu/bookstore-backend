@@ -5,6 +5,7 @@ const Uploader = require('../middlewares/Uploader');
 const fs = require('fs');
 const createUser = async (req,res)=>{
     try{
+        console.log(req.body);
         const user = await userService.createUser(req.body);
         res.status(httpStatus.CREATED).json(new Response(false,'Create'));
     }

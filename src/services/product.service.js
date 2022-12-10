@@ -8,7 +8,11 @@ const addProduct = async function (obj) {
 };
 
 const getProductByID = async function (id) {
-  return product.getProductByID(id);
+  const pro =await product.getProductByID(id);
+  if(pro[0]["HinhAnh"]){
+    pro[0]["HinhAnh"] = process.env.URL + "" + pro[0]["HinhAnh"];
+  }
+  return pro;
 };
 const getProductByName = async function (name) {
   return product.getProductByName(name);
@@ -18,6 +22,11 @@ const getProductByIDDanhMuc = async function (idcategory, page, size) {
     const data = await product.getProductByIDDanhMuc(idcategory, page, size);
     if (data.length === 0) {
       throw new Error("Page Not Found");
+    }
+    for await(const element of data){
+      if(element["HinhAnh"]){
+        element["HinhAnh"] = process.env.URL + "" + element["HinhAnh"];
+      }
     }
     const amount = await product.countAll(DB_Define.Product);
     const amountPage = Math.ceil(amount[0].soluong / size);
@@ -36,6 +45,11 @@ const getProductByIDTheLoai = async function (idTheloai, page, size) {
     if (data.length === 0) {
       throw new Error("Page Not Found");
     }
+    for await(const element of data) {
+      if(element["HinhAnh"]){
+        element["HinhAnh"] = process.env.URL + "" + element["HinhAnh"];
+      }
+    };
     const amount = await product.countAllByID(
       DB_Define.Product,
       "IDTheLoai",
@@ -52,13 +66,27 @@ const getProductByIDTheLoai = async function (idTheloai, page, size) {
   }
 };
 const getAllProductByIDTheLoai = async function (id) {
-  return product.getAllProductByIDTheLoai(id);
+  const obj =await product.getAllProductByIDTheLoai(id);
+  for await(const element of obj) {
+    if(element["HinhAnh"]){
+      element["HinhAnh"] = process.env.URL + "" + element["HinhAnh"];
+    }
+  };
+  return obj;
 };
+
 const getProductByIDNhaXuatBan = async function (id) {
   return product.getProductByIDNhaXuatBan(id);
 };
+
 const getAllProduct = async function () {
-  return product.getAllProduct();
+  let obj = await product.getAllProduct();
+  for await(const element of obj) {
+    if(element["HinhAnh"]){
+      element["HinhAnh"] = process.env.URL + "" + element["HinhAnh"];
+    }
+  };
+  return obj;
 };
 const deleteProductByID = async function (ID) {
   try {
@@ -79,10 +107,22 @@ const updateProductByID = async function (ID, obj) {
   }
 };
 const getNewProduct = async function () {
-  return product.getNewProduct();
+  let obj = await product.getNewProduct();
+  for await(const element of obj) {
+    if(element["HinhAnh"]){
+      element["HinhAnh"] = process.env.URL + "" + element["HinhAnh"];
+    }
+  };
+  return obj;
 };
 const getBestSeller = async function () {
-  return product.getBestseller();
+  let obj = await product.getBestseller();
+  for await(const element of obj) {
+    if(element["HinhAnh"]){
+      element["HinhAnh"] = process.env.URL + "" + element["HinhAnh"];
+    }
+  };
+  return obj;
 };
 const getTopTenBestsellerPerDay = async function () {
   let day = moment().isoWeekday(1).format("YYYY-MM-DD");
@@ -129,8 +169,10 @@ const filter = async function (c = "", k = "", d = "", page, size) {
       throw new Error("Page Not Found");
     }
     for await(const element of data){
-      element["HinhAnh"] = process.env.URL + "" + element["HinhAnh"];
-  }
+      if(element["HinhAnh"]){
+        element["HinhAnh"] = process.env.URL + "" + element["HinhAnh"];
+      }
+    }
     const amount = await product.countFilter(filter);
     const amountPage = Math.ceil(amount[0].soluong / size);
     return {
