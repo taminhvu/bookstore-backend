@@ -49,13 +49,13 @@ class UserModel extends Model {
 
   getNewRegistration = function(date) {
     let sql = `SELECT
-    COUNT(nguoidung.IDNguoiDung) as soluong
+    COUNT(nguoidung.IDNguoiDung) as soluong, 1 as number
     FROM nguoidung 
     WHERE nguoidung.NgayDangKi 
     BETWEEN ? AND CURRENT_DATE
     UNION
     SELECT 
-    COUNT(nguoidung.IDNguoiDung) as soluong
+    COUNT(nguoidung.IDNguoiDung) as soluong, 2 as number
     FROM nguoidung 
     WHERE nguoidung.NgayDangKi 
     BETWEEN DATE_SUB(?, INTERVAL 1 WEEK) AND DATE_SUB(?, INTERVAL 1 DAY)`;

@@ -57,7 +57,7 @@ class orderModel extends Model{
 
     getRevanue = function(date){
         let sql = `select
-        SUM(chitietdonhang.GiaBan * chitietdonhang.SoLuong) as DoanhThu
+        SUM(chitietdonhang.GiaBan * chitietdonhang.SoLuong) as DoanhThu, 1 as number
         from donhang 
         LEFT JOIN chitietdonhang
         on donhang.IDDonHang = chitietdonhang.IDDonHang
@@ -65,7 +65,7 @@ class orderModel extends Model{
         BETWEEN ? AND CURRENT_DATE
         UNION
         select
-        SUM(chitietdonhang.GiaBan * chitietdonhang.SoLuong) as DoanhThu
+        SUM(chitietdonhang.GiaBan * chitietdonhang.SoLuong) as DoanhThu, 2 as number
         from donhang 
         LEFT JOIN chitietdonhang
         on donhang.IDDonHang = chitietdonhang.IDDonHang
@@ -96,13 +96,13 @@ class orderModel extends Model{
       };
     getAmount = function(date){
         let sql = `select
-        COUNT(donhang.IDDonHang) as TongDon
+        COUNT(donhang.IDDonHang) as TongDon,1 as number
         from donhang 
         WHERE (donhang.TrangThai = 0 or donhang.TrangThai = 2 or donhang.TrangThai = 3) and donhang.NgayDat 
         BETWEEN ? AND CURRENT_DATE
         UNION
         select
-        COUNT(donhang.IDDonHang) as TongDon
+        COUNT(donhang.IDDonHang) as TongDon,2 as number
         from donhang 
         WHERE (donhang.TrangThai = 0 or donhang.TrangThai = 2 or donhang.TrangThai = 3) and donhang.NgayDat 
         BETWEEN DATE_SUB(?, INTERVAL 1 WEEK) AND DATE_SUB(?, INTERVAL 1 DAY);`;

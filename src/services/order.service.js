@@ -113,6 +113,7 @@ const addOrder = async function (obj) {
       IDNguoiDung: obj.IDNguoiDung,
       DiaChi: obj.DiaChi,
       PhiShip: obj.PhiShip,
+      TrangThai: 0,
     };
     const orderDetail = obj.ChiTietDonHang;
     //kiem tra chi tiet don hang
@@ -146,9 +147,13 @@ const getRevanue = async function () {
   try {
     let date = moment().isoWeekday(1).format("YYYY-MM-DD");
     const data = await order.getRevanue(date);
-    if (data.length === 0) return { DoanhThu: 0, PhanTram: 0 };
-    if (data[1].DoanhThu == 0) return { DoanhThu: data[0], PhanTram: 0 };
-    const percent = (data[0].DoanhThu / data[1].DoanhThu) * 100 - 100;
+    if (data[1].DoanhThu == 0) return { DoanhThu: data[0].DoanhThu, PhanTram: 100 };
+    let percent;
+    if(data[0].DoanhThu === data[1].DoanhThu){
+      percent = 100;
+    }else{
+      percent = (data[0].DoanhThu / data[1].DoanhThu) * 100 - 100;
+    }
     return { DoanhThu: data[0].DoanhThu, PhanTram: Math.round(percent) };
   } catch (error) {
     throw error;
@@ -169,9 +174,13 @@ const getAmount = async function () {
     console.log(date);
     const data = await order.getAmount(date);
     console.log(data);
-    if(data.length ===0) return {TongDon:0,PhanTram:0};
-    if(data[1].TongDon === 0) return {TongDon:data[0],PhanTram:0};
-    const percent = (data[0].TongDon / data[1].TongDon) * 100 - 100;
+    if(data[1].TongDon === 0) return {TongDon:data[0].TongDon,PhanTram:100};
+    let percent;
+    if(data[0].TongDon == data[1].TongDon){
+      percent = 100;
+    }else{
+      percent = (data[0].TongDon / data[1].TongDon) * 100 - 100;
+    }
     console.log({ TongDon: data[0].TongDon, PhanTram: Math.round(percent) });
     return { TongDon: data[0].TongDon, PhanTram: Math.round(percent) };
   } catch (error) {

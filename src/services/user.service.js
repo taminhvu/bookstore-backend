@@ -99,8 +99,9 @@ const getUserPagination = async (page) => {
       throw new Error('Page Not Found'); 
     }
     for await(const element of data){
-      if(element["Anh"]){
+      if(element["Anh"] && !element["Anh"].startsWith("http")){
         element["Anh"] = process.env.URL + "" + element["Anh"];
+        console.log(element["Anh"])
       }
     }
     const amountUser = await user.countAll(DB.user_table);
@@ -129,9 +130,13 @@ const getNewRegistration = async () => {
   try {
     let date = moment().isoWeekday(1).format("YYYY-MM-DD");
     const array = await user.getNewRegistration(date);
-    if(array.length ===0) return {TaiKhoan:0,PhanTram:0};
-    if(array[1].soluong == 0) return {TaiKhoan:array[0],PhanTram:0};
-    const percent = ((array[0].soluong / array[1].soluong) * 100 )-100;
+    if(array[1].soluong == 0) return {TaiKhoan:array[0].soluong,PhanTram:100};
+    let percent;
+    if(array[0].soluong === array[1].soluong){
+      percent = 100;
+    }else{
+      percent = ((array[0].soluong / array[1].soluong) * 100 )-100;
+    }
     return {TaiKhoan:array[0].soluong,PhanTram:Math.round(percent)};
   } catch (error) {
     throw error;
