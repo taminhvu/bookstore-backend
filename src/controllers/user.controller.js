@@ -15,7 +15,6 @@ const createUser = async (req,res)=>{
     
 }
 
-
 const getUser = async(req,res)=>{
     try{
         const user = await userService.getUserById(req.params.id);

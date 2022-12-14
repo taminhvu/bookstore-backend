@@ -30,12 +30,11 @@ const login = async (req, res) => {
     const result = await authService.loginWithEmailAndPassword(Email, MatKhau);
     res.cookie(Define.REFRESHTOKEN,result.refreshToken,Define.SESSION_COOKIE_OPTION);
     tokenService.addRefreshToken(result.refreshToken);
-    let anh = null;
     const user = result.user;
-    if(user.Anh !== null){
-      anh = process.env.URL+user.Anh
+    if(user["Anh"] !== null && !user["Anh"].startsWith("http")){
+      user.Anh = process.env.URL+user.Anh
     }
-    res.status(httpStatus.OK).json(new Response(false, "", {Email:user.Email,HoTen:user.HoTen ,Anh:anh,accessToken:user.accessToken}));
+    res.status(httpStatus.OK).json(new Response(false, "", {Email:user.Email,HoTen:user.HoTen ,Anh:user.Anh,accessToken:user.accessToken}));
   } catch (error) {
     res.status(httpStatus.NOT_ACCEPTABLE).json(new Response(true,error.message));
   }
