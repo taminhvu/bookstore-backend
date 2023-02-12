@@ -21,9 +21,12 @@ app.use('/public',express.static(path.join(__dirname,"../public")));
 app.use('/home',(req,res)=>{
     res.sendFile(__dirname+"/index.html");
 });
+app.use('/api-guide',(req,res)=>{
+    res.sendFile(__dirname+"/api-guide.json");
+});
 //end test
 
-app.use(cors({origin:["http://localhost:3000"], credentials:true}));
+app.use(cors({origin:["https://vqtruong0910.github.io"], credentials:true}));
 app.use(helmet());
 app.use('/api',routers);
 const port = process.env.PORT || 3001;

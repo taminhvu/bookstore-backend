@@ -27,6 +27,7 @@ const register = async (req, res) => {
 const login = async (req, res) => {
   try {
     const { Email, MatKhau } = req.body;
+    console.log(Email);
     const result = await authService.loginWithEmailAndPassword(Email, MatKhau);
     res.cookie(Define.REFRESHTOKEN,result.refreshToken,Define.SESSION_COOKIE_OPTION);
     tokenService.addRefreshToken(result.refreshToken);

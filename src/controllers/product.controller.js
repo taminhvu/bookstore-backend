@@ -172,6 +172,7 @@ const getProductPagination = async function (req, res) {
   }
 };
 const filter = async function(req,res){
+  console.log("ok");
   try {
     const {c="",k="",d="",p,s} = req.query;
     const data = await productService.filter(c,k,d,p,s);

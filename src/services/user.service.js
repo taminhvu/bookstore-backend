@@ -13,14 +13,17 @@ const createUser = async (userBody) => {
       throw new Error("Email already use");
     }
     const hashpass = bcrypt.hashSync(MatKhau, bcrypt.genSaltSync(10));
+    const utcDate = moment.utc(NgaySinh);
+    const mysqlDate = utcDate.format("YYYY-MM-DD");
     const obj = {
       Quyen: 1,
       Email,
       HoTen,
       MatKhau: hashpass,
       GioiTinh,
-      NgaySinh,
+      NgaySinh: mysqlDate,
       TrangThai: 1,
+      XacThuc: 0,
     };
     return user.addData(DB.user_table, obj);
   } catch (error) {
@@ -49,6 +52,7 @@ const createThirdPartyUsers = async (userBody) => {
 const getUserByEmail = async (Email) => {
   try {
     const array = await user.getUserByEmail(Email);
+    if(array.length === 0) throw new Error('Not found');
     return array;
   } catch (error) {
     throw error;

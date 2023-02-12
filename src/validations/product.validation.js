@@ -83,8 +83,8 @@ const filter = {
         c: Joi.number(),
         k: Joi.number(),
         d: Joi.string(),
-        p: Joi.number(),
-        s: Joi.number(),
+        p: Joi.number().required(),
+        s: Joi.number().required(),
     }),
 };
 module.exports ={
