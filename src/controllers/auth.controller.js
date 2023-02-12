@@ -43,14 +43,14 @@ const login = async (req, res) => {
 
 const handleErrorGoogle = async (err, req, res, next) => {
   if (err.name === 'TokenError') {
-    res.redirect('http://localhost:3000/auths/google'); // redirect them back to the login page
+    res.redirect('https://vqtruong0910.github.io/auths/google'); // redirect them back to the login page
 } else {
     // Handle other errors here
 }
 };
 const handleErrorFacebook = async (err, req, res, next) => {
   if (err.name === 'TokenError') {
-    res.redirect('http://localhost:3000/auths/facebook'); // redirect them back to the login page
+    res.redirect('https://vqtruong0910.github.io/auths/facebook'); // redirect them back to the login page
 } else {
     // Handle other errors here
 }
