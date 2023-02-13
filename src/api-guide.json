@@ -110,7 +110,32 @@
 				"error": false,
 				"message": "success"
 			}
-		}		
+		},
+		{
+			"path": "api/auths/refreshToken",
+			"method": "get",
+			"description": "refresh token"
+		},
+		{
+			"path": "api/auths/logout",
+			"method": "delete",
+			"description": "logout"
+		},
+		{
+			"path": "api/auths/send-email-reset-password",
+			"method": "post",
+			"description": "send email"
+		},
+		{
+			"path": "api/auths/reset-password",
+			"method": "post",
+			"description": "reset password"
+		},
+		{
+			"path": "api/auths/change_password",
+			"method": "put",
+			"description": "change password"
+		}										
     ],
 	"author":[
 		{

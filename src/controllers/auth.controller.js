@@ -35,7 +35,7 @@ const login = async (req, res) => {
     if(user["Anh"] !== null && !user["Anh"].startsWith("http")){
       user.Anh = process.env.URL+user.Anh
     }
-    res.status(httpStatus.OK).json(new Response(false, "", {Email:user.Email,HoTen:user.HoTen ,Anh:user.Anh,accessToken:user.accessToken}));
+    res.status(httpStatus.OK).json(new Response(false, "", {Email:user.Email,HoTen:user.HoTen ,GioiTinh:user.GioiTinh ,Anh:user.Anh,accessToken:user.accessToken}));
   } catch (error) {
     res.status(httpStatus.NOT_ACCEPTABLE).json(new Response(true,error.message));
   }
