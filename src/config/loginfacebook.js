@@ -6,7 +6,7 @@ const loginwithfacebook = (app)=>{
     passport.use(new FacebookStrategy({
         clientID: process.env.FACEBOOK_CLIENT_ID,
         clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
-        callbackURL: "http://localhost:3000/auths/facebook/callback",
+        callbackURL: "https://vqtruong0910.github.io/bookstore-frontend/auths/facebook/callback",
         profileFields: ['id', 'displayName', 'gender', 'picture.type(large)', 'email']
     },
         async function (accessToken, refreshToken, profile, cb) {
