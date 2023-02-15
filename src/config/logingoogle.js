@@ -6,7 +6,7 @@ const loginwithgoogle = (app)=>{
     passport.use(new GoogleStrategy({
         clientID: process.env.GOOGLE_CLIENT_ID,
         clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-        callbackURL: "http://localhost:3000/auths/google/callback"
+        callbackURL: "https://vqtruong0910.github.io/bookstore-frontend/auths/google/callback"
     },
         async function (accessToken, refreshToken, profile, cb) {
             const { provider, _raw, _json, ...user } = profile;
