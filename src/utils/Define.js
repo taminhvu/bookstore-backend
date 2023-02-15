@@ -1,7 +1,7 @@
 const { string } = require("joi");
 
 const Define = {
-    API_BASE_URL: "http://localhost:2727/",
+    //API_BASE_URL: "http://localhost:2727/",
     //user access token
     REFRESHTOKEN: "refreshToken",
     TOKENACCESS: "accessToken",
