@@ -25,8 +25,12 @@ app.use('/api-guide',(req,res)=>{
     res.sendFile(__dirname+"/api-guide.json");
 });
 //end test
-
-app.use(cors({origin:["https://bookstore-self.vercel.app"], credentials:true}));
+const corsOptions = {
+    origin: 'https://bookstore-self.vercel.app',
+    credentials:true
+  }
+  app.use(cors(corsOptions));
+// app.use(cors({origin:["https://bookstore-self.vercel.app"], credentials:true}));
 app.use(helmet());
 app.use('/api',routers);
 const port = process.env.PORT || 3001;
