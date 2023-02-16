@@ -7,8 +7,8 @@ const Define = {
     TOKENACCESS: "accessToken",
     SESSION_COOKIE_OPTION: {
         httpOnly: true,
-        secure: false,//only for browser
-        sameSite: 'lax',
+        secure: true,//only for browser
+        sameSite: 'none',
         signed: true,
         domain: 'vercel.app',
         maxAge: 30 * 24 * 60 * 60 * 1000//1 day in milis
