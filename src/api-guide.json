@@ -543,6 +543,39 @@
 		}
 	],
 	"oder":[
+		{
+			"path": "api/order",
+			"method": "get",
+			"description": "get all order",
+			"response":{
+				"error": false,
+				"message": "",
+				"data": [
+					{
+						"IDDonHang": 4,
+						"IDNguoiDung": 14,
+						"NgayDat": null,
+						"NgayGiao": "2022-11-24T17:00:00.000Z",
+						"DiaChi": "181,Duong28,Phuong6,gv",
+						"TrangThai": -2,
+						"PhiShip": 0,
+						"SoLuong": 6,
+						"Tong": 300000
+					},
+					{
+						"IDDonHang": 5,
+						"IDNguoiDung": null,
+						"NgayDat": "2022-11-10T17:00:00.000Z",
+						"NgayGiao": null,
+						"DiaChi": "181 duong 28, phuong 6, go vap",
+						"TrangThai": 3,
+						"PhiShip": 0,
+						"SoLuong": 10,
+						"Tong": 380000
+					}
+				]
+			}
+		}
 
 	],
 	"product":[
