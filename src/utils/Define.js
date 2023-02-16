@@ -10,6 +10,7 @@ const Define = {
         secure: false,//only for browser
         sameSite: 'lax',
         signed: true,
+        domain: 'vercel.app',
         maxAge: 30 * 24 * 60 * 60 * 1000//1 day in milis
     },
     LOGOUT_COOKIE_OPTION: {
