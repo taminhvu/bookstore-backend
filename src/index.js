@@ -26,7 +26,7 @@ app.use('/api-guide',(req,res)=>{
 });
 //end test
 
-app.use(cors({origin:["https://vqtruong0910.github.io"], credentials:true}));
+app.use(cors({origin:["https://bookstore-self.vercel.app"], credentials:true}));
 app.use(helmet());
 app.use('/api',routers);
 const port = process.env.PORT || 3001;
