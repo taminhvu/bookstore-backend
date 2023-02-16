@@ -1,5 +1,4 @@
 const passport = require('passport');
-cót
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 
 const loginwithgoogle = (app)=>{
