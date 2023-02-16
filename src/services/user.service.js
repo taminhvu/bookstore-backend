@@ -52,7 +52,6 @@ const createThirdPartyUsers = async (userBody) => {
 const getUserByEmail = async (Email) => {
   try {
     const array = await user.getUserByEmail(Email);
-    if(array.length === 0) throw new Error('Not found');
     return array;
   } catch (error) {
     throw error;
