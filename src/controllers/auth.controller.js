@@ -29,7 +29,7 @@ const login = async (req, res) => {
     const { Email, MatKhau } = req.body;
     console.log(Email);
     const result = await authService.loginWithEmailAndPassword(Email, MatKhau);
-    res.cookie(Define.REFRESHTOKEN,result.refreshToken,Define.SESSION_COOKIE_OPTION);
+    res.cookie(Define.REFRESHTOKEN,result.refreshToken,Define.SESSION_COOKIE_OPTION,{ domain: 'vercel.app' });
     tokenService.addRefreshToken(result.refreshToken);
     const user = result.user;
     if(user["Anh"] !== null && !user["Anh"].startsWith("http")){
