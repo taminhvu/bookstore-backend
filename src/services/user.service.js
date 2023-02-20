@@ -52,6 +52,12 @@ const createThirdPartyUsers = async (userBody) => {
 const getUserByEmail = async (Email) => {
   try {
     const array = await user.getUserByEmail(Email);
+    for await(const element of array){
+      if(element["Anh"] && !element["Anh"].startsWith("http")){
+        element["Anh"] = process.env.URL + "" + element["Anh"];
+        console.log(element["Anh"])
+      }
+    }
     return array;
   } catch (error) {
     throw error;
@@ -59,8 +65,14 @@ const getUserByEmail = async (Email) => {
 };
 const getAllUser = async () => {
   try {
-    const array = user.getAll(DB.user_table, "IDNguoiDung");
+    const array = await user.getAll(DB.user_table, "IDNguoiDung");
     if(array.length === 0) throw new Error('Not found');
+    for await(const element of array){
+      if(element["Anh"] && !element["Anh"].startsWith("http")){
+        element["Anh"] = process.env.URL + "" + element["Anh"];
+        console.log(element["Anh"])
+      }
+    }
     return array;
   } catch (error) {
     throw error;
@@ -69,8 +81,14 @@ const getAllUser = async () => {
 
 const getUserById = async (id) => {
   try {
-    const array = user.getUserById(id);
+    const array = await user.getUserById(id);
     if(array.length ===0) throw new Error('ID Not found');
+    for await(const element of array){
+      if(element["Anh"] && !element["Anh"].startsWith("http")){
+        element["Anh"] = process.env.URL + "" + element["Anh"];
+        console.log(element["Anh"])
+      }
+    }
     return array;
   } catch (error) {
     throw error;
@@ -149,7 +167,12 @@ const getNewRegistrationPerDay = async () => {
   try {
     let date = moment().isoWeekday(1).format("YYYY-MM-DD");
     const array = await user.getNewRegistrationPerDay(date);
-    if(array.length ===0);
+    for await(const element of array){
+      if(element["Anh"] && !element["Anh"].startsWith("http")){
+        element["Anh"] = process.env.URL + "" + element["Anh"];
+        console.log(element["Anh"])
+      }
+    }
     return array;
   } catch (error) {
     console.log(error);

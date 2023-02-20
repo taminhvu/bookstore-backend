@@ -16,7 +16,7 @@ class UserModel extends Model {
   };
 
   getUserById = function(id) {
-    let sql = `select * from nguoidung where idnguoidung = ?`;
+    let sql = `select * from nguoidung where IDNguoiDung = ?`;
     return new Promise((resolve, reject) => {
       this.db.query(sql,id, (err, result) => {
         if (err) {

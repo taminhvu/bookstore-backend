@@ -15,7 +15,13 @@ const getProductByID = async function (id) {
   return pro;
 };
 const getProductByName = async function (name) {
-  return product.getProductByName(name);
+  let obj = await product.getProductByName(name);
+  for await(const element of data){
+    if(element["HinhAnh"]){
+      element["HinhAnh"] = process.env.URL + "" + element["HinhAnh"];
+    }
+  }
+  return obj;
 };
 const getProductByIDDanhMuc = async function (idcategory, page, size) {
   try {
@@ -76,7 +82,13 @@ const getAllProductByIDTheLoai = async function (id) {
 };
 
 const getProductByIDNhaXuatBan = async function (id) {
-  return product.getProductByIDNhaXuatBan(id);
+  let obj = await product.getProductByIDNhaXuatBan(id);
+  for await(const element of obj) {
+    if(element["HinhAnh"]){
+      element["HinhAnh"] = process.env.URL + "" + element["HinhAnh"];
+    }
+  };
+  return obj;
 };
 
 const getAllProduct = async function () {
@@ -126,7 +138,13 @@ const getBestSeller = async function () {
 };
 const getTopTenBestsellerPerDay = async function () {
   let day = moment().isoWeekday(1).format("YYYY-MM-DD");
-  return product.getTopTenBestsellerPerDay(day);
+  let obj = await product.getTopTenBestsellerPerDay(day);
+  for await(const element of obj) {
+    if(element["HinhAnh"]){
+      element["HinhAnh"] = process.env.URL + "" + element["HinhAnh"];
+    }
+  };
+  return obj;
 };
 
 const getProductPagination = async function (page, size) {
@@ -135,6 +153,11 @@ const getProductPagination = async function (page, size) {
     if (data.length === 0) {
       throw new Error("Page Not Found");
     }
+    for await(const element of data) {
+      if(element["HinhAnh"]){
+        element["HinhAnh"] = process.env.URL + "" + element["HinhAnh"];
+      }
+    };
     const amount = await product.countAll(DB_Define.Product);
     const amountPage = Math.ceil(amount[0].soluong / size);
     return {
@@ -185,7 +208,13 @@ const filter = async function (c = "", k = "", d = "", page, size) {
   }
 };
 const filterByName = async function (name) {
-  return product.filterByName(name);
+  let obj = await product.filterByName(name);
+  for await(const element of obj) {
+    if(element["HinhAnh"]){
+      element["HinhAnh"] = process.env.URL + "" + element["HinhAnh"];
+    }
+  };
+  return obj;
 };
 module.exports = {
   getNewProduct,
