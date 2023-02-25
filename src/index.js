@@ -15,7 +15,7 @@ app.use(cookieParser(process.env.SIGNEDCOOKIE));
 
 loginGoogle(app);
 loginFacebook(app);
-
+console.log(process.env.URL);
 //begin test
 app.use('/public',express.static(path.join(__dirname,"../public")));
 app.use('/home',(req,res)=>{
@@ -26,7 +26,7 @@ app.use('/api-guide',(req,res)=>{
 });
 //end test
 const corsOptions = {
-    origin: 'https://bookstore-self.vercel.app',
+    origin: process.env.CLIENT_HOST,
     credentials:true
   }
   app.use(cors(corsOptions));
@@ -34,4 +34,4 @@ const corsOptions = {
 app.use(helmet());
 app.use('/api',routers);
 const port = process.env.PORT || 3001;
-app.listen(port,()=>console.log(`running at http://localhost:${port}`));
+app.listen(port,()=>console.log(`running at`+ process.env.URL));
