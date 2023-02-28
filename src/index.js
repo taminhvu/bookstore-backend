@@ -15,7 +15,6 @@ app.use(cookieParser(process.env.SIGNEDCOOKIE));
 
 loginGoogle(app);
 loginFacebook(app);
-console.log(process.env.URL);
 //begin test
 app.use('/public',express.static(path.join(__dirname,"../public")));
 app.use('/home',(req,res)=>{
@@ -34,4 +33,4 @@ const corsOptions = {
 app.use(helmet());
 app.use('/api',routers);
 const port = process.env.PORT || 3001;
-app.listen(port,()=>console.log(`running at`+ process.env.URL));
+app.listen(port,()=>console.log(`running at `+ process.env.URL));
