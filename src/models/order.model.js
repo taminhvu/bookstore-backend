@@ -139,7 +139,7 @@ class orderModel extends Model{
         on donhang.IDDonHang = chitietdonhang.IDDonHang
         LEFT JOIN nguoidung
         on donhang.IDNguoiDung = nguoidung.IDNguoiDung
-        GROUP BY donhang.IDDonHang limit ${size} offset ${skip}`;
+        GROUP BY donhang.IDDonHang order by donhang.IDDonHang DESC limit ${size} offset ${skip}`;
         return new Promise((resolve, reject)=>{
           this.db.query(sql,(err ,data)=>{
             if(err) return reject(err);
@@ -156,7 +156,8 @@ class orderModel extends Model{
         LEFT JOIN chitietdonhang
         on donhang.IDDonHang = chitietdonhang.IDDonHang
         WHERE donhang.IDNguoiDung = ?
-        GROUP BY donhang.IDDonHang`;
+        GROUP BY donhang.IDDonHang
+        order by donhang.IDDonHang DESC`;
         return new Promise((resolve, reject)=>{
             this.db.query(sql,id, (err, data)=>{
                 if(err) return reject(err);
