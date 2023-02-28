@@ -25,7 +25,7 @@ class orderModel extends Model{
         from donhang 
         LEFT JOIN chitietdonhang
         on donhang.IDDonHang = chitietdonhang.IDDonHang
-        GROUP BY donhang.IDDonHang `;
+        GROUP BY donhang.IDDonHang order by donhang.IDDonHang DESC`;
         return new Promise((resolve, reject)=>{
             this.db.query(sql, (err, data)=>{
                 if(err) return reject(err);

@@ -33,7 +33,7 @@ class ProductModel extends Model {
 
   getProductByIDTheloai = function(IDTheLoai,page,size){
     const skip = (page - 1) * size;
-    let sql = `select * from sanpham where sanpham.TrangThai = 0 and IDTheLoai = ? limit ${size} offset ${skip}`;
+    let sql = `select * from sanpham where sanpham.TrangThai = 0 and IDTheLoai = ? order by IDSanPham DESC limit ${size} offset ${skip} `;
     return new Promise((resolve, reject)=>{
         this.db.query(sql, IDTheLoai, (err, data)=>{
             if(err) return reject(err);
@@ -43,7 +43,7 @@ class ProductModel extends Model {
   };
 
   getProductByIDNhaXuatBan = function(id){
-    let sql = `select * from sanpham where sanpham.TrangThai = 0 and IDNhaXuatBan = ?`;
+    let sql = `select * from sanpham where sanpham.TrangThai = 0 and IDNhaXuatBan = ? order by IDSanPham DESC`;
     return new Promise((resolve, reject)=>{
         this.db.query(sql, id, (err, data)=>{
             if(err) return reject(err);
@@ -52,7 +52,7 @@ class ProductModel extends Model {
     });
   };
   getAllProductByIDTheLoai = function(id){
-    let sql = `select * from sanpham where sanpham.TrangThai = 0 and IDTheLoai = ?`;
+    let sql = `select * from sanpham where sanpham.TrangThai = 0 and IDTheLoai = ? order by IDSanPham DESC`;
     return new Promise((resolve, reject)=>{
         this.db.query(sql, id, (err, data)=>{
             if(err) return reject(err);
@@ -65,7 +65,7 @@ class ProductModel extends Model {
     const skip = (page - 1) * size;
     let sql = `select * from sanpham
     where sanpham.TrangThai = 0 and IDTheLoai IN(select IDTheLoai FROM theloai
-                      WHERE IDDanhMuc = ?) limit ${size} offset ${skip}`;
+                      WHERE IDDanhMuc = ?) order by IDSanPham DESC limit ${size} offset ${skip}`;
     return new Promise((resolve, reject)=>{
         this.db.query(sql, idcategory, (err, data)=>{
             if(err) return reject(err);
@@ -75,7 +75,7 @@ class ProductModel extends Model {
   };
 
   getAllProduct = function(){
-    let sql = 'select * from sanpham where sanpham.TrangThai = 0';
+    let sql = 'select * from sanpham where sanpham.TrangThai = 0 order by IDSanPham DESC';
     return new Promise((resolve,reject)=>{
         this.db.query(sql,(err,data)=>{
             if(err) return reject(err);
@@ -85,7 +85,7 @@ class ProductModel extends Model {
   }
 
   getNewProduct = function(){
-    let sql = "SELECT * FROM `sanpham` where sanpham.TrangThai = 0 and NgayThem BETWEEN DATE_SUB(CURRENT_DATE, INTERVAL 1 MONTH) AND CURRENT_DATE";
+    let sql = "SELECT * FROM `sanpham` where sanpham.TrangThai = 0 and NgayThem BETWEEN DATE_SUB(CURRENT_DATE, INTERVAL 1 MONTH) AND CURRENT_DATE order by IDSanPham DESC";
     return new Promise((resolve,reject)=>{
         this.db.query(sql,(err,data)=>{
             if(err) return reject(err);
@@ -137,7 +137,7 @@ class ProductModel extends Model {
     LEFT JOIN theloai
     ON sanpham.IDTheLoai = theloai.IDTheLoai
     LEFT JOIN danhmuc
-    ON theloai.IDDanhMuc = danhmuc.IDDanhMuc where TrangThai = 0 limit ${size} offset ${skip}`;
+    ON theloai.IDDanhMuc = danhmuc.IDDanhMuc where TrangThai = 0 order by IDSanPham DESC limit ${size} offset ${skip} `;
     return new Promise((resolve, reject)=>{
       this.db.query(sql,(err ,data)=>{
         if(err) return reject(err);
@@ -151,7 +151,7 @@ class ProductModel extends Model {
     LEFT JOIN theloai
     ON sanpham.IDTheLoai = theloai.IDTheLoai
     LEFT JOIN danhmuc
-    ON theloai.IDDanhMuc = danhmuc.IDDanhMuc where TrangThai = 0 ${filter} limit ${size} offset ${skip}`;
+    ON theloai.IDDanhMuc = danhmuc.IDDanhMuc where TrangThai = 0 ${filter} order by IDSanPham DESC limit ${size} offset ${skip}`;
     return new Promise((resolve, reject)=>{
       this.db.query(sql,(err ,data)=>{
         if(err) return reject(err);

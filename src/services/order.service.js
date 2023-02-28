@@ -54,7 +54,12 @@ const getAllOrder = async function () {
 };
 const getOrderDetailByIDOrder = async function (ID) {
   try {
-    const data = order.getOrderDetailByIDOrder(ID);
+    const data = await order.getOrderDetailByIDOrder(ID);
+    for await(const element of data) {
+      if(element["HinhAnh"]){
+        element["HinhAnh"] = process.env.URL + "" + element["HinhAnh"];
+      }
+    };
     return data;
   } catch (error) {
     throw error;
@@ -139,7 +144,9 @@ const addOrder = async function (obj) {
       await createOrderDetail(element);
     });
   } catch (error) {
+    console.log(error)
     throw error;
+    
   }
 };
 
