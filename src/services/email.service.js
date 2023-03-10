@@ -25,7 +25,7 @@ const sendVerificationEmail = async (to, token) => {
   try {
     const subject = "Email Verification";
     // replace this url with the link to the email verification page of your front-end app
-    const verificationEmailUrl = `http://localhost:3000/verify_email_checked?token=${token}`;
+    const verificationEmailUrl = `${process.env.CLIENT_HOST}/verify_email_checked?token=${token}`;
     const text = `Dear user,To verify your email, click on this link: ${verificationEmailUrl} If you did not create an account, then ignore this email.`;
     return sendEmail(to, subject, text);
   } catch (error) {
@@ -33,10 +33,10 @@ const sendVerificationEmail = async (to, token) => {
   }
 };
 
-const sendEmailResetPassword = async(to,token)=>{
+const sendEmailResetPassword = async (to, token) => {
   try {
     const subject = "Email verification change password";
-    const verificationPasswordURL = `http://localhost:3000/change_password?email=${to}&token=${token}`;
+    const verificationPasswordURL = `${process.env.CLIENT_HOST}/change_password?email=${to}&token=${token}`;
     const text = `Dear user, To verify your password change, click on this link:${verificationPasswordURL} If you did not change your password, then ignore this email.`;
     return sendEmail(to, subject, text);
   } catch (error) {

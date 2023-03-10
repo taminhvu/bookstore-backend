@@ -8,26 +8,28 @@ const { number } = require("joi");
 const addProduct = async function (req, res) {
   try {
     var upload = Uploader.single("HinhAnh");
-    upload(req,res,async function(err){
-      if(err)return res.status(httpStatus.BAD_REQUEST).json(new Response(true,err.message));
+    upload(req, res, async function (err) {
+      if (err) return res.status(httpStatus.BAD_REQUEST).json(new Response(true, err.message));
       if (!req.file) {
-          return res.status(httpStatus.BAD_REQUEST).json(new Response(true,'No file!'));
-      } 
+        return res.status(httpStatus.BAD_REQUEST).json(new Response(true, 'No file!'));
+      }
       let src = req.file.path.split('\\').join('/');
       const name = await productService.getProductByName(req.body.TenSanPham);
-      if(name.length !== 0){
-        fs.unlink(src,(err)=>{
-        if(err) console.log(err);
+      if (name.length !== 0) {
+        fs.unlink(src, (err) => {
+          if (err) console.log(err);
         })
-        return res.status(httpStatus.BAD_REQUEST).json("Sản phẩm đã tồn tại");
+        return res.status(httpStatus.BAD_REQUEST).json({
+          error: true, message: "Sản phẩm đã tồn tại"
+        });
       }
       let obj = req.body;
       obj["HinhAnh"] = src;
       console.log(obj);
-      
+
       await productService.addProduct(obj);
       return res.status(httpStatus.CREATED).send(new Response(false, "create"));
-    }); 
+    });
   } catch (err) {
     return res.status(httpStatus.BAD_REQUEST).send(err);
   }
@@ -36,7 +38,7 @@ const addProduct = async function (req, res) {
 const getNewProduct = async function (req, res) {
   try {
     const product = await productService.getNewProduct();
-    return res.status(httpStatus.OK).json(new Response(false,"",product));
+    return res.status(httpStatus.OK).json(new Response(false, "", product));
   } catch (err) {
     return res.status(httpStatus.BAD_REQUEST).json(err.message);
   }
@@ -44,7 +46,7 @@ const getNewProduct = async function (req, res) {
 const getBestSeller = async function (req, res) {
   try {
     const product = await productService.getBestSeller();
-    return res.status(httpStatus.OK).json(new Response(false,"",product));
+    return res.status(httpStatus.OK).json(new Response(false, "", product));
   } catch (err) {
     return res.status(httpStatus.BAD_REQUEST).json(err.message);
   }
@@ -52,7 +54,7 @@ const getBestSeller = async function (req, res) {
 const getTopTenBestsellerPerDay = async function (req, res) {
   try {
     const product = await productService.getTopTenBestsellerPerDay();
-    return res.status(httpStatus.OK).json(new Response(false,"",product));
+    return res.status(httpStatus.OK).json(new Response(false, "", product));
   } catch (err) {
     return res.status(httpStatus.BAD_REQUEST).json(err.message);
   }
@@ -70,8 +72,8 @@ const getProductByID = async function (req, res) {
 const getProductByIDDanhMuc = async function (req, res) {
   try {
 
-    const {c,p,s} = req.query;
-    const product = await productService.getProductByIDDanhMuc(c,p,s);
+    const { c, p, s } = req.query;
+    const product = await productService.getProductByIDDanhMuc(c, p, s);
     return res.status(httpStatus.OK).json(new Response(false, "", product));
   } catch (error) {
     return res.status(httpStatus.BAD_REQUEST).json(error.message);
@@ -80,8 +82,8 @@ const getProductByIDDanhMuc = async function (req, res) {
 
 const getProductByIDTheLoai = async function (req, res) {
   try {
-    const {k,p,s} = req.query;
-    const product = await productService.getProductByIDTheLoai(k,p,s);
+    const { k, p, s } = req.query;
+    const product = await productService.getProductByIDTheLoai(k, p, s);
     return res.status(httpStatus.OK).json(new Response(false, "", product));
   } catch (error) {
     return res.status(httpStatus.BAD_REQUEST).json(error.message);
@@ -118,7 +120,7 @@ const getAllProduct = async function (req, res) {
   }
 };
 
-const deleteProductByID = async function(req,res){
+const deleteProductByID = async function (req, res) {
   try {
     const ID = req.params.ID;
     await productService.deleteProductByID(ID);
@@ -127,36 +129,36 @@ const deleteProductByID = async function(req,res){
     return res.status(httpStatus.BAD_REQUEST).json(error.message);
   }
 };
-const updateProductByID = async function(req,res){
+const updateProductByID = async function (req, res) {
   try {
     var upload = Uploader.single("HinhAnh");
-    upload(req,res,async function(err){
-      if(err)return res.status(httpStatus.BAD_REQUEST).json(new Response(true,err.message));
+    upload(req, res, async function (err) {
+      if (err) return res.status(httpStatus.BAD_REQUEST).json(new Response(true, err.message));
       let id = req.params.ID;
       let obj = req.body;
-      if (!req.file){
+      if (!req.file) {
         const data = await productService.getProductByID(id);
         const urloldimage = data[0].HinhAnh;
         obj["HinhAnh"] = urloldimage;
       }
-      else{
+      else {
         let src = req.file.path.split('\\').join('/');
         const data = await productService.getProductByID(id);
         const urloldimage = data[0].HinhAnh;
-        if(urloldimage !== null){
-          fs.unlink(urloldimage,(err)=>{
-          if(err) console.log(err); 
+        if (urloldimage !== null) {
+          fs.unlink(urloldimage, (err) => {
+            if (err) console.log(err);
           })
         }
         obj["HinhAnh"] = src;
       }
       try {
-        await productService.updateProductByID(id,obj);
+        await productService.updateProductByID(id, obj);
       } catch (error) {
         return res.status(httpStatus.BAD_REQUEST).send(error.message);
       }
       return res.status(httpStatus.CREATED).send(new Response(false, "update success"));
-    }); 
+    });
   } catch (err) {
     return res.status(httpStatus.BAD_REQUEST).send(err);
   }
@@ -165,17 +167,17 @@ const getProductPagination = async function (req, res) {
   try {
     const page = req.query.p;
     const size = req.query.s;
-    const data = await productService.getProductPagination(page,size);
+    const data = await productService.getProductPagination(page, size);
     return res.status(httpStatus.OK).json(new Response(false, "", data));
   } catch (err) {
     return res.status(httpStatus.BAD_REQUEST).json(err.message);
   }
 };
-const filter = async function(req,res){
+const filter = async function (req, res) {
   console.log("ok");
   try {
-    const {c="",k="",d="",p,s} = req.query;
-    const data = await productService.filter(c,k,d,p,s);
+    const { c = "", k = "", d = "", p, s } = req.query;
+    const data = await productService.filter(c, k, d, p, s);
 
     return res.status(httpStatus.OK).json(new Response(false, "", data));
   } catch (error) {
@@ -195,19 +197,19 @@ const filterByName = async function (req, res) {
   }
 };
 module.exports = {
-    addProduct,
-    getNewProduct,
-    getProductByID,
-    getAllProduct,
-    deleteProductByID,
-    updateProductByID,
-    getProductByIDDanhMuc,
-    getProductByIDTheLoai,
-    getProductByIDNhaXuatBan,
-    getBestSeller,
-    getTopTenBestsellerPerDay,
-    getProductPagination,
-    filter,
-    getAllProductByIDTheLoai,
-    filterByName,
+  addProduct,
+  getNewProduct,
+  getProductByID,
+  getAllProduct,
+  deleteProductByID,
+  updateProductByID,
+  getProductByIDDanhMuc,
+  getProductByIDTheLoai,
+  getProductByIDNhaXuatBan,
+  getBestSeller,
+  getTopTenBestsellerPerDay,
+  getProductPagination,
+  filter,
+  getAllProductByIDTheLoai,
+  filterByName,
 }

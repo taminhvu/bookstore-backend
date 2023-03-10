@@ -10,8 +10,8 @@ const generateAuthToken = (user) => {
       Id: IDNguoiDung,
       Quyen: Quyen,
     };
-    
-    return helper.getAccesstoken(payload, "600000");
+
+    return helper.getAccesstoken(payload, "30d");
   } catch (error) {
     throw new Error('can not create accessToken');
   }
@@ -24,7 +24,7 @@ const generateVerifyEmailToken = (IDNguoiDung) => {
   } catch (error) {
     throw new Error('can not create verifyEmailToken');
   }
-  
+
 };
 
 const verifyEmailToken = (token) => {
@@ -83,15 +83,15 @@ const updateRefreshToken = async (newToken, IDOldToken) => {
   }
 };
 
-const generatePasswordToken = async(user)=>{
-    try {
-      return helper.getPasswordToken({IDNguoiDung:user.IDNguoiDung},'1h');
-    } catch (error) {
-      throw new Error('can not create passwordToken');
-    }
+const generatePasswordToken = async (user) => {
+  try {
+    return helper.getPasswordToken({ IDNguoiDung: user.IDNguoiDung }, '1h');
+  } catch (error) {
+    throw new Error('can not create passwordToken');
+  }
 }
 
-const verifyPasswordToken = async(token)=>{
+const verifyPasswordToken = async (token) => {
   try {
     return helper.verifyPasswordToken(token);
   } catch (error) {

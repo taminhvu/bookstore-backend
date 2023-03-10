@@ -8,16 +8,16 @@ const addProduct = async function (obj) {
 };
 
 const getProductByID = async function (id) {
-  const pro =await product.getProductByID(id);
-  if(pro[0]["HinhAnh"]){
+  const pro = await product.getProductByID(id);
+  if (pro[0]["HinhAnh"]) {
     pro[0]["HinhAnh"] = process.env.URL + "" + pro[0]["HinhAnh"];
   }
   return pro;
 };
 const getProductByName = async function (name) {
   let obj = await product.getProductByName(name);
-  for await(const element of data){
-    if(element["HinhAnh"]){
+  for await (const element of obj) {
+    if (element["HinhAnh"]) {
       element["HinhAnh"] = process.env.URL + "" + element["HinhAnh"];
     }
   }
@@ -29,8 +29,8 @@ const getProductByIDDanhMuc = async function (idcategory, page, size) {
     if (data.length === 0) {
       throw new Error("Page Not Found");
     }
-    for await(const element of data){
-      if(element["HinhAnh"]){
+    for await (const element of data) {
+      if (element["HinhAnh"]) {
         element["HinhAnh"] = process.env.URL + "" + element["HinhAnh"];
       }
     }
@@ -51,8 +51,8 @@ const getProductByIDTheLoai = async function (idTheloai, page, size) {
     if (data.length === 0) {
       throw new Error("Page Not Found");
     }
-    for await(const element of data) {
-      if(element["HinhAnh"]){
+    for await (const element of data) {
+      if (element["HinhAnh"]) {
         element["HinhAnh"] = process.env.URL + "" + element["HinhAnh"];
       }
     };
@@ -72,9 +72,9 @@ const getProductByIDTheLoai = async function (idTheloai, page, size) {
   }
 };
 const getAllProductByIDTheLoai = async function (id) {
-  const obj =await product.getAllProductByIDTheLoai(id);
-  for await(const element of obj) {
-    if(element["HinhAnh"]){
+  const obj = await product.getAllProductByIDTheLoai(id);
+  for await (const element of obj) {
+    if (element["HinhAnh"]) {
       element["HinhAnh"] = process.env.URL + "" + element["HinhAnh"];
     }
   };
@@ -83,8 +83,8 @@ const getAllProductByIDTheLoai = async function (id) {
 
 const getProductByIDNhaXuatBan = async function (id) {
   let obj = await product.getProductByIDNhaXuatBan(id);
-  for await(const element of obj) {
-    if(element["HinhAnh"]){
+  for await (const element of obj) {
+    if (element["HinhAnh"]) {
       element["HinhAnh"] = process.env.URL + "" + element["HinhAnh"];
     }
   };
@@ -93,8 +93,8 @@ const getProductByIDNhaXuatBan = async function (id) {
 
 const getAllProduct = async function () {
   let obj = await product.getAllProduct();
-  for await(const element of obj) {
-    if(element["HinhAnh"]){
+  for await (const element of obj) {
+    if (element["HinhAnh"]) {
       element["HinhAnh"] = process.env.URL + "" + element["HinhAnh"];
     }
   };
@@ -120,8 +120,8 @@ const updateProductByID = async function (ID, obj) {
 };
 const getNewProduct = async function () {
   let obj = await product.getNewProduct();
-  for await(const element of obj) {
-    if(element["HinhAnh"]){
+  for await (const element of obj) {
+    if (element["HinhAnh"]) {
       element["HinhAnh"] = process.env.URL + "" + element["HinhAnh"];
     }
   };
@@ -129,8 +129,8 @@ const getNewProduct = async function () {
 };
 const getBestSeller = async function () {
   let obj = await product.getBestseller();
-  for await(const element of obj) {
-    if(element["HinhAnh"]){
+  for await (const element of obj) {
+    if (element["HinhAnh"]) {
       element["HinhAnh"] = process.env.URL + "" + element["HinhAnh"];
     }
   };
@@ -139,8 +139,8 @@ const getBestSeller = async function () {
 const getTopTenBestsellerPerDay = async function () {
   let day = moment().isoWeekday(1).format("YYYY-MM-DD");
   let obj = await product.getTopTenBestsellerPerDay(day);
-  for await(const element of obj) {
-    if(element["HinhAnh"]){
+  for await (const element of obj) {
+    if (element["HinhAnh"]) {
       element["HinhAnh"] = process.env.URL + "" + element["HinhAnh"];
     }
   };
@@ -153,8 +153,8 @@ const getProductPagination = async function (page, size) {
     if (data.length === 0) {
       throw new Error("Page Not Found");
     }
-    for await(const element of data) {
-      if(element["HinhAnh"]){
+    for await (const element of data) {
+      if (element["HinhAnh"]) {
         element["HinhAnh"] = process.env.URL + "" + element["HinhAnh"];
       }
     };
@@ -191,8 +191,8 @@ const filter = async function (c = "", k = "", d = "", page, size) {
     if (data.length === 0) {
       throw new Error("Page Not Found");
     }
-    for await(const element of data){
-      if(element["HinhAnh"]){
+    for await (const element of data) {
+      if (element["HinhAnh"]) {
         element["HinhAnh"] = process.env.URL + "" + element["HinhAnh"];
       }
     }
@@ -209,8 +209,8 @@ const filter = async function (c = "", k = "", d = "", page, size) {
 };
 const filterByName = async function (name) {
   let obj = await product.filterByName(name);
-  for await(const element of obj) {
-    if(element["HinhAnh"]){
+  for await (const element of obj) {
+    if (element["HinhAnh"]) {
       element["HinhAnh"] = process.env.URL + "" + element["HinhAnh"];
     }
   };
