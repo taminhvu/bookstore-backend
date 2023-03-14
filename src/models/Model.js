@@ -9,7 +9,18 @@ class Model {
   getOne = async function (table, fieldId, value) {
     let sql = `SELECT * FROM ?? WHERE ?? = ?`;
     return new Promise((reslove, reject) => {
-      this.db.query(sql,[table,fieldId,value], (err, result) => {
+      this.db.query(sql, [table, fieldId, value], (err, result) => {
+        if (err) {
+          return reject(err);
+        }
+        return reslove(result);
+      });
+    });
+  };
+  getByCondition = async function (table, fieldId, value, fieldId2, value2) {
+    let sql = `SELECT * FROM ?? WHERE ?? = ? and ?? = ?`;
+    return new Promise((reslove, reject) => {
+      this.db.query(sql, [table, fieldId, value, fieldId2, value2], (err, result) => {
         if (err) {
           return reject(err);
         }
@@ -18,16 +29,16 @@ class Model {
     });
   };
 
-//get all data from a table in decending order by a field
-getAll = async function (table, field){
-  let sql = `SELECT * from ?? ORDER BY ? DESC`;
-  return new Promise((resolve,reject)=>{
-    this.db.query(sql,[table,field],(err,result)=>{
-      if(err) return reject(err);
-      return resolve(result);
-    });
-  })
-};
+  //get all data from a table in decending order by a field
+  getAll = async function (table, field) {
+    let sql = `SELECT * from ?? ORDER BY ? DESC`;
+    return new Promise((resolve, reject) => {
+      this.db.query(sql, [table, field], (err, result) => {
+        if (err) return reject(err);
+        return resolve(result);
+      });
+    })
+  };
   //insert into a specific table
   addData = async (table, obj) => {
     let sql = `INSERT INTO ${table} SET ?`;
@@ -39,50 +50,50 @@ getAll = async function (table, field){
     });
   };
   //update a specific row on a table
-  
-  updateData = async function (table, fieldId, obj,ID) {
+
+  updateData = async function (table, fieldId, obj, ID) {
     let sql = `UPDATE ?? SET ? WHERE ?? = ?`;
-    return new Promise((reslove,reject)=>{
-        this.db.query(sql, [table, obj, fieldId,ID], (err)=>{
-            if(err)reject(err);
-            return reslove();
-        });
+    return new Promise((reslove, reject) => {
+      this.db.query(sql, [table, obj, fieldId, ID], (err) => {
+        if (err) reject(err);
+        return reslove();
+      });
     });
   };
   //delete a specific row on a table
 
-  deleteData = async function(table, fieldId, value){
+  deleteData = async function (table, fieldId, value) {
     let sql = `DELETE FROM ?? WHERE ?? = ?`;
-    return new Promise((resolve,reject)=>{
-        this.db.query(sql,[table, fieldId, value],(err,result)=>{
-            if(err) return reject(err);
-            return resolve(result);
-        });
+    return new Promise((resolve, reject) => {
+      this.db.query(sql, [table, fieldId, value], (err, result) => {
+        if (err) return reject(err);
+        return resolve(result);
+      });
     })
-    
+
   };
-  
-  countAll = function(table){
+
+  countAll = function (table) {
     const sql = `select count(*) as soluong from ${table}`;
-    return new Promise((resolve,reject)=>{
-      this.db.query(sql,(err,result)=>{
-        if(err) return reject(err);
+    return new Promise((resolve, reject) => {
+      this.db.query(sql, (err, result) => {
+        if (err) return reject(err);
         return resolve(result);
       })
     })
   }
-  countAllByID = function(table,column,value){
+  countAllByID = function (table, column, value) {
     const sql = `select count(*) as soluong from ${table} where ${column} = ${value}`;
-    return new Promise((resolve,reject)=>{
-      this.db.query(sql,(err,result)=>{
-        if(err) return reject(err);
+    return new Promise((resolve, reject) => {
+      this.db.query(sql, (err, result) => {
+        if (err) return reject(err);
         return resolve(result);
       })
     })
   }
 
   //get all data from a table in decending order by a field with pagination
-  getPaginateList = (page, table, field, value, field2 = "",value2 = -1, order_field) => {
+  getPaginateList = (page, table, field, value, field2 = "", value2 = -1, order_field) => {
     //implement pagination here later
     const page_size = Define.PAGINATE_PAGE_SIZE;
     let skip = (page - 1) * page_size;
