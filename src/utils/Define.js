@@ -10,7 +10,7 @@ const Define = {
         secure: true,//only for browser
         sameSite: 'none',
         signed: true,
-        domain: 'vercel.app',
+        domain: process.env.CLIENT_HOST,
         maxAge: 30 * 24 * 60 * 60 * 1000//1 day in milis
     },
     LOGOUT_COOKIE_OPTION: {
@@ -24,7 +24,7 @@ const Define = {
     FORMAT_SQL_DATE: "YYYY-MM-DD",
     CREATED_AT: "created_at",
     PAGINATE_PAGE_SIZE: 10,
-    USER_PAGE_SIZE:5,
+    USER_PAGE_SIZE: 5,
     //time
     DAYS: "days",
     MONTHS: "months",
